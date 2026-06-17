@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/06/17 16:02:10 by pking            ###   ########.fr       */
+/*   Updated: 2026/06/17 16:40:20 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 int main (void)
 {
 	// Kick off the Shell
-	
+
 	// Wait for arguments to come in, in a loop
 
 	// Take arguments -> Parser
@@ -34,7 +34,7 @@ int main (void)
 			add_history(line);
 
 		//process the command here
-		printf("%s", line);
+		ft_printf("%s\n", line);
 		free(line);
 	}
 	return (0);

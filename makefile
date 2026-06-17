@@ -6,7 +6,7 @@
 #    By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/06/17 14:47:31 by jfox             ###   ########.fr        #
+#    Updated: 2026/06/17 16:33:54 by jfox             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ $(OBJECT_DIR)/%.o: $(SRC_DIR)/%.c
 
 # --------- Build minishell ----------
 $(NAME): $(TOOLS) $(OBJ)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(TOOLS) -lSDL2
+	@$(CC) $(CFLAGS) -lreadline -o $(NAME) $(OBJ) $(TOOLS) -lSDL2
 	@echo "\033[32m--------The minishell executable and object files have been made--------\033[0m"
 
 # -------- Utility libraries --------
