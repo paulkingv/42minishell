@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/pvx0x/Documents/Ecole42/git_repos/Level4/42minishell/src",
+      "program": "/Users/pvx0x/Documents/Ecole42/git_repos/Level4/42minishell/src/build/Debug/outDebug"
+    }
+  ]
+}
