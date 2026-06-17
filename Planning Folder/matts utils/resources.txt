@@ -1,0 +1,7 @@
+git merging
+
+https://www.varonis.com/blog/git-branching-and-merging
+
+making a shell
+
+https://www.youtube.com/watch?v=yTR00r8vBH8&t=359s
