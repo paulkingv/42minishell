@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/06/20 17:09:41 by pking            ###   ########.fr       */
+/*   Updated: 2026/06/20 17:20:30 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ t_token make_new_token(t_token_type type, char *value)
     if (!new_token)
         return (NULL);
     new_token->type = type;
-    new_token->
+    new_token->value = value;
+    new_token->next = NULL;
+    return (new_token);
 }
 
 // Used to create a linked list of tokens
@@ -48,7 +50,6 @@ t_token tokenize(char *input)
                         to pass it to our Helper Function
             If Special:
         */
-
 
         
         }
