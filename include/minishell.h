@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/06/20 15:25:31 by pking            ###   ########.fr       */
+/*   Updated: 2026/06/20 17:02:20 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,14 @@ typedef struct s_token
     char            *value;
     struct s_token  *next_token;
 }   t_token;
+
+// struct for environment variables
+typedef struct s_env
+	{
+		char			*key;
+		char			*value;
+		struct s_env	*next;
+	}	t_env;
 
 /*-----FUNCTIONS-----*/
 
