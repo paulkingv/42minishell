@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/06/20 17:09:41 by pking            ###   ########.fr       */
+/*   Updated: 2026/06/20 17:34:28 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_token tokenize(char *input)
             Inside Here is the logic for parsing the words;
 
             //First thing is we need to determine if we are looking at a:
-            WORD ; SPECIAL ; 
+            WORD ; SPECIAL ;
             If Word:
                         We need to know the beginning and end of the word,
                         to pass it to our Helper Function
@@ -50,7 +50,7 @@ t_token tokenize(char *input)
         */
 
 
-        
+
         }
 
     }
