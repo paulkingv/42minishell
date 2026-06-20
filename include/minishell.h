@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/06/20 15:10:36 by pking            ###   ########.fr       */
+/*   Updated: 2026/06/20 15:25:31 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define MINISHELL_H
 
 #include "../libft/header/libft.h"
-#include <stdio.h> //debugging
+#include <stdio.h> // printf
 #include <unistd.h> // pipes, fork, getpid, execve, dup2
 #include <sys/wait.h> // waitpid(),
 #include <sys/types.h> // pid_t datatype,
@@ -29,14 +29,13 @@
 
 typedef enum e_token_type
 {
-    //CHECK WITH OTHERS IF ENUMS ARE ALLOWED
-    TOKEN_WORD,
-    TOKEN_PIPE,
-    TOKEN_REDIR_OUT,
-    TOKEN_REDIR_IN,
-    TOKEN_APPEND,
-    TOKEN_HEREDOC,
-    TOKEN_EOF
+    TOKEN_EOF = 0,
+    TOKEN_WORD = 1 << 0,        // 0x00000001
+    TOKEN_PIPE = 1 << 1,        // 0x00000010
+    TOKEN_REDIR_OUT = 1 << 2,   // 0x00000100
+    TOKEN_REDIR_IN = 1 << 3,    // 0x00001000
+    TOKEN_APPEND = 1 << 4,      // 0x00010000
+    TOKEN_HEREDOC = 1 << 5     // 0x00100000
 }   t_token_type;
 
 typedef struct s_token
