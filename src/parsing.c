@@ -6,21 +6,22 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/06/21 18:01:40 by pking            ###   ########.fr       */
+/*   Updated: 2026/06/22 13:46:41 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //goes thru the word until the end to find the last char
-static int find_end_word(char *value, int i)
+static int find_end_word(char *input, int i)
 {
-    while (value[i] && value[i] != ' ' && value[i] != '\t'
+    while (input[i] && input[i] != ' ' && input[i] != '\t'
         && input[i] != '|' && input[i] != '<' && input[i] != '>')
         i++;
+    return (i);
 }
 
-// Our Helper for get_type. Returns Enum. (!!!Other Specials Handled Later!!!)
+// Our Helper for get_type. Returns Enum. Single Char Checker. (!!!Other Specials Handled Later!!!)
 static t_token_type get_type(char *value, int i)
 {
     if (value[i] == '|')
@@ -33,8 +34,10 @@ static t_token_type get_type(char *value, int i)
 }
 
 // Helper Function to make a New Token Node
-t_token make_new_token(t_token_type type, char *value)
+t_token *make_new_token(t_token_type type, char *value)
 {
+   t_token *new_token;
+   
     new_token = ft_calloc(1, sizeof(t_token));
     if (!new_token)
         return (NULL);
@@ -45,14 +48,15 @@ t_token make_new_token(t_token_type type, char *value)
 }
 
 // Used to create a linked list of tokens
-t_token tokenize(char *input)
+t_token *tokenize(char *input)
 {
     t_token *head;
     t_token *tail;
+    t_token *new;
     int word_start;
     int i;
 
-
+    new = NULL;
     head = NULL;
     tail = NULL;
     word_start = 0;
@@ -77,7 +81,7 @@ t_token tokenize(char *input)
             else
                 i = find_end_word(input, i);
             new = make_new_token(get_type(input, word_start),
-                    ft_substr(input, start, i - start));
+                    ft_substr(input, word_start, i - word_start));
             if (!new)
                 return (NULL);  // ! TO-DO: Free tokens list on error
             if (!head)

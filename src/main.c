@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/06/17 16:40:20 by jfox             ###   ########.fr       */
+/*   Updated: 2026/06/21 19:30:51 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
+
+static void print_tokens(t_token *head)
+{
+    t_token *cur;
+
+    cur = head;
+    while (cur)
+    {
+        printf("type: %d | value: '%s'\n", cur->type, cur->value);
+        cur = cur->next;
+    }
+}
 
 int main (void)
 {
@@ -23,7 +35,7 @@ int main (void)
 	// Return Parser arguments -> Executor
 
 	// Return Executor result -> Shell
-
+	t_token *tokens;
 	char *line;
 	while (1)
 	{
@@ -34,7 +46,10 @@ int main (void)
 			add_history(line);
 
 		//process the command here
-		ft_printf("%s\n", line);
+		tokens = tokenize(line);
+		print_tokens(tokens);
+
+		//ft_printf("%s\n", line);
 		free(line);
 	}
 	return (0);

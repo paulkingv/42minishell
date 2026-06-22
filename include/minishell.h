@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/06/20 15:45:54 by pking            ###   ########.fr       */
+/*   Updated: 2026/06/22 13:45:55 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,26 @@
 
 typedef enum e_token_type
 {
-    TOKEN_EOF = 0,
-    TOKEN_WORD = 1 << 0,        // 0x00000001
-    TOKEN_PIPE = 1 << 1,        // 0x00000010
-    TOKEN_REDIR_OUT = 1 << 2,   // 0x00000100
-    TOKEN_REDIR_IN = 1 << 3,    // 0x00001000
-    TOKEN_APPEND = 1 << 4,      // 0x00010000
-    TOKEN_HEREDOC = 1 << 5     // 0x00100000
+    TYPE_EOF = 0 << 0,           // 0x00000000 
+    WORD = 1 << 0,          // 0x00000001
+    PIPE = 1 << 1,          // 0x00000010
+    REDIR_OUT = 1 << 2,     // 0x00000100
+    REDIR_IN = 1 << 3,      // 0x00001000
+    APPEND = 1 << 4,        // 0x00010000
+    HEREDOC = 1 << 5        // 0x00100000
 }   t_token_type;
 
 typedef struct s_token
 {
     t_token_type    type;
     char            *value;
-    struct s_token  *next_token;
+    struct s_token  *next;
 }   t_token;
 
 /*-----FUNCTIONS-----*/
+
+//-----PARSING.C-----//
+t_token *make_new_token(t_token_type type, char *input);
+t_token *tokenize(char *input);
 
 #endif
