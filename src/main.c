@@ -3,41 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/06/20 17:26:44 by jfox             ###   ########.fr       */
+/*   Updated: 2026/06/22 15:29:23 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void print_tokens(t_token *head)
+{
+    t_token *cur;
+
+    cur = head;
+    while (cur)
+    {
+        printf("type: %d | value: '%s'\n", cur->type, cur->value);
+        cur = cur->next;
+    }
+}
+
 int main (int ac, char **av, char **envp) //added environment table
 {
-	// Kick off the Shell
+	/* Kick off the Shell
+	Wait for arguments to come in, in a loop
+	Take arguments -> Tokenizer->Parser
+	Return Parser arguments -> Executor
+	Return Executor result -> Shell
+	*/
 
-	// Wait for arguments to come in, in a loop
-
-	// Take arguments -> Parser
-
-	// Return Parser arguments -> Executor
-
-	// Return Executor result -> Shell
-
-	// print environment table as a test
 	(void)ac;
 	(void)av;
-	while(*envp)
-	{
-		ft_printf("%s\n", *envp);
-		envp++;
-	}
-	ft_printf("\n");
+	(void)envp;
+	// Printing ENV as test ⬇️
+	/* while(*envp)
+	// {
+	// 	ft_printf("%s\n", *envp);
+	// 	envp++;
+	// }
+	// ft_printf("\n");
 	// show working directory as a test.
 	// make this a function later to show current position at all times.
 	char cwd[BUFSIZ];
 	getcwd(cwd, sizeof(cwd));
-
+	*/
+	
+	// PAUL WORKED DOWN HERE
+	t_token *tokens;
 	char *line;
 	while (1)
 	{
@@ -49,7 +62,10 @@ int main (int ac, char **av, char **envp) //added environment table
 			add_history(line);
 
 		//process the command here
-		ft_printf("%s\n", line);
+		tokens = tokenize(line);
+		print_tokens(tokens);
+
+		//ft_printf("%s\n", line);
 		free(line);
 	}
 	return (0);
