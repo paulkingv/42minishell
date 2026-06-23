@@ -6,9 +6,13 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:04:19 by jfox              #+#    #+#             */
-/*   Updated: 2026/06/20 17:09:40 by jfox             ###   ########.fr       */
+/*   Updated: 2026/06/23 16:59:40 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
+// t_env init_env(char **envp)
+// {
+
+// }

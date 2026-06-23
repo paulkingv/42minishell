@@ -6,13 +6,13 @@
 #    By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/30 17:04:58 by jfox              #+#    #+#              #
-#    Updated: 2026/06/17 14:47:02 by jfox             ###   ########.fr        #
+#    Updated: 2026/06/23 16:57:17 by jfox             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 OBJECT_DIR ?= ../object_files
 SRC_DIR = ./src
-INC_DIR = ../header
+INC_DIR = ../include
 
 SRCC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
        ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c ft_memchr.c \
