@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/06/23 16:59:20 by jfox             ###   ########.fr       */
+/*   Updated: 2026/06/24 17:28:56 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 typedef enum e_token_type
 {
-    TYPE_EOF = 0 << 0,           // 0x00000000
+    TYPE_EOF = 0 << 0,      // 0x00000000
     WORD = 1 << 0,          // 0x00000001
     PIPE = 1 << 1,          // 0x00000010
     REDIR_OUT = 1 << 2,     // 0x00000100
@@ -47,11 +47,11 @@ typedef struct s_token
 
 // struct for environment variables
 typedef struct s_env
-	{
-		char			*key;
-		char			*value;
-		struct s_env	*next;
-	}	t_env;
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
 
 /*-----FUNCTIONS-----*/
 
@@ -60,6 +60,7 @@ t_token *make_new_token(t_token_type type, char *input);
 t_token *tokenize(char *input);
 
 //---ENVIRONMENTAL---//
-// t_env *init_env(char **envp);
+t_env	*init_env(char **envp);
+char	*get_env(t_env *s_env, char	*key);
 
 #endif
