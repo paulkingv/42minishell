@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/06/24 17:28:56 by jfox             ###   ########.fr       */
+/*   Updated: 2026/06/27 19:10:19 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,14 @@ t_token *make_new_token(t_token_type type, char *input);
 t_token *tokenize(char *input);
 
 //---ENVIRONMENTAL---//
+void	environment_checks(char **envp); //test function
+t_env	*new_env(char *key, char *value);
 t_env	*init_env(char **envp);
+t_env	*find_env(t_env *s_env, char *key);
+t_env	*edit_env(t_env *s_env, char *key, char *new);
 char	*get_env(t_env *s_env, char	*key);
+void	set_env(t_env *s_env, char *key, char *value);
+void	env_add_back(t_env **head, t_env *new);
+void	unset_env(t_env **head, char *key);
 
 #endif
