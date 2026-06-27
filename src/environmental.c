@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:04:19 by jfox              #+#    #+#             */
-/*   Updated: 2026/06/27 20:22:39 by jfox             ###   ########.fr       */
+/*   Updated: 2026/06/27 20:36:01 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,9 +240,10 @@ void	environment_checks(char **envp)
 	// check adding new environmental variables.
 	// create an if, so we either edit the variable or add a new one.
 	// assume that key and value have been determined already.
-	set_env(s_env, "USER", "JOE");
-	set_env(s_env, "NEW_VAL", "TEST");
-	set_env(s_env, "NEW_VAL_NEXT", "TEST_AGAIN");
+	tmp = s_env;
+	set_env(tmp, "USER", "JOE");
+	set_env(tmp, "NEW_VAL", "TEST");
+	set_env(tmp, "NEW_VAL_NEXT", "TEST_AGAIN");
 
 	// // reprint everything to see updates
 	// tmp = s_env;
@@ -314,6 +315,22 @@ void	environment_checks(char **envp)
 	unset_env(&s_env, "NEW_VAL_NEXT");
 
 	printf("------------------------\n");
+
+	// print to check remove
+	tmp = s_env;
+	while (tmp)
+	{
+		printf("key:   %s\n", tmp->key);
+		printf("value: %s\n", tmp->value);
+		printf("------------------------\n");
+		tmp = tmp->next;
+	}
+
+	printf("------------------------\n");
+
+	tmp = s_env;
+	set_env(tmp, "USER", "Matt");
+	set_env(tmp, "42", "LETS GO!");
 
 	// print to check remove
 	tmp = s_env;
