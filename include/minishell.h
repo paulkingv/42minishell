@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/06/22 15:14:48 by pking            ###   ########.fr       */
+/*   Updated: 2026/06/30 17:46:22 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 #include <readline/history.h> //for readline's history (sh history)
 #include <stdlib.h> //malloc
 
-/*------STRUCTS------*/
+/*~~~~~~~~~~!!STRUCTS!!~~~~~~~~~~*/
 
-// TOKENS
+/*       TOKENIZATION		*/
 // 2 Structs: Token and Token Type (Token Type first because Token needs it)
 
 typedef enum e_token_type
@@ -45,18 +45,40 @@ typedef struct s_token
     struct s_token  *next;
 }   t_token;
 
-// struct for environment variables
+/*		PARSING		*/		
+// 2 Structs:
+//		CMD: Linked List of each Command, with flags. Stores REDIR struct
+// 		REDIR: Linked List of REDIR and where to direct the output. Only Used if REDIR detected.
+typedef struct	s_redir
+{
+	char			*file_name;		// Output file name
+	t_token_type	type;			// Type of REDIR 
+	struct s_redir	*next;			// Pointer to next REDIR node
+}	t_redir;
+
+typedef struct	s_cmd
+{
+	char 				**args;			// ARGV: [cmd] [flag]
+	t_redir				*redirections;	// Only used if REDIR is used
+	struct s_cmdline	*next;			// Pointer to next CMD node
+}	t_cmd;
+
+/*		ENVIRONMENT VARS		*/
 typedef struct s_env
-	{
-		char			*key;
-		char			*value;
-		struct s_env	*next;
-	}	t_env;
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
 
-/*-----FUNCTIONS-----*/
+/*~~~~~~~~~~!!FUNCTIONS!!~~~~~~~~~~*/
 
-//-----PARSING.C-----//
+//		TOKENIZATION.C		//
 t_token *make_new_token(t_token_type type, char *input);
 t_token *tokenize(char *input);
+
+//		EXECUTION.C		//
+void exe_cmdline(t_cmd cmdline);
+// everything else is static in here
 
 #endif
