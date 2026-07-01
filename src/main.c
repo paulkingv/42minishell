@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/06/22 15:29:23 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/01 13:22:21 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void print_tokens(t_token *head)
     }
 }
 
+
 int main (int ac, char **av, char **envp) //added environment table
 {
 	/* Kick off the Shell
@@ -35,38 +36,42 @@ int main (int ac, char **av, char **envp) //added environment table
 
 	(void)ac;
 	(void)av;
-	(void)envp;
-	// Printing ENV as test ⬇️
-	/* while(*envp)
-	// {
-	// 	ft_printf("%s\n", *envp);
-	// 	envp++;
-	// }
-	// ft_printf("\n");
+	// (void)envp;
+
+	// function to take envp to environmental workspace and run all tests, keeping main clean.
+	environment_checks(envp);
+
 	// show working directory as a test.
 	// make this a function later to show current position at all times.
 	char cwd[BUFSIZ];
 	getcwd(cwd, sizeof(cwd));
-	*/
-	
+
 	// PAUL WORKED DOWN HERE
+	int cmd_count;
 	t_token *tokens;
-	char *line;
+	t_cmd *cmdline;
+	char *input;
 	while (1)
 	{
 		ft_printf("%s/", cwd);
-		line = readline("minishell$ ");
-		if (!line) // Ctrl + D (End of File)
+		input = readline("minishell$ ");
+		if (!input) // Ctrl + D (End of File)
 			break;
-		if (*line) //Only add non empty lines to history
-			add_history(line);
+		if (*input) //Only add non empty lines to history
+			add_history(input);
 
-		//process the command here
-		tokens = tokenize(line);
+		/* Start Processing the command here */
+		// TOKENIZE
+		tokens = tokenize(input);
+		// MAKE STRUCTS PER COMMAND
+		cmdline = parse(tokens);	// TODO: FOX
+		// EXECUTE TOKENS
+		exec_cmdline(cmdline);	// TODO: PAUL
 		print_tokens(tokens);
-
 		//ft_printf("%s\n", line);
-		free(line);
+		free(input);
+		free_tokens(tokens);		// TODO
+		free_cmdline(cmdline);		// TODO
 	}
 	return (0);
 }

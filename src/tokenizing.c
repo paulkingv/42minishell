@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/06/22 15:16:34 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/01 13:17:10 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_token_type get_type(char *value, int i)
 t_token *make_new_token(t_token_type type, char *value)
 {
    t_token *new_token;
-   
+
     new_token = ft_calloc(1, sizeof(t_token));
     if (!new_token)
         return (NULL);
@@ -63,7 +63,7 @@ t_token *tokenize(char *input)
     i = 0;
     while (input[i])
     {
-        if (input[i] == ' ' || input[i] == '\t')
+        if (input[i] == ' ' || input[i] == '\t') // 9 - 13
             i++;
         else
         {
@@ -93,9 +93,9 @@ t_token *tokenize(char *input)
             {
                 tail->next = new;
                 tail = tail->next;
-            }   
+            }
         }
     }
     return (head);
-} 
+}
 
