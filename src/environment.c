@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:04:19 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/01 15:32:21 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/04 13:31:52 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,23 @@ void	unset_env(t_env **head, char *key)
 		prev = current;
 		current = current->next;
 	}
+}
+
+void	free_env(t_env **s_env)
+{
+	t_env	*current = NULL;
+	t_env	*next = NULL;
+
+	current = *s_env;
+	while (current)
+	{
+		next = current->next;
+		free(current->key);
+		free(current->value);
+		free(current);
+		current = next;
+	}
+	//free(s_env);
 }
 
 // test function for testing all above environmental functions.
@@ -341,4 +358,7 @@ void	environment_checks(char **envp)
 		printf("------------------------\n");
 		tmp = tmp->next;
 	}
+
+	//test to free everything
+	free_env(&s_env);
 }

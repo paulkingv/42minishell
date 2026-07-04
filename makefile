@@ -6,7 +6,7 @@
 #    By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/07/01 14:27:42 by jfox             ###   ########.fr        #
+#    Updated: 2026/07/04 12:35:29 by jfox             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,8 @@ CC = cc
 CFLAGS += -Wall -Wextra -Werror -g -I$(INC_DIR) -MMD -MP
 
 TOOLS = libft.a
+
+USRPATH = $(shell pwd)
 
 all: $(NAME) ping_make
 
@@ -64,6 +66,9 @@ ping_re:
 	@echo "=======================REBUILDING THE EXECUTABLE========================"
 	@echo "\033[0m"
 
-.PHONY: all clean fclean re tools ping_make ping_re
+valgrind: $(NAME)
+	@echo clear && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --trace-children=yes --suppressions=$(USRPATH)/readline.supp ./minishell
+
+.PHONY: all clean fclean re tools ping_make ping_re valgrind
 
 -include $(OBJ:.o=.d)

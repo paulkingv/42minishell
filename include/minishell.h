@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/01 16:47:17 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/04 13:43:04 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,10 @@ char	*get_env(t_env *s_env, char	*key);
 void	set_env(t_env **s_env, char *key, char *value);
 void	env_add_back(t_env **head, t_env *new);
 void	unset_env(t_env **head, char *key);
+void	free_env(t_env **s_env);
 
 //------PARSING------//
+t_cmd	*parse(t_token *tokens);
 
 //-----BUILT-IN------//
 
