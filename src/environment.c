@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environmental.c                                    :+:      :+:    :+:   */
+/*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:04:19 by jfox              #+#    #+#             */
-/*   Updated: 2026/06/27 20:36:01 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/01 15:32:21 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,18 +119,18 @@ t_env	*edit_env(t_env *s_env, char *key, char *new)
 	return(tmp);
 }
 
-void	set_env(t_env *s_env, char *key, char *value)
+void	set_env(t_env **s_env, char *key, char *value)
 {
 	t_env	*tmp = NULL;
 	t_env	*new = NULL;
 
-	tmp = s_env;
+	tmp = *s_env;
 	if (find_env(tmp, key))
 		edit_env(tmp, key, value);
 	else
 	{
 		new = new_env(key, value);
-		env_add_back(&tmp, new);
+		env_add_back(s_env, new);
 	}
 }
 
@@ -241,9 +241,9 @@ void	environment_checks(char **envp)
 	// create an if, so we either edit the variable or add a new one.
 	// assume that key and value have been determined already.
 	tmp = s_env;
-	set_env(tmp, "USER", "JOE");
-	set_env(tmp, "NEW_VAL", "TEST");
-	set_env(tmp, "NEW_VAL_NEXT", "TEST_AGAIN");
+	set_env(&tmp, "USER", "JOE");
+	set_env(&tmp, "NEW_VAL", "TEST");
+	set_env(&tmp, "NEW_VAL_NEXT", "TEST_AGAIN");
 
 	// // reprint everything to see updates
 	// tmp = s_env;
@@ -277,7 +277,7 @@ void	environment_checks(char **envp)
 	unset_env(&s_env, "XDG_DATA_DIRS");
 	unset_env(&s_env, "GTK_IM_MODULE");
 	unset_env(&s_env, "__ETC_PROFILE_NIX_SOURCED");
-	// unset_env(&s_env, "USER");
+	unset_env(&s_env, "USER");
 	unset_env(&s_env, "XDG_SESSION_DESKTOP");
 	unset_env(&s_env, "XDG_CONFIG_DIRS");
 	unset_env(&s_env, "QT_ACCESSIBILITY");
@@ -286,8 +286,8 @@ void	environment_checks(char **envp)
 	unset_env(&s_env, "LOGNAME");
 	unset_env(&s_env, "XDG_SEAT_PATH");
 	unset_env(&s_env, "GNOME_TERMINAL_SERVICE");
-	// unset_env(&s_env, "HOME");
-	// unset_env(&s_env, "PATH");
+	unset_env(&s_env, "HOME");
+	unset_env(&s_env, "PATH");
 	unset_env(&s_env, "XDG_RUNTIME_DIR");
 	unset_env(&s_env, "XMODIFIERS");
 	unset_env(&s_env, "SHELL");
@@ -297,7 +297,7 @@ void	environment_checks(char **envp)
 	unset_env(&s_env, "VTE_VERSION");
 	unset_env(&s_env, "COLORTERM");
 	unset_env(&s_env, "XAUTHORITY");
-	// unset_env(&s_env, "PWD");
+	unset_env(&s_env, "PWD");
 	unset_env(&s_env, "DBUS_STARTER_ADDRESS");
 	unset_env(&s_env, "DISPLAY");
 	unset_env(&s_env, "TERM");
@@ -328,9 +328,9 @@ void	environment_checks(char **envp)
 
 	printf("------------------------\n");
 
-	tmp = s_env;
-	set_env(tmp, "USER", "Matt");
-	set_env(tmp, "42", "LETS GO!");
+	// tmp = s_enev;
+	set_env(&s_env, "USER", "Matt");
+	set_env(&s_env, "42", "LETS GO!");
 
 	// print to check remove
 	tmp = s_env;

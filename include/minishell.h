@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/01 13:18:35 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/01 16:47:17 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ typedef struct	s_redir
 
 typedef struct	s_cmd
 {
-	char 				**args;			// ARGV: [cmd] [flag]
-	t_redir				*redirections;	// Only used if REDIR is used
-	struct s_cmdline	*next;			// Pointer to next CMD node
+	char 			**args;			// ARGV: [cmd] [flag]
+	t_redir			*redirections;	// Only used if REDIR is used
+	struct s_cmd	*next;			// Pointer to next CMD node
 }	t_cmd;
 
 /*		ENVIRONMENT VARS		*/
@@ -84,12 +84,16 @@ t_env	*init_env(char **envp);
 t_env	*find_env(t_env *s_env, char *key);
 t_env	*edit_env(t_env *s_env, char *key, char *new);
 char	*get_env(t_env *s_env, char	*key);
-void	set_env(t_env *s_env, char *key, char *value);
+void	set_env(t_env **s_env, char *key, char *value);
 void	env_add_back(t_env **head, t_env *new);
 void	unset_env(t_env **head, char *key);
 
+//------PARSING------//
+
+//-----BUILT-IN------//
+
 //		EXECUTION.C		//
-void exe_cmdline(t_cmd cmdline);
+// void exe_cmdline(t_cmd cmdline);
 // everything else is static in here
 
 #endif

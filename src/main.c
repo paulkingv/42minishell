@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/01 13:22:21 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/01 16:43:59 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ int main (int ac, char **av, char **envp) //added environment table
 	getcwd(cwd, sizeof(cwd));
 
 	// PAUL WORKED DOWN HERE
-	int cmd_count;
+	// int cmd_count;
 	t_token *tokens;
-	t_cmd *cmdline;
+	// t_cmd *cmdline;
 	char *input;
 	while (1)
 	{
@@ -60,18 +60,18 @@ int main (int ac, char **av, char **envp) //added environment table
 		if (*input) //Only add non empty lines to history
 			add_history(input);
 
-		/* Start Processing the command here */
-		// TOKENIZE
+		// /* Start Processing the command here */
+		// // TOKENIZE
 		tokens = tokenize(input);
-		// MAKE STRUCTS PER COMMAND
-		cmdline = parse(tokens);	// TODO: FOX
-		// EXECUTE TOKENS
-		exec_cmdline(cmdline);	// TODO: PAUL
+		// // MAKE STRUCTS PER COMMAND
+		// cmdline = parse(tokens);	// TODO: FOX
+		// // EXECUTE TOKENS
+		// exec_cmdline(cmdline);	// TODO: PAUL
 		print_tokens(tokens);
-		//ft_printf("%s\n", line);
-		free(input);
-		free_tokens(tokens);		// TODO
-		free_cmdline(cmdline);		// TODO
+		// //ft_printf("%s\n", line);
+		// free(input);
+		// free_tokens(tokens);		// TODO
+		// free_cmdline(cmdline);		// TODO
 	}
 	return (0);
 }

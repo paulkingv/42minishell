@@ -6,7 +6,7 @@
 #    By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/07/01 13:17:27 by jfox             ###   ########.fr        #
+#    Updated: 2026/07/01 14:27:42 by jfox             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ OBJECT_DIR ?= ./object_files
 SRC_DIR = ./src
 INC_DIR = ./include
 
-SRC = main.c tokenizing.c execution.c environment.c
+SRC = main.c tokenizing.c execution.c environment.c parsing.c
 
 NAME = minishell
 OBJ = $(SRC:%.c=$(OBJECT_DIR)/%.o)
