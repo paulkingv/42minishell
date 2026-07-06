@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/06/30 17:46:01 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/06 17:26:46 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,10 @@ static int parent_cleanup_exe_cmd(int prev_fd, int pipe_fd[2], t_cmd cmd)
 	return (-1);
 }
 // Actual child executing the cmd part
-static void child_exe_cmd(int prev_fd, int pipe_fd[2], t_cmd cmd)
+static void child_exe_cmd(int prev_fd, int pipe_fd[2], t_cmd cmd, t_env *env)
 {
+	char **envp;
+	
 	if (prev_fd != -1) // if prev_fd is registered
 	{
 	// HOOK Up the content as the STDIN
@@ -65,27 +67,30 @@ static void child_exe_cmd(int prev_fd, int pipe_fd[2], t_cmd cmd)
 		close(pipe_fd[1]);
 		close(pipe_fd[0]);
 	}
-		execvp(cmd->args[0], cmd->args); // this executes all the flags for the arg
-		perror("execvp error in child");
-		exit(1);
+	envp = env_to_array(env);
+	execve(cmd->args[0], cmd->args); // this executes all the flags for the arg
+	perror("execvp error in child");
+	exit(1);
 }
 // The meat function. This is called in order to execute the line that has been parsed.
-void exe_cmdline(t_cmd cmdline)
+void exe_cmdline(t_cmd cmd, t_env *env)
 {
 	int		prev_fd;
 	int		pipe_fd[2];
 	pid_t pid;
 
 	prev_fd = -1;		// Prev FD exists out of Bounds (aka not registered)
-    while (cmdline)
+    while (cmd)
 	{
-		if (cmdline->next)
+		if (is_builtin(cmd))
+			exec_builtin(cmd);
+		if (cmd->next)
 			safe_pipe(pipe_fd); // error handling pipe improved function
 		pid = safe_fork(); // error handling fork improved function
 		if (pid == 0)
-			child_exe_cmd(prev_fd, pipe_fd, cmdline);
-		prev_fd = parent_cleanup_exe_cmd(prev_fd, pipe_fd, cmdline);
-		cmdline = cmdline->next;
+			child_exe_cmd(prev_fd, pipe_fd, cmd, env);
+		prev_fd = parent_cleanup_exe_cmd(prev_fd, pipe_fd, cmd);
+		cmd = cmd->next;
 	}
 	waitpid(pid, NULL, 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/01 13:18:35 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/05 17:21:55 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_token
     struct s_token  *next;
 }   t_token;
 
-/*		PARSING		*/
+/*		PARSING				*/
 // 2 Structs:
 //		CMD: Linked List of each Command, with flags. Stores REDIR struct
 // 		REDIR: Linked List of REDIR and where to direct the output. Only Used if REDIR detected.
@@ -71,13 +71,22 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+/*		SHELL					*/
+//	Contains:
+//		1) ENV LINKED LIST
+//		2) COMMANDS LINKED LIST (Post Parsing)
+
+// typedef struct s_shell
+// {
+// 	t_env	*s_env;
+// }	t_shell;
 /*~~~~~~~~~~!!FUNCTIONS!!~~~~~~~~~~*/
 
 //		TOKENIZATION.C		//
 t_token *make_new_token(t_token_type type, char *input);
 t_token *tokenize(char *input);
 
-//---ENVIRONMENTAL---//
+//		ENVIRONMENT.C		//
 void	environment_checks(char **envp); //test function
 t_env	*new_env(char *key, char *value);
 t_env	*init_env(char **envp);
@@ -88,7 +97,10 @@ void	set_env(t_env *s_env, char *key, char *value);
 void	env_add_back(t_env **head, t_env *new);
 void	unset_env(t_env **head, char *key);
 
-//		EXECUTION.C		//
+//		ENV_TO_ARRAY.C		//
+char	**env_to_array(t_env *env);
+
+//		EXECUTION.C			//
 void exe_cmdline(t_cmd cmdline);
 // everything else is static in here
 

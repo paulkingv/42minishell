@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/01 13:17:10 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/05 19:59:37 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ t_token *make_new_token(t_token_type type, char *value)
 }
 
 // Used to create a linked list of tokens
+        /*
+            //First thing is we need to determine if we are looking at a:
+             SPECIAL ; WORD;
+            If Special:
+                    It is either '|', '<', '>' (!!!Other Specials will be handled later!!!)
+            If !Special:
+                    WORD
+        */
 t_token *tokenize(char *input)
 {
     t_token *head;
@@ -67,14 +75,6 @@ t_token *tokenize(char *input)
             i++;
         else
         {
-        /*
-            //First thing is we need to determine if we are looking at a:
-             SPECIAL ; WORD;
-            If Special:
-                    It is either '|', '<', '>' (!!!Other Specials will be handled later!!!)
-            If !Special:
-                    WORD
-        */
             word_start = i;
             if (input[i] == '|' || input[i] == '<' || input[i] == '>')
                 i++;
