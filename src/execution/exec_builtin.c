@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_builtin.c                                       :+:      :+:    :+:   */
+/*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/07/06 17:22:24 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/06 20:23:04 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	is_builtin(t_cmd *cmd)
 {
+	if (!cmd || !cmd->args[0])
+		return (0);
 	if (!strcmp(cmd->args[0], "echo"))
 		return (1);
 	else if (!strcmp(cmd->args[0], "cd"))
@@ -30,7 +32,7 @@ int	is_builtin(t_cmd *cmd)
 		return (0);
 }
 
-int exec_builtin(t_cmd *cmd)
+int exec_builtin(t_cmd *cmd, t_env *env)
 {
 	int status;
 	if (!strcmp(cmd->args[0], "echo"))
@@ -45,5 +47,7 @@ int exec_builtin(t_cmd *cmd)
 		status = ft_unset()
 	else if (!strcmp(cmd->args[0], "exit"))
 		status = ft_exit()
+	else
+		return (-1);
 	return (status);
 }

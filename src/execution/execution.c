@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/07/06 17:26:46 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/06 22:00:46 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,22 @@ static void child_exe_cmd(int prev_fd, int pipe_fd[2], t_cmd cmd, t_env *env)
 	exit(1);
 }
 // The meat function. This is called in order to execute the line that has been parsed.
-void exe_cmdline(t_cmd cmd, t_env *env)
+void exe_cmdline(t_cmd *cmd, t_env *env)
 {
 	int		prev_fd;
 	int		pipe_fd[2];
+	int		exit_code;
 	pid_t pid;
-
+	
 	prev_fd = -1;		// Prev FD exists out of Bounds (aka not registered)
     while (cmd)
 	{
 		if (is_builtin(cmd))
-			exec_builtin(cmd);
+		{
+			exit_code = exec_builtin(cmd, &env);
+			cmd = cmd->next;
+			continue; // this keyword resets the while(cmd) loop from the top
+		}
 		if (cmd->next)
 			safe_pipe(pipe_fd); // error handling pipe improved function
 		pid = safe_fork(); // error handling fork improved function
@@ -92,5 +97,5 @@ void exe_cmdline(t_cmd cmd, t_env *env)
 		prev_fd = parent_cleanup_exe_cmd(prev_fd, pipe_fd, cmd);
 		cmd = cmd->next;
 	}
-	waitpid(pid, NULL, 0);
+	while (waitpid(-1, NULL, 0) > 0); //
 }
