@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/13 14:27:23 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/13 15:30:23 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,13 @@ int main (int argv, char **argc, char **envp) //added environment table
 	Return Parser arguments -> Executor
 	Return Executor result -> Shell
 	*/
-
-	(void)argv;
-	(void)argc;
-
-	// function to take envp to environmental workspace and run all tests, keeping main clean.
-	// environment_checks(envp);
-
-	// then show working directory as a test.
-	// make this a function later to show current position at all times.
-	// char cwd[BUFSIZ];
-	// getcwd(cwd, sizeof(cwd));
-
-	// PAUL WORKED DOWN HERE
-	// int cmd_count;
 	t_token	*tokens = NULL;
 	t_cmd	*cmdline = NULL;
 	t_shell	*minishell = NULL;
 	char *input;
 
+	(void)argv;
+	(void)argc;
 	minishell = shell_init(envp);
 	while (1)
 	{
