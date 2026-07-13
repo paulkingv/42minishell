@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/06 17:29:09 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/13 16:04:16 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct	s_cmd
 {
 	char 				**args;			// ARGV: [cmd] [flag]
 	t_redir				*redirections;	// Only used if REDIR is used
-	struct s_cmdline	*next;			// Pointer to next CMD node
+	struct s_cmd		*next;			// Pointer to next CMD node
 }	t_cmd;
 
 /*		ENVIRONMENT VARS		*/

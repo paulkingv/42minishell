@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/07/06 22:00:46 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/09 16:09:31 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,5 @@ void exe_cmdline(t_cmd *cmd, t_env *env)
 		prev_fd = parent_cleanup_exe_cmd(prev_fd, pipe_fd, cmd);
 		cmd = cmd->next;
 	}
-	while (waitpid(-1, NULL, 0) > 0); //
+	while (waitpid(-1, NULL, 0) > 0); // Special waiting line (Need 2 research)
 }

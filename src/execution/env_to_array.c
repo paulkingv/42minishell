@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/02 21:04:29 by pking             #+#    #+#             */
-/*   Updated: 2026/07/05 20:03:32 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/13 16:04:20 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	fill_array(char **array, t_env *tmp)
 char	**env_to_array(t_env *env)
 {
 	char 	**array;
-	t_env	*tmp;
+	t_env	*tmp = NULL;
 	int		list_size;
 	
 	list_size = 0;

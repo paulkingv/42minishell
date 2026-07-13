@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/07/06 20:23:04 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/13 16:04:17 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	is_builtin(t_cmd *cmd)
 		return (0);
 }
 
+// NOT FINISHED, NEEDS MATT TO DO THE BUILTINS
 int exec_builtin(t_cmd *cmd, t_env *env)
 {
 	int status;
