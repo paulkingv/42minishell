@@ -6,13 +6,26 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 14:02:16 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/04 15:55:56 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/13 11:56:02 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Here we will start working on parsing through the tokens we have been given.
+
+t_cmd	*new_cmd(void)
+{
+	t_cmd	*new = NULL;
+
+	new = malloc(sizeof(t_cmd));
+	if (!new)
+		return (NULL);
+	new->args = NULL;
+	new->redirections = NULL;
+	new->next = NULL;
+	return (new);
+}
 
 t_cmd	*sort_tokens(t_cmd *cmd_ready, t_token *token, int count)
 {
@@ -40,7 +53,6 @@ t_cmd	*sort_tokens(t_cmd *cmd_ready, t_token *token, int count)
 	return (cmd);
 }
 
-
 t_cmd	*parse(t_token *tokens)
 {
 	t_cmd	*cmd_ready = NULL;
@@ -54,12 +66,9 @@ t_cmd	*parse(t_token *tokens)
 		tmp = tmp->next;
 		count++;
 	}
-	cmd_ready = malloc(sizeof(t_cmd));
+	cmd_ready = new_cmd();
 	if (!cmd_ready)
 		return (NULL);
-	cmd_ready->args = NULL;
-	cmd_ready->redirections = NULL;
-	cmd_ready->next = NULL;
 	cmd_ready = sort_tokens(cmd_ready, tokens, count);
 	return (cmd_ready);
 }

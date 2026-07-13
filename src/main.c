@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/04 15:40:17 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/13 11:50:55 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ int main (int ac, char **av, char **envp) //added environment table
 		print_cmd(cmdline);
 		// //ft_printf("%s\n", line);
 		// free(input);
-		// free_tokens(tokens);		// TODO
-		// free_cmdline(cmdline);		// TODO
+		free_tokens(&tokens);		// TODO
+		free_cmd(&cmdline);		// TODO
 	}
 	return (0);
 }
