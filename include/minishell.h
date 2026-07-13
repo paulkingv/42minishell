@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/13 11:48:53 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/13 14:27:44 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 /*~~~~~~~~~~!!STRUCTS!!~~~~~~~~~~*/
 
-/*       TOKENIZATION		*/
+/*	TOKENIZATION	*/
 // 2 Structs: Token and Token Type (Token Type first because Token needs it)
 
 typedef enum e_token_type
@@ -63,7 +63,7 @@ typedef struct	s_cmd
 	struct s_cmd	*next;			// Pointer to next CMD node
 }	t_cmd;
 
-/*		ENVIRONMENT VARS		*/
+/*	ENVIRONMENT VARS	*/
 typedef struct s_env
 {
 	char			*key;
@@ -71,14 +71,25 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+/*		SHELL		*/
+typedef struct s_shell
+{
+	t_env	*env;
+	int		exit;
+}	t_shell;
+
 /*~~~~~~~~~~!!FUNCTIONS!!~~~~~~~~~~*/
+
+//-------SHELL-------//
+t_shell	*shell_init(char **envp);
+char	*ft_path(t_shell *minishell);
 
 //		TOKENIZATION.C		//
 t_token *make_new_token(t_token_type type, char *input);
 t_token *tokenize(char *input);
 
 //---ENVIRONMENTAL---//
-void	environment_checks(char **envp); //test function
+// void	environment_checks(char **envp); //test function
 t_env	*new_env(char *key, char *value);
 t_env	*init_env(char **envp);
 t_env	*find_env(t_env *s_env, char *key);

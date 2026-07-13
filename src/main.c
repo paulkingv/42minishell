@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/13 11:50:55 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/13 14:27:23 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void print_cmd(t_cmd *head)
 	}
 }
 
-int main (int ac, char **av, char **envp) //added environment table
+int main (int argv, char **argc, char **envp) //added environment table
 {
 	/* Kick off the Shell
 	Wait for arguments to come in, in a loop
@@ -51,26 +51,28 @@ int main (int ac, char **av, char **envp) //added environment table
 	Return Executor result -> Shell
 	*/
 
-	(void)ac;
-	(void)av;
-	// (void)envp;
+	(void)argv;
+	(void)argc;
 
 	// function to take envp to environmental workspace and run all tests, keeping main clean.
-	environment_checks(envp);
+	// environment_checks(envp);
 
-	// show working directory as a test.
+	// then show working directory as a test.
 	// make this a function later to show current position at all times.
-	char cwd[BUFSIZ];
-	getcwd(cwd, sizeof(cwd));
+	// char cwd[BUFSIZ];
+	// getcwd(cwd, sizeof(cwd));
 
 	// PAUL WORKED DOWN HERE
 	// int cmd_count;
-	t_token *tokens;
-	t_cmd *cmdline;
+	t_token	*tokens = NULL;
+	t_cmd	*cmdline = NULL;
+	t_shell	*minishell = NULL;
 	char *input;
+
+	minishell = shell_init(envp);
 	while (1)
 	{
-		ft_printf("%s/", cwd);
+		ft_printf("%s/", ft_path(minishell));
 		input = readline("minishell$ ");
 		if (!input) // Ctrl + D (End of File)
 			break;
@@ -91,6 +93,7 @@ int main (int ac, char **av, char **envp) //added environment table
 		free_tokens(&tokens);		// TODO
 		free_cmd(&cmdline);		// TODO
 	}
+	free_env(&minishell->env);
+	free(minishell);
 	return (0);
 }
-
