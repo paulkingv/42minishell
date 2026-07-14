@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 11:47:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/13 12:18:18 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/14 16:59:25 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	free_cmd(t_cmd **cmdline)
 			i++;
 		}
 		free(current->args);
+		// will need to add a free redirections for the struct
 		free(current->redirections);
 		free(current);
 		current = next;

@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 13:49:32 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/13 15:30:59 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/14 11:51:41 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 t_shell	*shell_init(char **envp)
 {
 	t_shell	*shell = NULL;
+	t_token	*tokens = NULL;
+	t_cmd	*cmdline = NULL;
 
 	shell = malloc(sizeof(t_shell));
 	if (!shell)
 		return (NULL);
 	shell->env = init_env(envp);
+	shell->tokens = tokens;
+	shell->cmdline = cmdline;
 	shell->exit = 0;
 	return (shell);
 }

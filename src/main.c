@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/13 15:30:23 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/14 16:39:05 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,20 @@ static void print_cmd(t_cmd *head)
 {
 	t_cmd	*cur = NULL;
 	int		i;
+	int		x;
 
 	cur = head;
-	i = 0;
+	x = 1;
 	while (cur)
 	{
+		i = 0;
+		printf("Command %d: \n",x);
 		while (cur->args[i])
 		{
 			printf("arg[%d]: %s\n", i, cur->args[i]);
 			i++;
 		}
+		x++;
 		cur = cur->next;
 	}
 }
@@ -50,8 +54,7 @@ int main (int argv, char **argc, char **envp) //added environment table
 	Return Parser arguments -> Executor
 	Return Executor result -> Shell
 	*/
-	t_token	*tokens = NULL;
-	t_cmd	*cmdline = NULL;
+
 	t_shell	*minishell = NULL;
 	char *input;
 
@@ -69,17 +72,17 @@ int main (int argv, char **argc, char **envp) //added environment table
 
 		// /* Start Processing the command here */
 		// // TOKENIZE
-		tokens = tokenize(input);
+		minishell->tokens = tokenize(input);
 		// // MAKE STRUCTS PER COMMAND
-		cmdline = parse(tokens);	// TODO: FOX
+		minishell->cmdline = parse(minishell->tokens);	// TODO: FOX
 		// // EXECUTE TOKENS
 		// exec_cmdline(cmdline);	// TODO: PAUL
-		print_tokens(tokens);
-		print_cmd(cmdline);
+		print_tokens(minishell->tokens);
+		print_cmd(minishell->cmdline);
 		// //ft_printf("%s\n", line);
 		// free(input);
-		free_tokens(&tokens);		// TODO
-		free_cmd(&cmdline);		// TODO
+		free_tokens(&minishell->tokens);		// TODO
+		free_cmd(&minishell->cmdline);		// TODO
 	}
 	free_env(&minishell->env);
 	free(minishell);

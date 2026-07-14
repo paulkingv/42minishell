@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/13 14:27:44 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/14 11:48:16 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ typedef struct s_env
 typedef struct s_shell
 {
 	t_env	*env;
+	t_token	*tokens;
+	t_cmd	*cmdline;
 	int		exit;
 }	t_shell;
 
