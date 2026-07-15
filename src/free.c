@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 11:47:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/14 16:59:25 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/15 15:36:43 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,21 @@ void	free_env(t_env **s_env)
 	}
 }
 
+void	free_redirections(t_cmd *current)
+{
+	t_redir	*current_redir = NULL;
+	t_redir	*next = NULL;
+
+	current_redir = current->redirections;
+	while (current_redir)
+	{
+		next = current_redir->next;
+		free(current_redir->file_name);
+		free(current_redir);
+		current_redir = current_redir->next;
+	}
+}
+
 void	free_cmd(t_cmd **cmdline)
 {
 	t_cmd	*current = NULL;
@@ -60,8 +75,10 @@ void	free_cmd(t_cmd **cmdline)
 			i++;
 		}
 		free(current->args);
-		// will need to add a free redirections for the struct
-		free(current->redirections);
+		if (current->redirections)
+		{
+			free_redirections(current);
+		}
 		free(current);
 		current = next;
 	}

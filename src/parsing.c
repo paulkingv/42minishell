@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 14:02:16 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/14 17:19:39 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/15 15:33:12 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,59 @@ t_cmd	*new_cmd(void)
 	return (new);
 }
 
+int	count_args(t_token *tokens)
+{
+	t_token	*tmp = NULL;
+	int		i;
+
+	tmp = tokens;
+	i = 0;
+	while (tmp && tmp->type != PIPE)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
+t_redir	*new_redir(char *value, t_token_type num)
+{
+	t_redir *new = NULL;
+
+	new = malloc(sizeof(t_redir));
+	if (!new)
+		return (NULL);
+	new->file_name = value;
+	new->type = num;
+	new->next = NULL;
+	return (new);
+}
+
+void	redir_add_back(t_redir **head, t_redir *new)
+{
+	t_redir	*tmp = NULL;
+
+	if (*head == NULL)
+	{
+		*head = new;
+		return ;
+	}
+	tmp = *head;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+}
+
+void	sort_redirections(t_cmd *cmd_current, t_token **tmp)
+{
+	t_redir *new = NULL;
+
+	new = new_redir((*tmp)->next->value , (*tmp)->type);
+	redir_add_back(&cmd_current->redirections, new);
+	*tmp = (*tmp)->next;
+	// free(new);
+}
+
 void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 {
 	t_token	*tmp = NULL;
@@ -44,33 +97,19 @@ void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 			cmd->args[i] = ft_strdup(tmp->value);
 			i++;
 		}
-		// if (tmp->type == REDIR_OUT)
-		// {
-
-		// }
-		// if (tmp->type == REDIR_IN)
-		// {
-
-		// }
+		if (tmp->type == REDIR_OUT || tmp->type == REDIR_IN || tmp->type == APPEND || tmp->type == HEREDOC)
+		{
+			sort_redirections(cmd, &tmp);
+			if (!tmp->next)
+			{
+				// error
+				return ;
+			}
+		}
 		if (tmp->type == PIPE)
 			return ;
 		tmp = tmp->next;
 	}
-}
-
-int	count_args(t_token *tokens)
-{
-	t_token	*tmp = NULL;
-	int		i;
-
-	tmp = tokens;
-	i = 0;
-	while (tmp && tmp->type != PIPE)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	return (i);
 }
 
 t_cmd	*parse(t_token *tokens)

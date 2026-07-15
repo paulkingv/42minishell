@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/14 16:39:05 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/15 13:36:48 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,15 @@ static void print_cmd(t_cmd *head)
 		{
 			printf("arg[%d]: %s\n", i, cur->args[i]);
 			i++;
+			if (cur->redirections)
+			{
+				while (cur->redirections)
+				{
+					printf("redirection: %d\n", cur->redirections->type);
+					printf("File: %s\n", cur->redirections->file_name);
+					cur->redirections = cur->redirections->next;
+				}
+			}
 		}
 		x++;
 		cur = cur->next;
