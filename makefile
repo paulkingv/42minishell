@@ -14,11 +14,12 @@ OBJECT_DIR ?= ./object_files
 SRC_DIR = ./src
 INC_DIR = ./include
 
-SRC = 	main.c \
+SRC =	main.c \
 		tokenize/tokenizing.c \
 		execution/execution.c \
-		execution/env_to_array.c \
-		environment/environment.c 
+		environment/environment.c environment/environment_utils.c \
+		parsing/parsing.c parsing/parsing_redirects.c \
+		shell/shell.c shell/free.c
 
 NAME = minishell
 OBJ = $(SRC:%.c=$(OBJECT_DIR)/%.o)
@@ -28,11 +29,13 @@ CFLAGS += -Wall -Wextra -Werror -g -I$(INC_DIR) -MMD -MP
 
 TOOLS = libft.a
 
+USRPATH = $(shell pwd)
+
 all: $(NAME) ping_make
 
 # ---------- Build objects ----------
 $(OBJECT_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJECT_DIR)
+	@mkdir -p $(dir $@)
 	@$(CC) -o $@ -c $< $(CFLAGS)
 
 # --------- Build minishell ----------
@@ -68,6 +71,9 @@ ping_re:
 	@echo "=======================REBUILDING THE EXECUTABLE========================"
 	@echo "\033[0m"
 
-.PHONY: all clean fclean re tools ping_make ping_re
+valgrind: $(NAME)
+	@echo clear && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --trace-children=yes --suppressions=$(USRPATH)/readline.supp ./minishell
+
+.PHONY: all clean fclean re tools ping_make ping_re valgrind
 
 -include $(OBJ:.o=.d)

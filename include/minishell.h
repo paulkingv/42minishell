@@ -22,11 +22,9 @@
 #include <readline/history.h> //for readline's history (sh history)
 #include <stdlib.h> //malloc
 
-/*~~~~~~~~~~!!STRUCTS!!~~~~~~~~~~*/
+/*~~~~~~~~~~~~!!STRUCTS!!~~~~~~~~~~~~*/
 
-/*       TOKENIZATION		*/
-// 2 Structs: Token and Token Type (Token Type first because Token needs it)
-
+/*~~~~~~~~TOKENIZATION~~~~~~~~~*/
 typedef enum e_token_type
 {
     TYPE_EOF = 0 << 0,      // 0x00000000
@@ -65,7 +63,7 @@ typedef struct	s_cmd
 	struct s_cmd		*next;			// Pointer to next CMD node
 }	t_cmd;
 
-/*		ENVIRONMENT VARS		*/
+/*~~~~~~ENVIRONMENT VARS~~~~~~~*/
 typedef struct s_env
 {
 	char			*key;
@@ -73,16 +71,26 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-/*		SHELL					*/
-//	Contains:
-//		1) ENV LINKED LIST
-//		2) COMMANDS LINKED LIST (Post Parsing)
-//		3) EXIT CODE
-
+/*~~~~~~~~~~~~SHELL~~~~~~~~~~~~*/
 typedef struct s_shell
 {
 	t_env	*env;
 	t_token	*tokens;
+	t_cmd	*cmdline;
+	int		exit;
+}	t_shell;
+
+/*~~~~~~~~~~~!!FUNCTIONS!!~~~~~~~~~~~*/
+
+//------------SHELL------------//
+t_shell	*shell_init(char **envp);
+char	*ft_path(t_shell *minishell);
+
+//--------TOKENIZATION---------//
+t_token	*make_new_token(t_token_type type, char *input);
+t_token	*tokenize(char *input);
+
+//---------ENVIRONMENT---------//
 	t_cmd	*cmd;
 	int		exit;
 }	t_shell;
@@ -99,13 +107,32 @@ void 	free_tokens(t_token *head);
 void	environment_checks(char **envp); //test function
 t_env	*new_env(char *key, char *value);
 t_env	*init_env(char **envp);
-t_env	*find_env(t_env *s_env, char *key);
 t_env	*edit_env(t_env *s_env, char *key, char *new);
-char	*get_env(t_env *s_env, char	*key);
-void	set_env(t_env *s_env, char *key, char *value);
+void	set_env(t_env **s_env, char *key, char *value);
 void	env_add_back(t_env **head, t_env *new);
 void	unset_env(t_env **head, char *key);
 
+//------ENVIRONMENT UTILS------//
+t_env	*new_env(char *key, char *value);
+char	*get_env(t_env *s_env, char	*key);
+t_env	*find_env(t_env *s_env, char *key);
+
+//-----------PARSING-----------//
+t_cmd	*parse(t_token *tokens);
+// static t_cmd	*new_cmd(void);
+// static int	count_args(t_token *tokens);
+// static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
+
+//------PARSING_REDIRECTS------//
+void	sort_redirections(t_cmd *cmd_current, t_token **tmp);
+// static t_redir	*new_redir(char *value, t_token_type num);
+// static void	redir_add_back(t_redir **head, t_redir *new);
+
+//----------BUILT-IN-----------//
+
+//----------EXECUTION----------//
+// void exe_cmdline(t_cmd cmdline);
+// everything else is static in here
 //		EXECUTION.C			//
 void 	exe_cmdline(t_shell *shell);
 
@@ -135,5 +162,10 @@ void	safe_exit(int *wstatus, t_shell *shell);
 
 
 
+
+//-----------FREEING-----------//
+void	free_tokens(t_token **tokens);
+void	free_env(t_env **s_env);
+void	free_cmd(t_cmd **cmdline);
 
 #endif
