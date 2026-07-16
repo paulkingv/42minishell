@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/16 16:30:07 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/16 16:32:51 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,15 @@ int main (int argv, char **argc, char **envp) //added environment table
 		// // TOKENIZE
 		minishell->tokens = tokenize(input);
 		// // MAKE STRUCTS PER COMMAND
-		minishell->cmd = parse(minishell->tokens);	// TODO: FOX
+		minishell->cmdline = parse(minishell->tokens);	// TODO: FOX
 		// // EXECUTE TOKENS
-		exec_cmdline(minishell->cmd);	// TODO: PAUL
+		exec_cmdline(minishell);
 		print_tokens(minishell->tokens);
-		print_cmd(minishell->cmd);
+		print_cmd(minishell->cmdline);
 		// //ft_printf("%s\n", line);
 		// free(input);
 		free_tokens(&minishell->tokens);		// TODO
-		free_cmd(&minishell->cmd);		// TODO
+		free_cmd(&minishell->cmdline);		// TODO
 	}
 	free_env(&minishell->env);
 	free(minishell);
