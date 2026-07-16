@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/16 14:07:06 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/16 16:05:45 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,6 @@ int main (int argv, char **argc, char **envp) //added environment table
 	}
 	free_env(&minishell->env);
 	free(minishell);
-	return (0);
+	ft_printf("exit\n");
+	return (minishell->exit);
 }
