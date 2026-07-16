@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/16 16:27:48 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/16 16:52:42 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
@@ -27,28 +28,27 @@
 /*~~~~~~~~TOKENIZATION~~~~~~~~~*/
 typedef enum e_token_type
 {
-    TYPE_EOF = 0 << 0,      // 0x00000000
-    WORD = 1 << 0,          // 0x00000001
-    PIPE = 1 << 1,          // 0x00000010
-    REDIR_OUT = 1 << 2,     // 0x00000100	( >  )
-    REDIR_IN = 1 << 3,      // 0x00001000	( <  )
-    APPEND = 1 << 4,        // 0x00010000	( >> )
-    HEREDOC = 1 << 5        // 0x00100000	( << )
-	D_QUOTED = 1 << 6		// 0x01000000
-	S_QUOTED = 1 << 7		// 0x10000000
-}   t_token_type;
+	TYPE_EOF = 0 << 0,	// 0x00000000 0
+	WORD = 1 << 0,		// 0x00000001 1
+	PIPE = 1 << 1,		// 0x00000010 2
+	REDIR_OUT = 1 << 2,	// 0x00000100 4		( >  )
+	REDIR_IN = 1 << 3,	// 0x00001000 8		( <  )
+	APPEND = 1 << 4,	// 0x00010000 16	( >> )
+	HEREDOC = 1 << 5,	// 0x00100000 32	( << )
+	D_QUOTED = 1 << 6,	// 0x01000000 64
+	S_QUOTED = 1 << 7	// 0x10000000 128
+}	t_token_type;
 
 typedef struct s_token
 {
-    t_token_type    type;
-    char            *value;
-    struct s_token  *next;
-}   t_token;
+	t_token_type	type;
+	char			*value;
+	struct s_token	*next;
+}	t_token;
 
-/*		PARSING				*/
-// 2 Structs:
-//		CMD: Linked List of each Command, with flags. Stores REDIR struct
-// 		REDIR: Linked List of REDIR and where to direct the output. Only Used if REDIR detected.
+/*~~~~~~~~~~~PARSING~~~~~~~~~~~*/
+// CMD: Linked List of each Command, with flags. Stores REDIR struct
+// REDIR: Linked List of REDIR and where to direct the output. Only Used if REDIR detected.
 typedef struct	s_redir
 {
 	char			*file_name;		// Output file name
@@ -90,23 +90,11 @@ char	*ft_path(t_shell *minishell);
 t_token	*make_new_token(t_token_type type, char *input);
 t_token	*tokenize(char *input);
 
-//---------ENVIRONMENT---------//
-	t_cmd	*cmd;
-	int		exit;
-}	t_shell;
-
-/*~~~~~~~~~~!!FUNCTIONS!!~~~~~~~~~~*/
-
-//		TOKENIZING.C		//
+//---------TOKENIZING----------//
 t_token *make_new_token(t_token_type type, char *input);
 t_token *tokenize(char *input);
 
-//		free_tokens.c		//
-void 	free_tokens(t_token *head);
-
-//		ENVIRONMENT.C		//
-void	environment_checks(char **envp); //test function
-t_env	*new_env(char *key, char *value);
+//----------ENVIRONMENT--------//
 t_env	*init_env(char **envp);
 t_env	*edit_env(t_env *s_env, char *key, char *new);
 void	set_env(t_env **s_env, char *key, char *value);
@@ -129,40 +117,31 @@ void	sort_redirections(t_cmd *cmd_current, t_token **tmp);
 // static t_redir	*new_redir(char *value, t_token_type num);
 // static void	redir_add_back(t_redir **head, t_redir *new);
 
-//----------BUILT-IN-----------//
-
 //----------EXECUTION----------//
-// void exe_cmdline(t_cmd cmdline);
-// everything else is static in here
-//		EXECUTION.C			//
 void 	exe_cmdline(t_shell *shell);
 
-//		env_to_array.c		//
+//--------env_to_array.c-------//
 char	**env_to_array(t_env *env);
 
-//		exec_close_pipe.c	//
+//------exec_close_pipe.c------//
 void	exec_close_pipe(int pipe_fd[2]);
 
-//		env_to_array.c		//
+//--------env_to_array.c-------//
 char	**env_to_array(t_env *env);
 
-//		exec_builtin.c		//
+//--------exec_builtin.c-------//
 int		is_builtin(t_cmd *cmd);
 int		exec_builtin(t_cmd *cmd, t_env *env);
 
-//		exec_handle_redir.c	//
-int		open_redir_file(t_redir *redir);
-int		handle_redirects(t_redir *redir);
+//-----exec_handle_redir.c-----//
+int open_redir_file(t_redir *redir);
+int handle_redirects(t_redir *redir);
 
-//		exec_safety_funct.c	//
+//-----exec_safety_funct.c-----//
 int 	safe_dup2(int fd, int target_fd);
 pid_t	safe_fork(void);
 int		safe_pipe(int pipe_fd[2]);
 void	safe_exit(int *wstatus, t_shell *shell);
-
-
-
-
 
 //-----------FREEING-----------//
 void	free_tokens(t_token **tokens);
