@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   safe_functions.c                                   :+:      :+:    :+:   */
+/*   exec_safety_funct.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 02:16:14 by pking             #+#    #+#             */
-/*   Updated: 2026/07/16 02:57:16 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/16 16:00:18 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ pid_t safe_fork(void)
 }
 
 
-static int	safe_pipe(int pipe_fd[2])
+int	safe_pipe(int pipe_fd[2])
 {
 	int return_code;
 
@@ -50,4 +50,11 @@ static int	safe_pipe(int pipe_fd[2])
 		exit(1);
 	}
 	return (0);
+}
+void safe_exit(int *wstatus, t_shell *shell)
+{
+	if (WIFEXITED(*wstatus))
+		shell->exit = WEXITSTATUS(*wstatus);
+	if (WIFSIGNALED(*wstatus))
+		shell->exit = 128 + WTERMSIG(*wstatus);
 }

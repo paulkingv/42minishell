@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/16 03:01:11 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/16 15:57:37 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "libft.h"
 #include <stdio.h> // printf
 #include <unistd.h> // pipes, fork, getpid, execve, dup2
-#include <sys/wait.h> // waitpid(),
+#include <sys/wait.h> // waitpid(), WIFEXITED, WEXITSTATUS
 #include <sys/types.h> // pid_t datatype,
 #include <readline/readline.h> // for readline
 #include <readline/history.h> //for readline's history (sh history)
@@ -77,11 +77,15 @@ typedef struct s_env
 //	Contains:
 //		1) ENV LINKED LIST
 //		2) COMMANDS LINKED LIST (Post Parsing)
+//		3) EXIT CODE
 
-// typedef struct s_shell
-// {
-// 	t_env	*s_env;
-// }	t_shell;
+typedef struct s_shell
+{
+	t_env	*env;
+	t_token	*tokens;
+	t_cmd	*cmd;
+	int		exit;
+}	t_shell;
 /*~~~~~~~~~~!!FUNCTIONS!!~~~~~~~~~~*/
 
 //		TOKENIZING.C		//
@@ -89,7 +93,7 @@ t_token *make_new_token(t_token_type type, char *input);
 t_token *tokenize(char *input);
 
 //		free_tokens.c		//
-void free_tokens(t_token *head);
+void 	free_tokens(t_token *head);
 
 //		ENVIRONMENT.C		//
 void	environment_checks(char **envp); //test function
@@ -103,22 +107,32 @@ void	env_add_back(t_env **head, t_env *new);
 void	unset_env(t_env **head, char *key);
 
 //		EXECUTION.C			//
-void exe_cmdline(t_cmd cmdline);
+void 	exe_cmdline(t_shell *shell);
 
 //		env_to_array.c		//
 char	**env_to_array(t_env *env);
 
 //		exec_close_pipe.c	//
-void exec_close_pipe(int pipe_fd[2]);
+void	exec_close_pipe(int pipe_fd[2]);
 
 //		env_to_array.c		//
 char	**env_to_array(t_env *env);
 
 //		exec_builtin.c		//
-int	is_builtin(t_cmd *cmd);
-int exec_builtin(t_cmd *cmd, t_env *env);
+int		is_builtin(t_cmd *cmd);
+int		exec_builtin(t_cmd *cmd, t_env *env);
 
-// MISSING STUFF IM TOO SLEEPY DO THIS LATER ADD THE STUFF PAUL
+//		exec_handle_redir.c	//
+int open_redir_file(t_redir *redir);
+int handle_redirects(t_redir *redir);
+
+//		exec_safety_funct.c	//
+int 	safe_dup2(int fd, int target_fd);
+pid_t	safe_fork(void);
+int		safe_pipe(int pipe_fd[2]);
+void	safe_exit(int *wstatus, t_shell *shell);
+
+
 
 
 
