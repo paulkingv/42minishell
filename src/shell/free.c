@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 11:47:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/15 15:36:43 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/16 13:26:04 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,8 @@ void	free_redirections(t_cmd *current)
 	while (current_redir)
 	{
 		next = current_redir->next;
-		free(current_redir->file_name);
 		free(current_redir);
-		current_redir = current_redir->next;
+		current_redir = next;
 	}
 }
 

@@ -6,7 +6,7 @@
 #    By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/07/13 14:05:41 by jfox             ###   ########.fr        #
+#    Updated: 2026/07/16 13:51:28 by jfox             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,12 @@ OBJECT_DIR ?= ./object_files
 SRC_DIR = ./src
 INC_DIR = ./include
 
-SRC = main.c tokenizing.c execution.c environment.c parsing.c free.c shell.c
+SRC =	main.c \
+		tokenize/tokenizing.c \
+		execution/execution.c \
+		environment/environment.c environment/environment_utils.c \
+		parsing/parsing.c parsing/parsing_redirects.c \
+		shell/shell.c shell/free.c
 
 NAME = minishell
 OBJ = $(SRC:%.c=$(OBJECT_DIR)/%.o)
@@ -30,7 +35,7 @@ all: $(NAME) ping_make
 
 # ---------- Build objects ----------
 $(OBJECT_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJECT_DIR)
+	@mkdir -p $(dir $@)
 	@$(CC) -o $@ -c $< $(CFLAGS)
 
 # --------- Build minishell ----------

@@ -6,15 +6,13 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 14:02:16 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/15 15:33:12 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/16 11:47:13 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Here we will start working on parsing through the tokens we have been given.
-
-t_cmd	*new_cmd(void)
+static t_cmd	*new_cmd(void)
 {
 	t_cmd	*new = NULL;
 
@@ -27,7 +25,7 @@ t_cmd	*new_cmd(void)
 	return (new);
 }
 
-int	count_args(t_token *tokens)
+static int	count_args(t_token *tokens)
 {
 	t_token	*tmp = NULL;
 	int		i;
@@ -42,45 +40,7 @@ int	count_args(t_token *tokens)
 	return (i);
 }
 
-t_redir	*new_redir(char *value, t_token_type num)
-{
-	t_redir *new = NULL;
-
-	new = malloc(sizeof(t_redir));
-	if (!new)
-		return (NULL);
-	new->file_name = value;
-	new->type = num;
-	new->next = NULL;
-	return (new);
-}
-
-void	redir_add_back(t_redir **head, t_redir *new)
-{
-	t_redir	*tmp = NULL;
-
-	if (*head == NULL)
-	{
-		*head = new;
-		return ;
-	}
-	tmp = *head;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
-}
-
-void	sort_redirections(t_cmd *cmd_current, t_token **tmp)
-{
-	t_redir *new = NULL;
-
-	new = new_redir((*tmp)->next->value , (*tmp)->type);
-	redir_add_back(&cmd_current->redirections, new);
-	*tmp = (*tmp)->next;
-	// free(new);
-}
-
-void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
+static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 {
 	t_token	*tmp = NULL;
 	t_cmd	*cmd = NULL;
