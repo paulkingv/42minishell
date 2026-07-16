@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/16 15:57:37 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/16 16:27:48 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ t_token	*tokenize(char *input);
 	t_cmd	*cmd;
 	int		exit;
 }	t_shell;
+
 /*~~~~~~~~~~!!FUNCTIONS!!~~~~~~~~~~*/
 
 //		TOKENIZING.C		//
@@ -150,8 +151,8 @@ int		is_builtin(t_cmd *cmd);
 int		exec_builtin(t_cmd *cmd, t_env *env);
 
 //		exec_handle_redir.c	//
-int open_redir_file(t_redir *redir);
-int handle_redirects(t_redir *redir);
+int		open_redir_file(t_redir *redir);
+int		handle_redirects(t_redir *redir);
 
 //		exec_safety_funct.c	//
 int 	safe_dup2(int fd, int target_fd);
