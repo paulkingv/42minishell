@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environmental.c                                    :+:      :+:    :+:   */
+/*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:04:19 by jfox              #+#    #+#             */
-/*   Updated: 2026/06/27 20:36:01 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/08 17:26:44 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	unset_env(t_env **head, char *key)
 		current = current->next;
 	}
 }
-
+// ELLIOT COMMENT: env -i ./minishell to launch the project, you get an empty env var list (testing to see if we've hardcoded in certain env vars)
 // test function for testing all above environmental functions.
 void	environment_checks(char **envp)
 {

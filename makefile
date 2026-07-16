@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+         #
+#    By: pking <pking@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/07/01 13:17:27 by jfox             ###   ########.fr        #
+#    Updated: 2026/07/05 17:23:00 by pking            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,11 @@ OBJECT_DIR ?= ./object_files
 SRC_DIR = ./src
 INC_DIR = ./include
 
-SRC = main.c tokenizing.c execution.c environment.c
+SRC = 	main.c \
+		tokenize/tokenizing.c \
+		execution/execution.c \
+		execution/env_to_array.c \
+		environment/environment.c 
 
 NAME = minishell
 OBJ = $(SRC:%.c=$(OBJECT_DIR)/%.o)

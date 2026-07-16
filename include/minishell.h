@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/01 13:18:35 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/16 15:57:37 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "libft.h"
 #include <stdio.h> // printf
 #include <unistd.h> // pipes, fork, getpid, execve, dup2
-#include <sys/wait.h> // waitpid(),
+#include <sys/wait.h> // waitpid(), WIFEXITED, WEXITSTATUS
 #include <sys/types.h> // pid_t datatype,
 #include <readline/readline.h> // for readline
 #include <readline/history.h> //for readline's history (sh history)
@@ -32,10 +32,12 @@ typedef enum e_token_type
     TYPE_EOF = 0 << 0,      // 0x00000000
     WORD = 1 << 0,          // 0x00000001
     PIPE = 1 << 1,          // 0x00000010
-    REDIR_OUT = 1 << 2,     // 0x00000100
-    REDIR_IN = 1 << 3,      // 0x00001000
-    APPEND = 1 << 4,        // 0x00010000
-    HEREDOC = 1 << 5        // 0x00100000
+    REDIR_OUT = 1 << 2,     // 0x00000100	( >  )
+    REDIR_IN = 1 << 3,      // 0x00001000	( <  )
+    APPEND = 1 << 4,        // 0x00010000	( >> )
+    HEREDOC = 1 << 5        // 0x00100000	( << )
+	D_QUOTED = 1 << 6		// 0x01000000
+	S_QUOTED = 1 << 7		// 0x10000000
 }   t_token_type;
 
 typedef struct s_token
@@ -45,7 +47,7 @@ typedef struct s_token
     struct s_token  *next;
 }   t_token;
 
-/*		PARSING		*/
+/*		PARSING				*/
 // 2 Structs:
 //		CMD: Linked List of each Command, with flags. Stores REDIR struct
 // 		REDIR: Linked List of REDIR and where to direct the output. Only Used if REDIR detected.
@@ -60,7 +62,7 @@ typedef struct	s_cmd
 {
 	char 				**args;			// ARGV: [cmd] [flag]
 	t_redir				*redirections;	// Only used if REDIR is used
-	struct s_cmdline	*next;			// Pointer to next CMD node
+	struct s_cmd		*next;			// Pointer to next CMD node
 }	t_cmd;
 
 /*		ENVIRONMENT VARS		*/
@@ -71,13 +73,29 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+/*		SHELL					*/
+//	Contains:
+//		1) ENV LINKED LIST
+//		2) COMMANDS LINKED LIST (Post Parsing)
+//		3) EXIT CODE
+
+typedef struct s_shell
+{
+	t_env	*env;
+	t_token	*tokens;
+	t_cmd	*cmd;
+	int		exit;
+}	t_shell;
 /*~~~~~~~~~~!!FUNCTIONS!!~~~~~~~~~~*/
 
-//		TOKENIZATION.C		//
+//		TOKENIZING.C		//
 t_token *make_new_token(t_token_type type, char *input);
 t_token *tokenize(char *input);
 
-//---ENVIRONMENTAL---//
+//		free_tokens.c		//
+void 	free_tokens(t_token *head);
+
+//		ENVIRONMENT.C		//
 void	environment_checks(char **envp); //test function
 t_env	*new_env(char *key, char *value);
 t_env	*init_env(char **envp);
@@ -88,8 +106,34 @@ void	set_env(t_env *s_env, char *key, char *value);
 void	env_add_back(t_env **head, t_env *new);
 void	unset_env(t_env **head, char *key);
 
-//		EXECUTION.C		//
-void exe_cmdline(t_cmd cmdline);
-// everything else is static in here
+//		EXECUTION.C			//
+void 	exe_cmdline(t_shell *shell);
+
+//		env_to_array.c		//
+char	**env_to_array(t_env *env);
+
+//		exec_close_pipe.c	//
+void	exec_close_pipe(int pipe_fd[2]);
+
+//		env_to_array.c		//
+char	**env_to_array(t_env *env);
+
+//		exec_builtin.c		//
+int		is_builtin(t_cmd *cmd);
+int		exec_builtin(t_cmd *cmd, t_env *env);
+
+//		exec_handle_redir.c	//
+int open_redir_file(t_redir *redir);
+int handle_redirects(t_redir *redir);
+
+//		exec_safety_funct.c	//
+int 	safe_dup2(int fd, int target_fd);
+pid_t	safe_fork(void);
+int		safe_pipe(int pipe_fd[2]);
+void	safe_exit(int *wstatus, t_shell *shell);
+
+
+
+
 
 #endif
