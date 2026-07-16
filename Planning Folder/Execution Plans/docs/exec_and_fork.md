@@ -15,3 +15,9 @@ Here is the prototype of **execv:**
 `int execv(const char *pathname, char *const argv[]);`
 Essentially, execv needs two things: where the program is located, and what arguments you want to pass to it.
 Therefore, when we call it, we need to specify the path, and then we place the whole input as argv (parameter 2).
+
+All that being said, it turns out we are using **EXECVE**, which is a variant of **execv**. 
+
+## wait WTF is the difference
+**execve** needs an environment to be provided to it to search through. Here is the prototype of **execve**:\
+` int execve(const char *path, char *const _Nullable argv[], char *const _Nullable envp[]); `

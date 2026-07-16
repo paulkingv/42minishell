@@ -3,33 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/01 14:03:33 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/16 16:00:21 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //goes thru the word until the end to find the last char
-static int find_end_word(char *input, int i)
+static int find_end_word(char *input, int i, int *word_start)
 {
-    while (input[i] && input[i] != ' ' && input[i] != '\t'
-        && input[i] != '|' && input[i] != '<' && input[i] != '>')
-        i++;
+	char quote_type;
+
+	if (input[i] == '"' || input[i] -- '\'')
+	{
+		quote_type = input[i];
+		i++;
+		word_start = i;
+		while(input[i] && input[i] != quote_type)
+			i++;
+	}
+	else
+	{
+		while (input[i] && input[i] != ' ' && input[i] != '\t'
+ 			&& input[i] != '|' && input[i] != '<' && input[i] != '>')
+			i++;
+	}
     return (i);
 }
 
-// Our Helper for get_type. Returns Enum. Single Char Checker. (!!!Other Specials Handled Later!!!)
+// Our Helper for get_type. Returns Enum. Single Char Checker.
 static t_token_type get_type(char *value, int i)
 {
     if (value[i] == '|')
         return (PIPE);
     if (value[i] == '<')
-        return (REDIR_IN);
+    {
+		if (value[i + 1] == '<')
+			return (HEREDOC);
+		else
+			return (REDIR_IN);
+	}
     if (value[i] == '>')
-        return (REDIR_OUT);
+	{
+		if (value[i + 1] == '>')
+			return (APPEND);
+		else
+			return (REDIR_OUT);
+	}
+	if (value[i] == '"' || value[i] == '\'')
+	{
+		if (value[i] == '"')
+			return (WORD | D_QUOTED);
+		else
+			return (WORD | S_QUOTED);
+	}
     return (WORD);
 }
 
@@ -48,25 +78,6 @@ t_token *make_new_token(t_token_type type, char *value)
 }
 
 // Used to create a linked list of tokens
-t_token *tokenize(char *input)
-{
-    t_token *head;
-    t_token *tail;
-    t_token *new;
-    int word_start;
-    int i;
-
-    new = NULL;
-    head = NULL;
-    tail = NULL;
-    word_start = 0;
-    i = 0;
-    while (input[i])
-    {
-        if (input[i] == ' ' || input[i] == '\t') // 9 - 13
-            i++;
-        else
-        {
         /*
             //First thing is we need to determine if we are looking at a:
              SPECIAL ; WORD;
@@ -75,27 +86,56 @@ t_token *tokenize(char *input)
             If !Special:
                     WORD
         */
-            word_start = i;
-            if (input[i] == '|' || input[i] == '<' || input[i] == '>')
-                i++;
-            else
-                i = find_end_word(input, i);
-            new = make_new_token(get_type(input, word_start),
-                    ft_substr(input, word_start, i - word_start));
-            if (!new)
-                return (NULL);  // ! TO-DO: Free tokens list on error
-            if (!head)
-            {
-                head = new;
-                tail = new;
-            }
-            else
-            {
-                tail->next = new;
-                tail = tail->next;
-            }
-        }
-    }
-    return (head);
+t_token *tokenize(char *input)
+{
+	t_token *head;
+	t_token *tail;
+	t_token *new;
+	int word_start;
+	int i;
+
+	new = NULL;
+	head = NULL;
+	tail = NULL;
+	word_start = 0;
+	i = 0;
+	while (input[i])
+	{
+		if ((input[i] >= 9 && input[i] <= 13) || input [i] == ' ')
+		{
+			i++;
+			continue;
+		}
+		word_start = i;
+		if (input[i] == '|' || input[i] == '<' || input[i] == '>')
+		{
+			if (input[i] == '<' && input[i + 1] == '<')
+				i++;
+			if (input[i] == '>' && input[i + 1] == '>')
+				i++;
+			i++;
+		}
+		else
+			i = find_end_word(input, i, *word_start);
+		new = make_new_token(get_type(input, word_start),
+				ft_substr(input, word_start, i - word_start));
+		if (!new)
+		{
+			free_tokens(head);
+			return (NULL);
+		}
+		if (!head)
+		{
+			head = new;
+			tail = new;
+		}
+		else
+		{
+			tail->next = new;
+			tail = tail->next;
+		}
+	}
+	return (head);
 }
+
 

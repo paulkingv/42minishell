@@ -1,0 +1,40 @@
+exe_cmdline(t_cmd *cmd, t_env *env)
+│
+├─ Initialize
+│  ├─ Convert env to char **envp
+│  └─ prev_fd = -1
+│
+├─ LOOP through cmd linked list
+│  │
+│  ├─ Check if builtin (echo, cd, pwd, export, unset, exit)
+│  │  ├─ YES → Execute in-process (parent process)
+│  │  │        Return updated state (env, prev_exit_code)
+│  │  │        Continue to next cmd
+│  │  │
+│  │  └─ NO → External command
+│  │           │
+│  │           ├─ PATH resolution: search_path(argv[0], env)
+│  │           │  ├─ Found → full_path
+│  │           │  └─ Not found → exit(127) + handle pipe cleanup
+│  │           │
+│  │           ├─ Fork child
+│  │           │
+│  │           ├─ CHILD PROCESS:
+│  │           │  ├─ Set up pipes (dup2 stdin from prev_fd if exists)
+│  │           │  ├─ Set up pipes (dup2 stdout to next pipe if exists)
+│  │           │  ├─ Close file descriptors (prev_fd + pipe ends)
+│  │           │  ├─ Handle redirections (>, >>, <)
+│  │           │  └─ execve(full_path, argv, envp)
+│  │           │
+│  │           └─ PARENT PROCESS:
+│  │              ├─ Close pipe write end (child owns read end now)
+│  │              ├─ Save pipe read end as prev_fd (for next iteration)
+│  │              └─ Store child PID (if tracking multiple)
+│  │
+│  └─ Move to next cmd
+│
+├─ Wait for all children
+│  ├─ Loop: waitpid(-1, &wstatus, 0) until all children reaped
+│  └─ Track last exit code (for $?)
+│
+└─ Return (or store last exit code globally)

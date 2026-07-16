@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:04:19 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/16 11:43:57 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/08 17:26:44 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ t_env	*init_env(char **envp)
 	return (head);
 }
 
+// ELLIOT COMMENT: env -i ./minishell to launch the project, you get an empty env var list (testing to see if we've hardcoded in certain env vars)
 // 	All the possible current ENV variables when loading a stock shell.
 // 	unset_env(&s_env, "SYSTEMD_EXEC_PID");
 // 	unset_env(&s_env, "SSH_AUTH_SOCK");
