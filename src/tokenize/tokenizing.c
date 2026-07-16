@@ -6,14 +6,14 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/13 16:04:21 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/14 14:00:38 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //goes thru the word until the end to find the last char
-static int find_end_word(char *input, int i)
+static int find_end_word(char *input, int i, int *word_start)
 {
 	char quote_type;
 
@@ -21,10 +21,9 @@ static int find_end_word(char *input, int i)
 	{
 		quote_type = input[i];
 		i++;
+		word_start = i;
 		while(input[i] && input[i] != quote_type)
 			i++;
-		if (input[i] == quote_type)
-			i++; // This line is so that we encompass the entire quoted area, incl quotes
 	}
 	else
 	{
@@ -35,7 +34,7 @@ static int find_end_word(char *input, int i)
     return (i);
 }
 
-// Our Helper for get_type. Returns Enum. Single Char Checker. (!!!Other Specials Handled Later!!!)
+// Our Helper for get_type. Returns Enum. Single Char Checker.
 static t_token_type get_type(char *value, int i)
 {
     if (value[i] == '|')
@@ -54,7 +53,13 @@ static t_token_type get_type(char *value, int i)
 		else
 			return (REDIR_OUT);
 	}
-        
+	if (value[i] == '"' || value[i] == '\'')
+	{
+		if (value[i] == '"')
+			return (WORD | D_QUOTED);
+		else
+			return (WORD | S_QUOTED);
+	}
     return (WORD);
 }
 
@@ -111,7 +116,7 @@ t_token *tokenize(char *input)
 			i++;
 		}
 		else
-			i = find_end_word(input, i);
+			i = find_end_word(input, i, *word_start);
 		new = make_new_token(get_type(input, word_start),
 				ft_substr(input, word_start, i - word_start));
 		if (!new)

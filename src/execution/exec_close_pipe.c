@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_tokens.c                                      :+:      :+:    :+:   */
+/*   exec_close_pipe.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/11 21:20:20 by pking             #+#    #+#             */
-/*   Updated: 2026/07/16 02:57:25 by pking            ###   ########.fr       */
+/*   Created: 2026/07/16 02:12:32 by pking             #+#    #+#             */
+/*   Updated: 2026/07/16 02:57:09 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_tokens(t_token *head)
+void exec_close_pipe(int pipe_fd[2])
 {
-	t_token tmp;
-
-	while (head)
-	{
-		tmp = head->next;
-		free(head->value);
-		free(head);
-		head = tmp;
-	}
+	if (pipe_fd[0] != -1)
+		close(pipe_fd[0]);
+	if (pipe_fd[1] != -1)
+		close(pipe_fd[1]);
 }
