@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/07/16 02:57:23 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/17 11:59:10 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,22 @@ int	is_builtin(t_cmd *cmd)
 }
 
 // NOT FINISHED, NEEDS MATT TO DO THE BUILTINS
-int exec_builtin(t_cmd *cmd, t_env *env)
-{
-	int status;
-	if (!strcmp(cmd->args[0], "echo"))
-		status = ft_echo()
-	else if (!strcmp(cmd->args[0], "cd"))
-		status = ft_cd()
-	else if (!strcmp(cmd->args[0], "pwd"))
-		status = ft_pwd()
-	else if (!strcmp(cmd->args[0], "export"))
-		status = ft_export()
-	else if (!strcmp(cmd->args[0], "unset"))
-		status = ft_unset()
-	else if (!strcmp(cmd->args[0], "exit"))
-		status = ft_exit()
-	else
-		return (-1);
-	return (status);
-}
+// int exec_builtin(t_cmd *cmd, t_env *env)
+// {
+// 	int status;
+// 	if (!strcmp(cmd->args[0], "echo"))
+// 		status = ft_echo();
+// 	else if (!strcmp(cmd->args[0], "cd"))
+// 		status = ft_cd();
+// 	else if (!strcmp(cmd->args[0], "pwd"))
+// 		status = ft_pwd();
+// 	else if (!strcmp(cmd->args[0], "export"))
+// 		status = ft_export();
+// 	else if (!strcmp(cmd->args[0], "unset"))
+// 		status = ft_unset();
+// 	else if (!strcmp(cmd->args[0], "exit"))
+// 		status = ft_exit();
+// 	else
+// 		return (-1);
+// 	return (status);
+// }

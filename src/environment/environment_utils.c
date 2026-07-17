@@ -6,12 +6,14 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 11:38:11 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/16 11:41:17 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/17 12:40:08 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// As with all structs, a handle to create the node for a chained list.
+// Here we also pass information so we can fill the struct while we initialize it.
 t_env	*new_env(char *key, char *value)
 {
 	t_env	*new = NULL;
@@ -25,6 +27,8 @@ t_env	*new_env(char *key, char *value)
 	return (new);
 }
 
+// A simply string compare helper to check if the current environment variable
+// is the one we are looking for, it returns a pointer to the desired variable.
 t_env	*find_env(t_env *s_env, char *key)
 {
 	t_env	*tmp;
@@ -43,6 +47,8 @@ t_env	*find_env(t_env *s_env, char *key)
 	return (NULL);
 }
 
+// Similar to above however this function returns the string of the Value at the
+// desired environment node.
 char	*get_env(t_env *s_env, char	*key)
 {
 	t_env	*tmp;

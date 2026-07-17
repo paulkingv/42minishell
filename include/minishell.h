@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/16 16:52:42 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/17 12:01:53 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "libft.h"
 #include <stdio.h> // printf
 #include <unistd.h> // pipes, fork, getpid, execve, dup2
+#include <fcntl.h> // FOR READ
 #include <sys/wait.h> // waitpid(), WIFEXITED, WEXITSTATUS
 #include <sys/types.h> // pid_t datatype,
 #include <readline/readline.h> // for readline
@@ -86,10 +87,6 @@ typedef struct s_shell
 t_shell	*shell_init(char **envp);
 char	*ft_path(t_shell *minishell);
 
-//--------TOKENIZATION---------//
-t_token	*make_new_token(t_token_type type, char *input);
-t_token	*tokenize(char *input);
-
 //---------TOKENIZING----------//
 t_token *make_new_token(t_token_type type, char *input);
 t_token *tokenize(char *input);
@@ -103,8 +100,8 @@ void	unset_env(t_env **head, char *key);
 
 //------ENVIRONMENT UTILS------//
 t_env	*new_env(char *key, char *value);
-char	*get_env(t_env *s_env, char	*key);
 t_env	*find_env(t_env *s_env, char *key);
+char	*get_env(t_env *s_env, char	*key);
 
 //-----------PARSING-----------//
 t_cmd	*parse(t_token *tokens);

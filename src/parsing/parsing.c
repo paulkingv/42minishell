@@ -6,12 +6,13 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 14:02:16 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/16 11:47:13 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/17 12:34:45 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// As per most structs, helper function to create the function and alloc memory.
 static t_cmd	*new_cmd(void)
 {
 	t_cmd	*new = NULL;
@@ -25,6 +26,9 @@ static t_cmd	*new_cmd(void)
 	return (new);
 }
 
+// Quick helper to count the number of arguments in the token struct.
+// This is used by parse to jump through the command looking for pipes,
+// This lets us break commands into seperate command structs.
 static int	count_args(t_token *tokens)
 {
 	t_token	*tmp = NULL;
@@ -40,6 +44,13 @@ static int	count_args(t_token *tokens)
 	return (i);
 }
 
+// Function needs work, much too big and complicated.
+// No error handling also, although some protections are here.
+// Here we take an empty command struct and start to fill it with either arguments
+// or Redirects.
+// We store words and other arguments in the ARGS, and Redirects in the Redirections,
+// Using the sort redirects function.
+// If we hit a pipe we break out of this function as that means the command is finished.
 static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 {
 	t_token	*tmp = NULL;
@@ -50,6 +61,8 @@ static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 	cmd = cmd_current;
 	i = 0;
 	cmd->args = ft_calloc(sizeof(char **), count + 1);
+	if (!cmd->args)
+		return (NULL);
 	while (tmp && i < count)
 	{
 		if (tmp->type == WORD)
@@ -72,6 +85,13 @@ static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 	}
 }
 
+// Function is too long.
+// No real edge case or error handling.
+// This function takes our list of tokens and starts building them into command structs.
+// It creates a head if one does not already exist (it shouldn't) and then starts to fill
+// That head by moving through the token chained list.
+// Sort tokens does the bulk of the work, it fills command structs with data.
+// This function is simply to build command structs and move through a list.
 t_cmd	*parse(t_token *tokens)
 {
 	t_cmd	*head = NULL;

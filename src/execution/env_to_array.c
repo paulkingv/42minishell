@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_to_array.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/02 21:04:29 by pking             #+#    #+#             */
-/*   Updated: 2026/07/16 16:00:07 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/17 12:17:28 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ static void	fill_array(char **array, t_env *tmp)
 }
 char	**env_to_array(t_env *env)
 {
-	char 	**array;
 	t_env	*tmp = NULL;
+	char 	**array;
 	int		list_size;
-	
+
 	list_size = 0;
 	tmp = env; // tmp is used to walk, env stays @ head
 	while (tmp)

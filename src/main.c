@@ -3,59 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/16 16:32:51 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/17 12:21:38 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void print_tokens(t_token *head)
-{
-    t_token *cur;
+// static void print_tokens(t_token *head)
+// {
+//     t_token *cur;
 
-    cur = head;
-    while (cur)
-    {
-        printf("type: %d | value: '%s'\n", cur->type, cur->value);
-        cur = cur->next;
-    }
-}
+//     cur = head;
+//     while (cur)
+//     {
+//         printf("type: %d | value: '%s'\n", cur->type, cur->value);
+//         cur = cur->next;
+//     }
+// }
 
-static void print_cmd(t_cmd *head)
-{
-	t_cmd	*cur = NULL;
-	t_redir *redir = NULL;
-	int		i;
-	int		x;
+// static void print_cmd(t_cmd *head)
+// {
+// 	t_cmd	*cur = NULL;
+// 	t_redir *redir = NULL;
+// 	int		i;
+// 	int		x;
 
-	cur = head;
-	x = 1;
-	while (cur)
-	{
-		i = 0;
-		redir = cur->redirections;
-		printf("Command %d: \n",x);
-		while (cur->args[i])
-		{
-			printf("arg[%d]: %s\n", i, cur->args[i]);
-			i++;
-			if (redir)
-			{
-				while (redir)
-				{
-					printf("redirection: %d\n", redir->type);
-					printf("File: %s\n", redir->file_name);
-					redir = redir->next;
-				}
-			}
-		}
-		x++;
-		cur = cur->next;
-	}
-}
+// 	cur = head;
+// 	x = 1;
+// 	while (cur)
+// 	{
+// 		i = 0;
+// 		redir = cur->redirections;
+// 		printf("Command %d: \n",x);
+// 		while (cur->args[i])
+// 		{
+// 			printf("arg[%d]: %s\n", i, cur->args[i]);
+// 			i++;
+// 			if (redir)
+// 			{
+// 				while (redir)
+// 				{
+// 					printf("redirection: %d\n", redir->type);
+// 					printf("File: %s\n", redir->file_name);
+// 					redir = redir->next;
+// 				}
+// 			}
+// 		}
+// 		x++;
+// 		cur = cur->next;
+// 	}
+// }
 
 int main (int argv, char **argc, char **envp) //added environment table
 {
@@ -65,9 +65,9 @@ int main (int argv, char **argc, char **envp) //added environment table
 	Return Parser arguments -> Executor
 	Return Executor result -> Shell
 	*/
-
 	t_shell	*minishell = NULL;
-	char *input;
+	char	*input;
+	int		exit;
 
 	(void)argv;
 	(void)argc;
@@ -80,23 +80,21 @@ int main (int argv, char **argc, char **envp) //added environment table
 			break;
 		if (*input) //Only add non empty lines to history
 			add_history(input);
-
-		// /* Start Processing the command here */
-		// // TOKENIZE
+		/* Start Processing the command here */
+		// TOKENIZE
 		minishell->tokens = tokenize(input);
-		// // MAKE STRUCTS PER COMMAND
-		minishell->cmdline = parse(minishell->tokens);	// TODO: FOX
-		// // EXECUTE TOKENS
-		exec_cmdline(minishell);
-		print_tokens(minishell->tokens);
-		print_cmd(minishell->cmdline);
-		// //ft_printf("%s\n", line);
-		// free(input);
-		free_tokens(&minishell->tokens);		// TODO
-		free_cmd(&minishell->cmdline);		// TODO
+		// MAKE STRUCTS PER COMMAND
+		minishell->cmdline = parse(minishell->tokens);
+		// EXECUTE TOKENS
+		exe_cmdline(minishell); // WORK REQUIRED!!!
+		// print_tokens(minishell->tokens);
+		// print_cmd(minishell->cmdline);
+		free_tokens(&minishell->tokens);
+		free_cmd(&minishell->cmdline);
+		exit = minishell->exit;
 	}
 	free_env(&minishell->env);
 	free(minishell);
 	ft_printf("exit\n");
-	return (minishell->exit);
+	return (exit);
 }

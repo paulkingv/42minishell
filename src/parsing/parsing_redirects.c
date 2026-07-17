@@ -6,12 +6,14 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 11:44:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/16 12:47:48 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/17 12:37:08 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// As with all structs, we have a helper to build it.
+// However here we can fill it at the same time and we have passed information to this function.
 static t_redir	*new_redir(char *value, t_token_type num)
 {
 	t_redir *new = NULL;
@@ -25,6 +27,8 @@ static t_redir	*new_redir(char *value, t_token_type num)
 	return (new);
 }
 
+// Very much the same as ENV_ADD_BACK. We move to the last node in the list and
+// add the new struct there.
 static void	redir_add_back(t_redir **head, t_redir *new)
 {
 	t_redir	*tmp = NULL;
@@ -40,6 +44,8 @@ static void	redir_add_back(t_redir **head, t_redir *new)
 	tmp->next = new;
 }
 
+// A simple helper to build new redirects as needed, and fill them with the info
+// passed to it by sort_tokens.
 void	sort_redirections(t_cmd *cmd_current, t_token **tmp)
 {
 	t_redir *new = NULL;

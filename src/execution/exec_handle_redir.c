@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle_redir.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 14:49:09 by pking             #+#    #+#             */
-/*   Updated: 2026/07/16 16:00:19 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/17 12:02:01 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int open_redir_file(t_redir *redir)
 	else if (redir->type == REDIR_OUT)
 		fd = open(redir->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (redir->type == APPEND)
-		fd = open(redir->file_name, O_WRONLY | O_CREAT | O_APPEND, 0644)
+		fd = open(redir->file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else if (redir->type == HEREDOC)
 		return (-1);
 	else
@@ -46,7 +46,7 @@ int handle_redirects(t_redir *redir)
 		if (redir->type == REDIR_IN)
 			safe_dup2(fd, 0);
 		if (redir->type == REDIR_OUT || redir->type == APPEND)
-			safe_dup2(fd, 1);	
+			safe_dup2(fd, 1);
 		close(fd);
 		redir = redir->next;
 	}
