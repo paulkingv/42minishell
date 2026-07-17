@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/07/17 12:15:37 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/17 16:13:36 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,14 @@ static void child_exe_cmd(int prev_fd, int pipe_fd[2], t_shell *shell)
 void exe_cmdline(t_shell *shell)
 {
 	t_cmd	*cmdline = NULL;
-	t_env	*shell_env = NULL;
+	//t_env	*shell_env = NULL;
 	int		prev_fd;
 	int		pipe_fd[2];
 	int		exit;
 	pid_t 	pid;
 
 	cmdline = shell->cmdline;
-	shell_env = shell->env;
+	//shell_env = shell->env;
 	prev_fd = -1;		// Prev FD exists out of Bounds (aka not registered)
 	while (cmdline)
 	{

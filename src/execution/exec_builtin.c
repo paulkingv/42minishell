@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/07/17 11:59:10 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/17 16:12:28 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ int	is_builtin(t_cmd *cmd)
 {
 	if (!cmd || !cmd->args[0])
 		return (0);
-	if (!strcmp(cmd->args[0], "echo"))
+	if (!ft_strncmp(cmd->args[0], "echo", 4))
 		return (1);
-	else if (!strcmp(cmd->args[0], "cd"))
+	else if (!ft_strncmp(cmd->args[0], "cd", 2))
 		return (1);
-	else if (!strcmp(cmd->args[0], "pwd"))
+	else if (!ft_strncmp(cmd->args[0], "pwd", 3))
 		return (1);
-	else if (!strcmp(cmd->args[0], "export"))
+	else if (!ft_strncmp(cmd->args[0], "export", 6))
 		return (1);
-	else if (!strcmp(cmd->args[0], "unset"))
+	else if (!ft_strncmp(cmd->args[0], "unset", 5))
 		return (1);
-	else if (!strcmp(cmd->args[0], "exit"))
+	else if (!ft_strncmp(cmd->args[0], "exit", 4))
 		return (1);
 	else
 		return (0);

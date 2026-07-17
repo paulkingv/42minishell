@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 14:02:16 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/17 12:34:45 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/17 16:15:13 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 	i = 0;
 	cmd->args = ft_calloc(sizeof(char **), count + 1);
 	if (!cmd->args)
-		return (NULL);
+		return ;
 	while (tmp && i < count)
 	{
 		if (tmp->type == WORD)
