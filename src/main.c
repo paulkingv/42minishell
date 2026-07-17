@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/17 17:07:45 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/17 17:28:35 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@
 //         cur = cur->next;
 //     }
 // }
-static void print_shell_envi(t_env *head)
-{
-	t_env *tmp;
+// static void print_shell_envi(t_env *head)
+// {
+// 	t_env *tmp;
 
-	tmp = head;
-	while (head)
-	{
-		ft_printf("Key: %d\n", tmp->key);
-		ft_printf("Value: %d\n", tmp->value);
-		tmp = tmp->next;
-	}
-}
+// 	tmp = head;
+// 	while (head)
+// 	{
+// 		ft_printf("Key: %d\n", tmp->key);
+// 		ft_printf("Value: %d\n", tmp->value);
+// 		tmp = tmp->next;
+// 	}
+// }
 
 static void print_cmd(t_cmd *head)
 {
@@ -98,7 +98,7 @@ int main (int argv, char **argc, char **envp) //added environment table
 		// MAKE STRUCTS PER COMMAND
 		minishell->cmdline = parse(minishell->tokens);
 		// EXECUTE TOKENS
-		print_shell_envi(minishell->env);
+		//print_shell_envi(minishell->env);
 		exe_cmdline(minishell);
 		// print_tokens(minishell->tokens);
 		print_cmd(minishell->cmdline);
