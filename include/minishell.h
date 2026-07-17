@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/17 12:01:53 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/17 16:47:46 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ t_token *tokenize(char *input);
 
 //----------ENVIRONMENT--------//
 t_env	*init_env(char **envp);
-t_env	*edit_env(t_env *s_env, char *key, char *new);
+t_env	*edit_env(t_env *s_env, char *key, char *new_node);
 void	set_env(t_env **s_env, char *key, char *value);
-void	env_add_back(t_env **head, t_env *new);
+void	env_add_back(t_env **head, t_env *new_node);
 void	unset_env(t_env **head, char *key);
 
 //------ENVIRONMENT UTILS------//
