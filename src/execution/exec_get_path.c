@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 00:51:05 by pking             #+#    #+#             */
-/*   Updated: 2026/07/20 15:28:48 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/20 16:09:42 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,10 @@ static char *split_and_try_access(char *path_value, char *cmd)
 				free(paths);
 				return (path_cmd);
 			}
+			free(path_cmd);
 			i++;
 	}
+	free_array(paths);
 	return (NULL);
 }
 

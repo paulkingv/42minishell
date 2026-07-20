@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/19 22:49:00 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/20 16:10:56 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,8 @@ char *exec_get_valid_path(t_shell *shell, char *cmd);
 //-----------FREEING-----------//
 void	free_tokens(t_token **tokens);
 void	free_env(t_env **s_env);
+void	free_redirections(t_cmd *current);
 void	free_cmd(t_cmd **cmdline);
+void	free_array(char **array);
 
 #endif
