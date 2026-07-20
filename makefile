@@ -6,7 +6,7 @@
 #    By: pking <pking@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/07/19 22:45:55 by pking            ###   ########.fr        #
+#    Updated: 2026/07/20 15:13:53 by pking            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ NAME = minishell
 OBJ = $(SRC:%.c=$(OBJECT_DIR)/%.o)
 
 CC = cc
-CFLAGS += -Wall -Wextra -Werror -g -I$(INC_DIR) -MMD -MP
+CFLAGS += -Wall -Wextra -Werror -g -I$(INC_DIR) -MMD -MP 
 
 TOOLS = libft.a
 

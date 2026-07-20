@@ -6,14 +6,11 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 00:51:05 by pking             #+#    #+#             */
-/*   Updated: 2026/07/20 13:53:36 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/20 15:28:48 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-	//if strchr(arg[0], '/') If it finds this in args[0] it is a exact path, otherwise exec the lines below
-	// //split PATH var by :, use the acess(path you did with strjoin, F_OK) then acess(path, X_OK) [find ok exec ok
 
 static char *join_path_cmd (char *path_i, char*cmd)
 {
@@ -61,15 +58,15 @@ static char *find_path(t_shell *shell)
 	tmp = shell->env;
 	if (!tmp)
 		return (NULL);
-	while (tmp && (ft_strncmp(tmp->key, "PATH", 4) != 0)) //while the key inside tmp does not equal "PATH"
+	while (tmp && (ft_strncmp(tmp->key, "PATH", 5) != 0)) //while the key inside tmp does not equal "PATH"
 		tmp = tmp->next;
-	if (tmp->value)
+	if (tmp)
 		return (tmp->value);
-	else
-		return (NULL);
+	return (NULL);
 }
 
 // 2. We have the path. Lets make the split and access function
+// NOTE ⬇️ This leaks [path_cmd needs to be freed]. Free one layer above
 static char *split_and_try_access(char *path_value, char *cmd)
 {
 	char **paths;
@@ -104,8 +101,13 @@ char *exec_get_valid_path(t_shell *shell, char *cmd)// shell and argv0
 	path_value = find_path(shell);
 	if (path_value)
 	{
-		if (ft_strchr(cmd, '/') && access(cmd, X_OK))
-			return (cmd);
+		if (ft_strchr(cmd, '/'))
+		{
+			if (access(cmd, X_OK) == 0)
+				return (cmd);
+			else
+				return (NULL);
+		}
 		valid_path_cmd = split_and_try_access(path_value, cmd);
 			if (valid_path_cmd)
 				return (valid_path_cmd);
