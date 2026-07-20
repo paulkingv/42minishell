@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/07/17 17:47:11 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/19 23:16:29 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ static void child_exe_cmd(int prev_fd, int pipe_fd[2], t_shell *shell)
 	is_redir = cmdline->redirections;
 	if (prev_fd != -1) // if prev_fd is registered
 	{
-	// HOOK Up the content as the STDIN
-		safe_dup2(prev_fd, STDIN_FILENO);
+		safe_dup2(prev_fd, STDIN_FILENO);// HOOK Up the content as the STDIN
 		close(prev_fd); // unmaps the value of prev_fd (val points to no existing FD)
 	}
 	if (cmdline->next) // have to set up where we write to. Pipe FD overwrite STDOUT
@@ -52,8 +51,7 @@ static void child_exe_cmd(int prev_fd, int pipe_fd[2], t_shell *shell)
 	if (is_redir)
 		handle_redirects(is_redir);
 	envp = env_to_array(shell->env);
-	//if strchr(arg[0], '/') If it finds this in args[0] it is a exact path, otherwise exec the lines below
-	// //split PATH var by :, use the acess(path you did with strjoin, F_OK) then acess(path, X_OK) [find ok exec ok]
+	exec_get_valid_path(shell, cmdline->args[0]);
 	execve(cmdline->args[0], cmdline->args, envp);
 	perror("execve error in child");
 	exit(1);

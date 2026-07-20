@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/17 16:47:46 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/19 22:49:00 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,9 @@ int 	safe_dup2(int fd, int target_fd);
 pid_t	safe_fork(void);
 int		safe_pipe(int pipe_fd[2]);
 void	safe_exit(int *wstatus, t_shell *shell);
+
+//-----exec_get_path.c----------//
+char *exec_get_valid_path(t_shell *shell, char *cmd);
 
 //-----------FREEING-----------//
 void	free_tokens(t_token **tokens);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+         #
+#    By: pking <pking@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/07/16 16:51:59 by jfox             ###   ########.fr        #
+#    Updated: 2026/07/19 22:45:55 by pking            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC =	main.c \
 		execution/builtin.c execution/env_to_array.c execution/exec_builtin.c \
 		execution/exec_close_pipe.c execution/exec_handle_redir.c \
 		execution/exec_safety_funct.c execution/execution.c \
+		execution/exec_get_path.c \
 		environment/environment.c environment/environment_utils.c \
 		parsing/parsing.c parsing/parsing_redirects.c \
 		shell/shell.c shell/free.c
