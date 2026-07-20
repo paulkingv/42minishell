@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/17 12:21:38 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/20 14:51:39 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int main (int argv, char **argc, char **envp) //added environment table
 	*/
 	t_shell	*minishell = NULL;
 	char	*input;
-	int		exit;
+	int		sig_exit;
 
 	(void)argv;
 	(void)argc;
@@ -91,10 +91,10 @@ int main (int argv, char **argc, char **envp) //added environment table
 		// print_cmd(minishell->cmdline);
 		free_tokens(&minishell->tokens);
 		free_cmd(&minishell->cmdline);
-		exit = minishell->exit;
 	}
+	sig_exit = minishell->exit;
 	free_env(&minishell->env);
 	free(minishell);
 	ft_printf("exit\n");
-	return (exit);
+	return (sig_exit);
 }

@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/07/20 12:42:26 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/20 15:56:04 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,27 @@ int	is_builtin(t_cmd *cmd)
 }
 
 //NOT FINISHED, NEEDS MATT TO DO THE BUILTINS
-int exec_builtin(t_cmd *cmd, t_env *env)
+void	exec_builtin(t_shell *shell, t_cmd *cmd)
 {
-	int status;
-	if (!strcmp(cmd->args[0], "echo"))
-		status = ft_echo();
-	else if (!strcmp(cmd->args[0], "cd"))
-		status = ft_cd();
-	else if (!strcmp(cmd->args[0], "pwd"))
-		status = ft_pwd();
-	else if (!strcmp(cmd->args[0], "export"))
-		status = ft_export();
-	else if (!strcmp(cmd->args[0], "unset"))
-		status = ft_unset();
-	else if (!strcmp(cmd->args[0], "env"))
-		status = ft_env();
-	else if (!strcmp(cmd->args[0], "exit"))
-		status = ft_exit();
-	else
-		return (-1);
-	return (status);
+	t_shell	*tmp = NULL;
+	t_cmd	*tmp_cmd = NULL;
+
+	tmp = shell;
+	tmp_cmd = cmd;
+	// if (!strcmp(shell->cmdline->args[0], "echo"))
+	// 	ft_echo(tmp);
+	// else if (!strcmp(shell->cmdline->args[0], "cd"))
+	// 	ft_cd(tmp);
+	// else if (!strcmp(shell->cmdline->args[0], "pwd"))
+	// 	ft_pwd(tmp);
+	// else
+	if (!strcmp(shell->cmdline->args[0], "export"))
+		ft_export(tmp, tmp_cmd);
+	else if (!strcmp(shell->cmdline->args[0], "unset"))
+		ft_unset(tmp, tmp_cmd);
+	else if (!strcmp(shell->cmdline->args[0], "env"))
+		ft_env(tmp);
+	// else if (!strcmp(shell->cmdline->args[0], "exit"))
+	// 	ft_exit(tmp);
+	return ;
 }

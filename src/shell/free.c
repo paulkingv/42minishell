@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 11:47:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/16 13:26:04 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/20 16:36:57 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	free_env(t_env **s_env)
 	}
 }
 
-void	free_redirections(t_cmd *current)
+static void	free_redirections(t_cmd *current)
 {
 	t_redir	*current_redir = NULL;
 	t_redir	*next = NULL;
@@ -81,4 +81,19 @@ void	free_cmd(t_cmd **cmdline)
 		free(current);
 		current = next;
 	}
+}
+
+void	free_array(char **array)
+{
+	int i;
+
+	i = 0;
+	if (!array)
+		return ;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
 }

@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/20 12:43:56 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/20 16:37:07 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,9 @@ t_cmd	*parse(t_token *tokens);
 // static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 
 //-----------BUILT-IN----------//
+void	ft_env(t_shell *shell);
+void	ft_unset(t_shell *shell, t_cmd *cmd);
+void	ft_export(t_shell *shell, t_cmd *cmd);
 
 //------PARSING_REDIRECTS------//
 void	sort_redirections(t_cmd *cmd_current, t_token **tmp);
@@ -130,7 +133,7 @@ char	**env_to_array(t_env *env);
 
 //--------exec_builtin.c-------//
 int		is_builtin(t_cmd *cmd);
-int		exec_builtin(t_cmd *cmd, t_env *env);
+void	exec_builtin(t_shell *shell, t_cmd *cmd);
 
 //-----exec_handle_redir.c-----//
 int open_redir_file(t_redir *redir);
@@ -146,5 +149,7 @@ void	safe_exit(int *wstatus, t_shell *shell);
 void	free_tokens(t_token **tokens);
 void	free_env(t_env **s_env);
 void	free_cmd(t_cmd **cmdline);
+void	free_array(char **array);
+// static void	free_redirections(t_cmd *current)
 
 #endif
