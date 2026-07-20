@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 11:47:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/20 16:06:26 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/20 16:14:03 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	free_array(char **array)
 	while (array[i])
 	{
 		free(array[i]);
-		i++:
+		i++;
 	}
 	free(array);
 }
