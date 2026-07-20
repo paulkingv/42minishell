@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/07/17 12:15:37 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/20 12:43:07 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,12 @@ void exe_cmdline(t_shell *shell)
 	prev_fd = -1;		// Prev FD exists out of Bounds (aka not registered)
 	while (cmdline)
 	{
-		// if (is_builtin(cmdline))
-		// {
-		// 	exit = exec_builtin(cmdline, shell_env); // idk how to do this w shell struct
-		// 	cmdline = cmdline->next;
-		// 	continue; // this keyword resets the while(cmd) loop from the top
-		// }
+		if (is_builtin(cmdline))
+		{
+			exit = exec_builtin(cmdline, shell_env); // idk how to do this w shell struct
+			cmdline = cmdline->next;
+			continue; // this keyword resets the while(cmd) loop from the top
+		}
 		if (cmdline->next)
 			safe_pipe(pipe_fd); // error handling pipe improved function
 		pid = safe_fork(); // error handling fork improved function

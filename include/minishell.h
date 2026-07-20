@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/17 12:01:53 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/20 12:43:56 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ t_cmd	*parse(t_token *tokens);
 // static t_cmd	*new_cmd(void);
 // static int	count_args(t_token *tokens);
 // static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
+
+//-----------BUILT-IN----------//
 
 //------PARSING_REDIRECTS------//
 void	sort_redirections(t_cmd *cmd_current, t_token **tmp);

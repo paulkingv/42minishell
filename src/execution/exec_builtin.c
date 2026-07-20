@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/07/17 12:48:59 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/20 12:42:26 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	is_builtin(t_cmd *cmd)
 	else if (!strcmp(cmd->args[0], "export"))
 		return (1);
 	else if (!strcmp(cmd->args[0], "unset"))
+		return (1);
+	else if (!strcmp(cmd->args[0], "env"))
 		return (1);
 	else if (!strcmp(cmd->args[0], "exit"))
 		return (1);
@@ -46,6 +48,8 @@ int exec_builtin(t_cmd *cmd, t_env *env)
 		status = ft_export();
 	else if (!strcmp(cmd->args[0], "unset"))
 		status = ft_unset();
+	else if (!strcmp(cmd->args[0], "env"))
+		status = ft_env();
 	else if (!strcmp(cmd->args[0], "exit"))
 		status = ft_exit();
 	else
