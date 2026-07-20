@@ -1,5 +1,4 @@
-../object_files/ft_putnbr_fd.o: \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json \
-  src/ft_putnbr_fd.c ../include/../include/libft.h
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json:
+../object_files/ft_putnbr_fd.o: src/ft_putnbr_fd.c \
+  ../include/../include/libft.h
+
 ../include/../include/libft.h:

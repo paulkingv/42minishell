@@ -1,5 +1,4 @@
-../object_files/ft_strdup.o: \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json \
-  src/ft_strdup.c ../include/../include/libft.h
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json:
+../object_files/ft_strdup.o: src/ft_strdup.c \
+  ../include/../include/libft.h
+
 ../include/../include/libft.h:

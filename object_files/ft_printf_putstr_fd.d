@@ -1,5 +1,4 @@
-../object_files/ft_printf_putstr_fd.o: \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json \
-  src/ft_printf_putstr_fd.c ../include/../include/libft.h
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json:
+../object_files/ft_printf_putstr_fd.o: src/ft_printf_putstr_fd.c \
+  ../include/../include/libft.h
+
 ../include/../include/libft.h:

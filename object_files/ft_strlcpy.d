@@ -1,5 +1,4 @@
-../object_files/ft_strlcpy.o: \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json \
-  src/ft_strlcpy.c ../include/../include/libft.h
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json:
+../object_files/ft_strlcpy.o: src/ft_strlcpy.c \
+  ../include/../include/libft.h
+
 ../include/../include/libft.h:

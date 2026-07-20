@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/07/19 23:16:29 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/20 14:16:32 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void child_exe_cmd(int prev_fd, int pipe_fd[2], t_shell *shell)
 {
 	t_cmd	*cmdline = NULL;
 	t_redir	*is_redir = NULL;
+	char	*valid_cmd;
 	char	**envp;
 
 	cmdline = shell->cmdline;
@@ -51,8 +52,8 @@ static void child_exe_cmd(int prev_fd, int pipe_fd[2], t_shell *shell)
 	if (is_redir)
 		handle_redirects(is_redir);
 	envp = env_to_array(shell->env);
-	exec_get_valid_path(shell, cmdline->args[0]);
-	execve(cmdline->args[0], cmdline->args, envp);
+	valid_cmd = exec_get_valid_path(shell, cmdline->args[0]);
+	execve(valid_cmd, cmdline->args, envp);
 	perror("execve error in child");
 	exit(1);
 }
