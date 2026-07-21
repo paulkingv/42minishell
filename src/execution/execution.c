@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/07/21 13:55:43 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/20 15:45:30 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,34 +61,33 @@ static void child_exe_cmd(int prev_fd, int pipe_fd[2], t_shell *shell)
 // Added tmp structs to not touch shell. This function needs allot of work as it's too big.
 void exe_cmdline(t_shell *shell)
 {
-	t_cmd	*cmdline = NULL;
-	//t_env	*shell_env = NULL;
+	t_shell	*tmp = NULL;
+	t_cmd	*tmp_cmd = NULL;
 	int		prev_fd;
 	int		pipe_fd[2];
-	int		exit;
 	pid_t 	pid;
 
-	cmdline = shell->cmdline;
-	//shell_env = shell->env;
+	tmp = shell;
+	tmp_cmd = shell->cmdline;
 	prev_fd = -1;		// Prev FD exists out of Bounds (aka not registered)
-	while (cmdline)
+	while (tmp_cmd)
 	{
-		// if (is_builtin(cmdline))
-		// {
-		// 	exit = exec_builtin(cmdline, shell_env); // idk how to do this w shell struct
-		// 	cmdline = cmdline->next;
-		// 	continue; // this keyword resets the while(cmd) loop from the top
-		// }
-		pipe_fd[0] = -1;
+		if (is_builtin(tmp_cmd))
+		{
+			exec_builtin(shell, tmp_cmd);
+			tmp_cmd = tmp_cmd->next;
+			continue; // this keyword resets the while(cmd) loop from the top
+		}
+    pipe_fd[0] = -1;
 		pipe_fd[1] = -1;
 		if (cmdline->next)
-			safe_pipe(pipe_fd); // error handling pipe improved function
+				safe_pipe(pipe_fd); // error handling pipe improved function
 		pid = safe_fork(); // error handling fork improved function
 		if (pid == 0)
 			child_exe_cmd(prev_fd, pipe_fd, shell);
 		prev_fd = parent_cleanup_exe_cmd(prev_fd, pipe_fd, shell, cmdline);
 		cmdline = cmdline->next;
 	}
-	while (waitpid(-1, &exit, 0) > 0) // Special waiting line (Need 2 research)
-		safe_exit(&exit, shell);
+	while (waitpid(-1, &shell->exit, 0) > 0) // Special waiting line (Need 2 research)
+		safe_exit(&shell->exit, shell);
 }

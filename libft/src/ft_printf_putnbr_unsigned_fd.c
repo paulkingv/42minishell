@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 18:02:24 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/21 13:05:31 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/21 13:05:51 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static unsigned int	get_length(unsigned int n)
 	unsigned int	digit;
 
 	digit = 0;
-	// if (n < 0)
-	// 	n = n * -1;
 	if (n == 0)
 		return (1);
 	while (n > 0)
