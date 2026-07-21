@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_pvoid.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:24:17 by jfox              #+#    #+#             */
-/*   Updated: 2026/06/24 11:04:02 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/21 13:04:47 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static int	get_length(unsigned long n, int bs)
 	int	digit;
 
 	digit = 0;
-	if (n < 0)
-		n = n * -1;
+	// if (n < 0)
+	// 	n = n * -1;
 	if (n == 0)
 		return (1);
 	while (n > 0)

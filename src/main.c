@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/17 17:28:35 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/21 13:57:13 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,6 @@ static void print_cmd(t_cmd *head)
 
 int main (int argv, char **argc, char **envp) //added environment table
 {
-	/* Kick off the Shell
-	Wait for arguments to come in, in a loop
-	Take arguments -> Tokenizer->Parser
-	Return Parser arguments -> Executor
-	Return Executor result -> Shell
-	*/
 	t_shell	*minishell = NULL;
 	char	*input;
 	int		exit;
@@ -111,3 +105,5 @@ int main (int argv, char **argc, char **envp) //added environment table
 	ft_printf("exit\n");
 	return (exit);
 }
+
+

@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/07/21 01:27:23 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/21 13:55:43 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 // Added tmp struct to not touch shell.
 static int parent_cleanup_exe_cmd(int prev_fd, int pipe_fd[2], t_shell *shell, t_cmd *cmdline)
 {
+	(void) shell;
 	if (prev_fd != -1)
 		close(prev_fd);
 	if (cmdline->next)
@@ -50,6 +51,8 @@ static void child_exe_cmd(int prev_fd, int pipe_fd[2], t_shell *shell)
 		handle_redirects(is_redir);
 	envp = env_to_array(shell->env);
 	valid_cmd = exec_get_valid_path(shell, cmdline->args[0]);
+	if (valid_cmd == NULL && write(2, "msh: command not found\n", 23))
+		exit(127);
 	execve(valid_cmd, cmdline->args, envp);
 	perror("execve error in child");
 	exit(1);
