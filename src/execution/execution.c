@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/07/20 15:45:30 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/21 16:08:16 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,15 @@ void exe_cmdline(t_shell *shell)
 			tmp_cmd = tmp_cmd->next;
 			continue; // this keyword resets the while(cmd) loop from the top
 		}
-    pipe_fd[0] = -1;
+		pipe_fd[0] = -1;
 		pipe_fd[1] = -1;
-		if (cmdline->next)
+		if (tmp_cmd->next)
 				safe_pipe(pipe_fd); // error handling pipe improved function
 		pid = safe_fork(); // error handling fork improved function
 		if (pid == 0)
 			child_exe_cmd(prev_fd, pipe_fd, shell);
-		prev_fd = parent_cleanup_exe_cmd(prev_fd, pipe_fd, shell, cmdline);
-		cmdline = cmdline->next;
+		prev_fd = parent_cleanup_exe_cmd(prev_fd, pipe_fd, shell, tmp_cmd);
+		tmp_cmd = tmp_cmd->next;
 	}
 	while (waitpid(-1, &shell->exit, 0) > 0) // Special waiting line (Need 2 research)
 		safe_exit(&shell->exit, shell);

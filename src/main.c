@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/21 14:02:19 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/21 16:06:29 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,38 +38,38 @@
 		// print_tokens(minishell->tokens);
 		// print_cmd(minishell->cmdline);
 
-static void print_cmd(t_cmd *head)
-{
-	t_cmd	*cur = NULL;
-	t_redir *redir = NULL;
-	int		i;
-	int		x;
+// static void print_cmd(t_cmd *head)
+// {
+// 	t_cmd	*cur = NULL;
+// 	t_redir *redir = NULL;
+// 	int		i;
+// 	int		x;
 
-	cur = head;
-	x = 1;
-	while (cur)
-	{
-		i = 0;
-		redir = cur->redirections;
-		printf("Command %d: \n",x);
-		while (cur->args[i])
-		{
-			printf("arg[%d]: %s\n", i, cur->args[i]);
-			i++;
-			if (redir)
-			{
-				while (redir)
-				{
-					printf("redirection: %d\n", redir->type);
-					printf("File: %s\n", redir->file_name);
-					redir = redir->next;
-				}
-			}
-		}
-		x++;
-		cur = cur->next;
-	}
-}
+// 	cur = head;
+// 	x = 1;
+// 	while (cur)
+// 	{
+// 		i = 0;
+// 		redir = cur->redirections;
+// 		printf("Command %d: \n",x);
+// 		while (cur->args[i])
+// 		{
+// 			printf("arg[%d]: %s\n", i, cur->args[i]);
+// 			i++;
+// 			if (redir)
+// 			{
+// 				while (redir)
+// 				{
+// 					printf("redirection: %d\n", redir->type);
+// 					printf("File: %s\n", redir->file_name);
+// 					redir = redir->next;
+// 				}
+// 			}
+// 		}
+// 		x++;
+// 		cur = cur->next;
+// 	}
+// }
 
 int main (int argv, char **argc, char **envp) //added environment table
 {

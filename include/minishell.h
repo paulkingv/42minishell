@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/21 15:32:09 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/21 16:08:49 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ char *exec_get_valid_path(t_shell *shell, char *cmd);
 //-----------FREEING-----------//
 void	free_tokens(t_token **tokens);
 void	free_env(t_env **s_env);
-void	free_redirections(t_cmd *current);
 void	free_cmd(t_cmd **cmdline);
 void	free_array(char **array);
 // static void	free_redirections(t_cmd *current)
