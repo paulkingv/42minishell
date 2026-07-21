@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:04:19 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/17 12:45:51 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/17 16:53:59 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// PK: Changed "new" to "new_node" (new is a keyword & was getting flagged)
+// 		[I did that in 3 functions. Now compiles w/o error. Delete this once read]
+
 // A helper for set env, that actually edits the value.
-t_env	*edit_env(t_env *s_env, char *key, char *new)
+t_env	*edit_env(t_env *s_env, char *key, char *new_node)
 {
 	t_env	*tmp;
 
@@ -22,7 +25,7 @@ t_env	*edit_env(t_env *s_env, char *key, char *new)
 	if (!tmp)
 		return(NULL);
 	free(tmp->value);
-	tmp->value = ft_strdup(new);
+	tmp->value = ft_strdup(new_node);
 	return(tmp);
 }
 
@@ -31,15 +34,15 @@ t_env	*edit_env(t_env *s_env, char *key, char *new)
 void	set_env(t_env **s_env, char *key, char *value)
 {
 	t_env	*tmp = NULL;
-	t_env	*new = NULL;
+	t_env	*new_node = NULL;
 
 	tmp = *s_env;
 	if (find_env(tmp, key))
 		edit_env(tmp, key, value);
 	else
 	{
-		new = new_env(key, value);
-		env_add_back(s_env, new);
+		new_node = new_env(key, value);
+		env_add_back(s_env, new_node);
 	}
 }
 
@@ -72,19 +75,19 @@ void	unset_env(t_env **head, char *key)
 // A simple function to add new data to a chained list.
 // We first fill head if it doesnt exist. Then subsequent calls will move to the
 // end of the chained list and place a node there.
-void	env_add_back(t_env **head, t_env *new)
+void	env_add_back(t_env **head, t_env *new_node)
 {
 	t_env	*tmp = NULL;
 
 	if (*head == NULL)
 	{
-		*head = new;
+		*head = new_node;
 		return ;
 	}
 	tmp = *head;
 	while (tmp->next)
 		tmp = tmp->next;
-	tmp->next = new;
+	tmp->next = new_node;
 }
 
 // Horrible function.

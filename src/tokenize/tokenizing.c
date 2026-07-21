@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/17 12:22:24 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/17 16:06:32 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //goes thru the word until the end to find the last char
-static int find_end_word(char *input, int i, int word_start)
+static int find_end_word(char *input, int i, int *word_start)
 {
 	char quote_type;
 
@@ -21,7 +21,7 @@ static int find_end_word(char *input, int i, int word_start)
 	{
 		quote_type = input[i];
 		i++;
-		word_start = i;
+		*word_start = i;
 		while(input[i] && input[i] != quote_type)
 			i++;
 	}
@@ -105,7 +105,7 @@ t_token *tokenize(char *input)
 			i++;
 		}
 		else
-			i = find_end_word(input, i, word_start);
+			i = find_end_word(input, i, &word_start);
 		new = make_new_token(get_type(input, word_start),
 				ft_substr(input, word_start, i - word_start));
 		if (!new)

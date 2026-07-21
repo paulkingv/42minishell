@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
 /*   Updated: 2026/07/21 15:32:09 by jfox             ###   ########.fr       */
@@ -95,9 +95,9 @@ t_token *tokenize(char *input);
 
 //----------ENVIRONMENT--------//
 t_env	*init_env(char **envp);
-t_env	*edit_env(t_env *s_env, char *key, char *new);
+t_env	*edit_env(t_env *s_env, char *key, char *new_node);
 void	set_env(t_env **s_env, char *key, char *value);
-void	env_add_back(t_env **head, t_env *new);
+void	env_add_back(t_env **head, t_env *new_node);
 void	unset_env(t_env **head, char *key);
 
 //------ENVIRONMENT UTILS------//
@@ -151,9 +151,13 @@ pid_t	safe_fork(void);
 int		safe_pipe(int pipe_fd[2]);
 void	safe_exit(int *wstatus, t_shell *shell);
 
+//-----exec_get_path.c----------//
+char *exec_get_valid_path(t_shell *shell, char *cmd);
+
 //-----------FREEING-----------//
 void	free_tokens(t_token **tokens);
 void	free_env(t_env **s_env);
+void	free_redirections(t_cmd *current);
 void	free_cmd(t_cmd **cmdline);
 void	free_array(char **array);
 // static void	free_redirections(t_cmd *current)

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
 /*   Updated: 2026/07/21 14:02:19 by jfox             ###   ########.fr       */
@@ -23,41 +23,53 @@
 //         cur = cur->next;
 //     }
 // }
-
-// static void print_cmd(t_cmd *head)
+// static void print_shell_envi(t_env *head)
 // {
-// 	t_cmd	*cur = NULL;
-// 	t_redir *redir = NULL;
-// 	int		i;
-// 	int		x;
+// 	t_env *tmp;
 
-// 	cur = head;
-// 	x = 1;
-// 	while (cur)
+// 	tmp = head;
+// 	while (head)
 // 	{
-// 		i = 0;
-// 		redir = cur->redirections;
-// 		printf("Command %d: \n",x);
-// 		while (cur->args[i])
-// 		{
-// 			printf("arg[%d]: %s\n", i, cur->args[i]);
-// 			i++;
-// 			if (redir)
-// 			{
-// 				while (redir)
-// 				{
-// 					printf("redirection: %d\n", redir->type);
-// 					printf("File: %s\n", redir->file_name);
-// 					redir = redir->next;
-// 				}
-// 			}
-// 		}
-// 		x++;
-// 		cur = cur->next;
+// 		ft_printf("Key: %d\n", tmp->key);
+// 		ft_printf("Value: %d\n", tmp->value);
+// 		tmp = tmp->next;
 // 	}
 // }
 		// print_tokens(minishell->tokens);
 		// print_cmd(minishell->cmdline);
+
+static void print_cmd(t_cmd *head)
+{
+	t_cmd	*cur = NULL;
+	t_redir *redir = NULL;
+	int		i;
+	int		x;
+
+	cur = head;
+	x = 1;
+	while (cur)
+	{
+		i = 0;
+		redir = cur->redirections;
+		printf("Command %d: \n",x);
+		while (cur->args[i])
+		{
+			printf("arg[%d]: %s\n", i, cur->args[i]);
+			i++;
+			if (redir)
+			{
+				while (redir)
+				{
+					printf("redirection: %d\n", redir->type);
+					printf("File: %s\n", redir->file_name);
+					redir = redir->next;
+				}
+			}
+		}
+		x++;
+		cur = cur->next;
+	}
+}
 
 int main (int argv, char **argc, char **envp) //added environment table
 {
@@ -70,7 +82,7 @@ int main (int argv, char **argc, char **envp) //added environment table
 	minishell = shell_init(envp);
 	while (minishell->status == 1)
 	{
-		ft_printf("%s/", ft_path(minishell));
+		//ft_printf("%s/", ft_path(minishell));
 		input = readline("minishell$ ");
 		if (!input) // Ctrl + D (End of File)
 			break;
@@ -87,3 +99,5 @@ int main (int argv, char **argc, char **envp) //added environment table
 	free(minishell);
 	return (sig_exit);
 }
+
+
