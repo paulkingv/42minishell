@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/20 16:37:07 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/21 15:32:09 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #define MINISHELL_H
 
 #include "libft.h"
+#include <linux/limits.h>
 #include <stdio.h> // printf
 #include <unistd.h> // pipes, fork, getpid, execve, dup2
 #include <fcntl.h> // FOR READ
@@ -78,6 +79,7 @@ typedef struct s_shell
 	t_env	*env;
 	t_token	*tokens;
 	t_cmd	*cmdline;
+	int		status;
 	int		exit;
 }	t_shell;
 
@@ -110,9 +112,13 @@ t_cmd	*parse(t_token *tokens);
 // static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 
 //-----------BUILT-IN----------//
+// void	ft_echo(t_shell *shell);
+void	ft_cd(t_shell *shell, t_cmd *cmd);
+void	ft_pwd();
 void	ft_env(t_shell *shell);
 void	ft_unset(t_shell *shell, t_cmd *cmd);
 void	ft_export(t_shell *shell, t_cmd *cmd);
+void	ft_exit(t_shell *shell);
 
 //------PARSING_REDIRECTS------//
 void	sort_redirections(t_cmd *cmd_current, t_token **tmp);

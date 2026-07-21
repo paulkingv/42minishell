@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 13:49:32 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/14 11:51:41 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/21 12:15:18 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_shell	*shell_init(char **envp)
 	shell->env = init_env(envp);
 	shell->tokens = tokens;
 	shell->cmdline = cmdline;
+	shell->status = 1;
 	shell->exit = 0;
 	return (shell);
 }

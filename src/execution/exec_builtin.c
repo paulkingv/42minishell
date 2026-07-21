@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/07/20 15:56:04 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/21 15:35:03 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,18 @@ void	exec_builtin(t_shell *shell, t_cmd *cmd)
 	tmp_cmd = cmd;
 	// if (!strcmp(shell->cmdline->args[0], "echo"))
 	// 	ft_echo(tmp);
-	// else if (!strcmp(shell->cmdline->args[0], "cd"))
-	// 	ft_cd(tmp);
-	// else if (!strcmp(shell->cmdline->args[0], "pwd"))
-	// 	ft_pwd(tmp);
 	// else
-	if (!strcmp(shell->cmdline->args[0], "export"))
+	if (!strcmp(shell->cmdline->args[0], "cd"))
+		ft_cd(tmp, tmp_cmd);
+	else if (!strcmp(shell->cmdline->args[0], "pwd"))
+		ft_pwd();
+	else if (!strcmp(shell->cmdline->args[0], "export"))
 		ft_export(tmp, tmp_cmd);
 	else if (!strcmp(shell->cmdline->args[0], "unset"))
 		ft_unset(tmp, tmp_cmd);
 	else if (!strcmp(shell->cmdline->args[0], "env"))
 		ft_env(tmp);
-	// else if (!strcmp(shell->cmdline->args[0], "exit"))
-	// 	ft_exit(tmp);
+	else if (!strcmp(shell->cmdline->args[0], "exit"))
+		ft_exit(tmp);
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 15:35:37 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/20 16:37:59 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/21 15:32:30 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,43 @@
 // Here we will start working on the main built in functions.
 // useful now that we have environmental table made!
 
-// // echo with option -n
-// ft_echo(t_shell *shell)
-// // cd with only a relative or absolute path
-// ft_cd(t_shell *shell)
-// // pwd with no options
-// ft_pwd(t_shell *shell)
+// echo with option -n
+// void	ft_echo(t_shell *shell)
+// {
+
+// }
+
+// cd with only a relative or absolute path
+void	ft_cd(t_shell *shell, t_cmd *cmd)
+{
+	char	*new_path;
+	char	*old_path;
+
+	old_path = get_env(shell->env, "PWD");
+	if (cmd->args[1])
+		new_path = cmd->args[1];
+	else
+		new_path = get_env(shell->env, "HOME");
+	if (!(chdir(new_path)))
+	{
+		set_env(&shell->env, "OLDPWD", old_path);
+		set_env(&shell->env, "PWD", new_path);
+	}
+	else
+		ft_printf("No such file or directory.\n");
+}
+
+// pwd with no options
+void	ft_pwd(void)
+{
+	char	cwd[PATH_MAX];
+
+	if (getcwd(cwd, sizeof(cwd)))
+		ft_printf("%s\n", cwd);
+	else
+		perror("pwd");
+}
+
 // export with no options
 void	ft_export(t_shell *shell, t_cmd *cmd)
 {
@@ -53,5 +84,11 @@ void	ft_env(t_shell *shell)
 		tmp = tmp->next;
 	}
 }
-// // exit with no options
-// ft_exit(t_shell *shell)
+
+// exit with no options
+void	ft_exit(t_shell *shell)
+{
+	shell->status = 0;
+	shell->exit = 0;
+	ft_printf("exit\n");
+}
