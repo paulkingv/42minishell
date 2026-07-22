@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 02:16:14 by pking             #+#    #+#             */
-/*   Updated: 2026/07/16 16:00:18 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/22 20:45:52 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,22 @@ int	safe_pipe(int pipe_fd[2])
 	}
 	return (0);
 }
-void safe_exit(int *wstatus, t_shell *shell)
+
+void wait_for_children(pid_t last_pid, t_shell *shell)
 {
-	if (WIFEXITED(*wstatus))
-		shell->exit = WEXITSTATUS(*wstatus);
-	if (WIFSIGNALED(*wstatus))
-		shell->exit = 128 + WTERMSIG(*wstatus);
+	pid_t	reaped_pid;
+	int		status;
+
+	reaped_pid = waitpid(-1, &status, 0);
+	while (reaped_pid > 0)
+	{
+		if (reaped_pid == last_pid)
+		{
+			if (WIFEXITED(status))
+				shell->exit = WEXITSTATUS(status);
+			if (WIFSIGNALED(status))
+				shell->exit = 128 + WTERMSIG(status);
+		}
+		reaped_pid = waitpid(-1, &status, 0);
+	}
 }
