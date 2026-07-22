@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/21 16:08:49 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/22 03:53:24 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #define MINISHELL_H
 
 #include "libft.h"
-#include <linux/limits.h>
+//#include <linux/limits.h>
 #include <stdio.h> // printf
 #include <unistd.h> // pipes, fork, getpid, execve, dup2
 #include <fcntl.h> // FOR READ
@@ -85,33 +85,53 @@ typedef struct s_shell
 
 /*~~~~~~~~~~~!!FUNCTIONS!!~~~~~~~~~~~*/
 
-//------------SHELL------------//
+//**********************************SRC/SHELL********************************//
+//------------SHELL.C------------//
 t_shell	*shell_init(char **envp);
 char	*ft_path(t_shell *minishell);
 
-//---------TOKENIZING----------//
+//-----------FREE_SHELL.C--------//
+void free_shell(t_shell *shell);
+
+//-----------free_utils.C-------------//
+void	free_tokens(t_token **tokens);
+void	free_env(t_env **s_env);
+void	free_cmd(t_cmd **cmdline);
+void	free_array(char **array);
+//static void	free_redirections(t_cmd *current);
+
+//**********************************SRC/TOKENIZE********************************//
+//--------TOKENIZING.C---------//
 t_token *make_new_token(t_token_type type, char *input);
 t_token *tokenize(char *input);
 
-//----------ENVIRONMENT--------//
+//**********************************SRC/ENVIRONMENT********************************//
+//--------ENVIRONMENT.C-------//
 t_env	*init_env(char **envp);
 t_env	*edit_env(t_env *s_env, char *key, char *new_node);
 void	set_env(t_env **s_env, char *key, char *value);
 void	env_add_back(t_env **head, t_env *new_node);
 void	unset_env(t_env **head, char *key);
 
-//------ENVIRONMENT UTILS------//
+//----environment_utils.c-----//
 t_env	*new_env(char *key, char *value);
 t_env	*find_env(t_env *s_env, char *key);
 char	*get_env(t_env *s_env, char	*key);
 
-//-----------PARSING-----------//
+//**********************************SRC/PARSING********************************//
+//-----------PARSING.C-----------//
 t_cmd	*parse(t_token *tokens);
 // static t_cmd	*new_cmd(void);
 // static int	count_args(t_token *tokens);
 // static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 
-//-----------BUILT-IN----------//
+//------parsing_redirects.c------//
+void	sort_redirections(t_cmd *cmd_current, t_token **tmp);
+// static t_redir	*new_redir(char *value, t_token_type num);
+// static void	redir_add_back(t_redir **head, t_redir *new);
+
+//**********************************SRC/BUILTINS********************************//
+//-----------BUILTIN.C-----------//
 // void	ft_echo(t_shell *shell);
 void	ft_cd(t_shell *shell, t_cmd *cmd);
 void	ft_pwd();
@@ -120,12 +140,10 @@ void	ft_unset(t_shell *shell, t_cmd *cmd);
 void	ft_export(t_shell *shell, t_cmd *cmd);
 void	ft_exit(t_shell *shell);
 
-//------PARSING_REDIRECTS------//
-void	sort_redirections(t_cmd *cmd_current, t_token **tmp);
-// static t_redir	*new_redir(char *value, t_token_type num);
-// static void	redir_add_back(t_redir **head, t_redir *new);
 
-//----------EXECUTION----------//
+
+//**********************************SRC/EXECUTION********************************//
+//--------EXECUTION.c----------//
 void 	exe_cmdline(t_shell *shell);
 
 //--------env_to_array.c-------//
@@ -139,11 +157,11 @@ char	**env_to_array(t_env *env);
 
 //--------exec_builtin.c-------//
 int		is_builtin(t_cmd *cmd);
-void	exec_builtin(t_shell *shell, t_cmd *cmd);
+int		exec_builtin(t_shell *shell, t_cmd *cmd);
 
 //-----exec_handle_redir.c-----//
-int open_redir_file(t_redir *redir);
-int handle_redirects(t_redir *redir);
+int		open_redir_file(t_redir *redir);
+int		handle_redirects(t_redir *redir);
 
 //-----exec_safety_funct.c-----//
 int 	safe_dup2(int fd, int target_fd);
@@ -152,13 +170,13 @@ int		safe_pipe(int pipe_fd[2]);
 void	safe_exit(int *wstatus, t_shell *shell);
 
 //-----exec_get_path.c----------//
-char *exec_get_valid_path(t_shell *shell, char *cmd);
+char	*exec_get_valid_path(t_shell *shell, char *cmd);
 
-//-----------FREEING-----------//
-void	free_tokens(t_token **tokens);
-void	free_env(t_env **s_env);
-void	free_cmd(t_cmd **cmdline);
-void	free_array(char **array);
-// static void	free_redirections(t_cmd *current)
+//**********************************SRC/EXECUTION/INIT**************************//
+//-----exec_init_pipefd.c-------//
+void	exec_init_pipefd(int pipe_fd[2]);
+
+
+
 
 #endif

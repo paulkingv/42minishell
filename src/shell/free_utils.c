@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 11:47:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/20 16:36:57 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/22 03:30:09 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	free_tokens(t_token **tokens)
 	t_token	*next = NULL;
 
 	current = *tokens;
+	if (!current)
+		return ;
 	while (current)
 	{
 		next = current->next;
@@ -33,6 +35,8 @@ void	free_env(t_env **s_env)
 	t_env	*next = NULL;
 
 	current = *s_env;
+	if (!current)
+		return ;
 	while (current)
 	{
 		next = current->next;
@@ -49,6 +53,8 @@ static void	free_redirections(t_cmd *current)
 	t_redir	*next = NULL;
 
 	current_redir = current->redirections;
+	if (!current_redir)
+		return ;
 	while (current_redir)
 	{
 		next = current_redir->next;
@@ -64,6 +70,8 @@ void	free_cmd(t_cmd **cmdline)
 	int		i;
 
 	current = *cmdline;
+	if (!current)
+		return ;
 	while (current)
 	{
 		i = 0;

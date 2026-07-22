@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 15:35:37 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/21 15:32:30 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/22 03:58:41 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 // }
 
 // cd with only a relative or absolute path
+
+
+// ****NOTE FROM PAUL:**** 
+// 				The functions need to access shell->exit and set the int from the exit code of the builtin
+//				Alternatively, you can return an int upwards, and we will accomodate the setting of shell->exit above
+//				I prefer option 2 because we can use exit(exec_builtin(cmd))
 void	ft_cd(t_shell *shell, t_cmd *cmd)
 {
 	char	*new_path;

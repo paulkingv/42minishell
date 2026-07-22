@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 00:51:05 by pking             #+#    #+#             */
-/*   Updated: 2026/07/20 16:19:36 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/22 03:06:47 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static char *find_path(t_shell *shell)
 }
 
 // 2. We have the path. Lets make the split and access function
-// NOTE ⬇️ This leaks [path_cmd needs to be freed]. Free one layer above
+// NOTE ⬇️ This leaks [path_cmd needs to be freed]. Free one layer above 
+// UPDATE ⬆️ THIS SHOULD BE FIXED NOW
 static char *split_and_try_access(char *path_value, char *cmd)
 {
 	char **paths;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/21 16:06:29 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/22 02:38:50 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int main (int argv, char **argc, char **envp) //added environment table
 	}
 	sig_exit = minishell->exit;
 	free_env(&minishell->env);
-	free(minishell);
+	free_shell(minishell);
 	return (sig_exit);
 }
 
