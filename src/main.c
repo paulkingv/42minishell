@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/22 21:22:25 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/23 00:13:46 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,17 @@ int main (int argv, char **argc, char **envp) //added environment table
 		if (!input) // Ctrl + D (End of File)
 			break;
 		if (*input) //Only add non empty lines to history
+		{
 			add_history(input);
-		minishell->tokens = tokenize(input);
-		minishell->cmdline = parse(minishell->tokens);
-		exe_cmdline(minishell); // WORK REQUIRED!!!
-		free_tokens(&minishell->tokens);
-		free_cmd(&minishell->cmdline);
+			minishell->tokens = tokenize(input);
+			minishell->cmdline = parse(minishell->tokens);
+			exe_cmdline(minishell);
+			free_tokens(&minishell->tokens);
+			free_cmd(&minishell->cmdline);
+		}
+	free(input);
 	}
 	sig_exit = minishell->exit;
-	free_env(&minishell->env);
 	free_shell(minishell);
 	return (sig_exit);
 }

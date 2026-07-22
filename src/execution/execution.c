@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/07/22 21:09:38 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/23 00:13:44 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ static void is_prevfd_registered(int prev_fd)
 }
 
 // Helper to free our array on close
-static void valid_cmd_null_cleanup(t_cmd *cmdline, char **envp)
+static void invalid_cmd_cleanup(t_shell *shell, t_cmd *cmdline, char **envp)
 {
 	write(2, "minishell: ", 11);
 	if(cmdline && cmdline->args && cmdline->args[0])
 		write(2, cmdline->args[0], ft_strlen(cmdline->args[0]));
 	write(2, ": command not found\n", 20);
 	free_array(envp);
+	free_shell(shell);
 	exit(127);
 }
 
@@ -64,18 +65,19 @@ static void child_exe_cmd(int prev_fd, int pipe_fd[2], t_shell *shell, t_cmd *tm
 	if (tmp_cmd->redirections)
 		handle_redirects(tmp_cmd->redirections);
 	if (!tmp_cmd->args || !tmp_cmd->args[0])
-		exit(0);
+		exit(free_shell(shell));
 	if (is_builtin(tmp_cmd))
-		exit(exec_builtin(shell, tmp_cmd));
+		exec_child_builtin(shell, tmp_cmd);
 	envp = env_to_array(shell->env);
 	valid_cmd = exec_get_valid_path(shell, tmp_cmd->args[0]);
 	if (valid_cmd == NULL)
-		valid_cmd_null_cleanup(tmp_cmd, envp);
+		invalid_cmd_cleanup(shell, tmp_cmd, envp);
 	execve(valid_cmd, tmp_cmd->args, envp);
 	perror("execve error in child");
-	free_array(envp);
 	free(valid_cmd);
-	exit(1);
+	free_array(envp);
+	free_shell(shell);
+	exit(126);
 }
 // The meat function. This is called in order to execute the line that has been parsed.
 void exe_cmdline(t_shell *shell)

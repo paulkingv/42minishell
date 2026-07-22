@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 11:47:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/22 03:30:09 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/23 00:13:45 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	free_tokens(t_token **tokens)
 		free(current);
 		current = next;
 	}
+	*tokens = NULL;
 }
 
 void	free_env(t_env **s_env)
@@ -45,6 +46,7 @@ void	free_env(t_env **s_env)
 		free(current);
 		current = next;
 	}
+	*s_env = NULL;
 }
 
 static void	free_redirections(t_cmd *current)
@@ -61,6 +63,7 @@ static void	free_redirections(t_cmd *current)
 		free(current_redir);
 		current_redir = next;
 	}
+	current->redirections = NULL;
 }
 
 void	free_cmd(t_cmd **cmdline)
@@ -89,6 +92,7 @@ void	free_cmd(t_cmd **cmdline)
 		free(current);
 		current = next;
 	}
+	*cmdline = NULL;
 }
 
 void	free_array(char **array)

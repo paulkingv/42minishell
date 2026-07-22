@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/22 21:17:55 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/23 00:13:50 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_shell	*shell_init(char **envp);
 char	*ft_path(t_shell *minishell);
 
 //-----------FREE_SHELL.C--------//
-void free_shell(t_shell *shell);
+int free_shell(t_shell *shell);
 
 //-----------free_utils.C-------------//
 void	free_tokens(t_token **tokens);
@@ -133,12 +133,12 @@ void	sort_redirections(t_cmd *cmd_current, t_token **tmp);
 //**********************************SRC/BUILTINS********************************//
 //-----------BUILTIN.C-----------//
 // void	ft_echo(t_shell *shell);
-void	ft_cd(t_shell *shell, t_cmd *cmd);
-void	ft_pwd();
-void	ft_env(t_shell *shell);
-void	ft_unset(t_shell *shell, t_cmd *cmd);
-void	ft_export(t_shell *shell, t_cmd *cmd);
-void	ft_exit(t_shell *shell);
+int		ft_cd(t_shell *shell, t_cmd *cmd);
+int		ft_pwd();
+int		ft_env(t_shell *shell);
+int		ft_unset(t_shell *shell, t_cmd *cmd);
+int		ft_export(t_shell *shell, t_cmd *cmd);
+int		ft_exit(t_shell *shell);
 
 
 
@@ -155,10 +155,6 @@ void	exec_close_pipe(int pipe_fd[2]);
 //--------env_to_array.c-------//
 char	**env_to_array(t_env *env);
 
-//--------exec_builtin.c-------//
-int		is_builtin(t_cmd *cmd);
-int		exec_builtin(t_shell *shell, t_cmd *cmd);
-
 //-----exec_handle_redir.c-----//
 int		open_redir_file(t_redir *redir);
 int		handle_redirects(t_redir *redir);
@@ -173,8 +169,16 @@ void 	wait_for_children(pid_t last_pid, t_shell *shell);
 char	*exec_get_valid_path(t_shell *shell, char *cmd);
 
 //**********************************SRC/EXECUTION/INIT**************************//
-//-----exec_init_pipefd.c-------//
+//-----EXEC_INIT_PIPEFD.C-------//
 void	exec_init_pipefd(int pipe_fd[2]);
+
+//**********************************SRC/EXECUTION/EXEC_BUILTIN******************//
+//--------EXEC_BUILTIN.C-------//
+int		is_builtin(t_cmd *cmd);
+int		exec_builtin(t_shell *shell, t_cmd *cmd);
+
+//--------exec_child_builtin.c--//
+void exec_child_builtin(t_shell *shell, t_cmd *cmd);
 
 
 

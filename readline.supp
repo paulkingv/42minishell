@@ -1,15 +1,16 @@
 {
-   readline
+   ignore_readline
    Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect,possible
    ...
    fun:readline
-   ...
 }
 
 {
-   readline
+   ignore_add_history
    Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect,possible
    ...
    fun:add_history
-   ...
 }
+

@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_shell.c                                       :+:      :+:    :+:   */
+/*   exec_child_builtin.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/22 02:21:00 by pking             #+#    #+#             */
-/*   Updated: 2026/07/23 00:13:48 by pking            ###   ########.fr       */
+/*   Created: 2026/07/22 23:45:27 by pking             #+#    #+#             */
+/*   Updated: 2026/07/23 00:13:39 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int free_shell(t_shell *shell)
+void exec_child_builtin(t_shell *shell, t_cmd *cmd)
 {
-	if (!shell)
-		return (0);
-	if(shell->cmdline)
-	{
-		free_cmd(&shell->cmdline);
-		shell->cmdline = NULL;
-	}
-	if(shell->tokens)
-	{
-		free_tokens(&shell->tokens);
-		shell->tokens = NULL;
-	}
-	if(shell->env)
-	{
-		free_env(&shell->env);
-		shell->env = NULL;
-	}
-	free(shell);
-	return 0;
+	int status;
+
+	status = exec_builtin(shell, cmd);
+	free_shell(shell);
+	exit(status);
 }
