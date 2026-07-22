@@ -6,11 +6,11 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 03:20:34 by pking             #+#    #+#             */
-/*   Updated: 2026/07/22 03:23:17 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/22 21:17:35 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell"
+#include "minishell.h"
 
 void	exec_init_pipefd(int pipe_fd[2])
 {

@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/17 16:06:32 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/22 21:16:47 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ t_token *tokenize(char *input)
 
 	word_start = 0;
 	i = 0;
+	if (!input)
+		return NULL;
 	while (input[i])
 	{
 		if ((input[i] >= 9 && input[i] <= 13) || input [i] == ' ')

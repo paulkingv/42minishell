@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/22 20:47:56 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/22 21:17:55 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #define MINISHELL_H
 
 #include "libft.h"
-//#include <linux/limits.h>
+#include <linux/limits.h>
 #include <stdio.h> // printf
 #include <unistd.h> // pipes, fork, getpid, execve, dup2
 #include <fcntl.h> // FOR READ
