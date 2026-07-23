@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:16:09 by jfox              #+#    #+#             */
-/*   Updated: 2026/06/24 11:04:02 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/23 15:10:59 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*ft_strrchr(const char *s, int c)
 {
 	size_t	i;
+
 	if (!s)
 		return (NULL);
 	i = ft_strlen(s);

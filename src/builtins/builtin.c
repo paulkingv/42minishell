@@ -6,16 +6,11 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 15:35:37 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/23 12:55:54 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/23 15:14:00 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// ****NOTE FROM PAUL:****
-// 				The functions need to access shell->exit and set the int from the exit code of the builtin
-//				Alternatively, you can return an int upwards, and we will accomodate the setting of shell->exit above
-//				I prefer option 2 because we can use exit(exec_builtin(cmd))
 
 // echo with option -n
 int	ft_echo(t_shell *shell)

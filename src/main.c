@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/23 12:56:02 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/23 15:13:31 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@
 		// print_tokens(minishell->tokens);
 		// print_cmd(minishell->cmdline);
 
-int main (int argv, char **argc, char **envp) //added environment table
+int	main(int argv, char **argc, char **envp) //added environment table
 {
 	t_shell	minishell;
 	char	*input;
@@ -86,22 +86,20 @@ int main (int argv, char **argc, char **envp) //added environment table
 	minishell.env = init_env(envp);
 	while (minishell.status == 0)
 	{
-		input = readline("minishell$ ");
-		if (!input && ft_printf("exit\n")) // Ctrl + D (End of File)
-			break;
-		if (*input) //Only add non empty lines to history
+		input = readline("/minishell$ ");
+		if (!input && ft_printf("exit\n"))
+			break ;
+		if (*input)
 		{
 			add_history(input);
 			minishell.tokens = tokenize(input);
 			minishell.cmdline = parse(minishell.tokens);
-			exe_cmdline(&minishell); // WORK REQUIRED!!!
+			exe_cmdline(&minishell);
 			free_tokens(&minishell.tokens);
 			free_cmd(&minishell.cmdline);
 		}
-	free(input);
+		free(input);
 	}
 	free_shell(&minishell);
 	return (minishell.exit);
 }
-
-

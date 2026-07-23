@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 13:49:32 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/23 12:03:36 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/23 14:58:08 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_path(t_shell *minishell)
 	char	*path;
 
 	tmp_shell = minishell;
-	tmp = find_env(tmp_shell->env, "PATH");
+	tmp = find_env(tmp_shell->env, "PWD");
 	if (!tmp)
 	{
 		ft_printf("PATH not found.");

@@ -6,23 +6,23 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/23 12:14:43 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/23 15:10:26 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
-#include "libft.h"
-#include <linux/limits.h>
-#include <stdio.h> // printf
-#include <unistd.h> // pipes, fork, getpid, execve, dup2
-#include <fcntl.h> // FOR READ
-#include <sys/wait.h> // waitpid(), WIFEXITED, WEXITSTATUS
-#include <sys/types.h> // pid_t datatype,
-#include <readline/readline.h> // for readline
-#include <readline/history.h> //for readline's history (sh history)
-#include <stdlib.h> //malloc
+# include "libft.h"
+# include <linux/limits.h>
+# include <stdio.h> // printf
+# include <unistd.h> // pipes, fork, getpid, execve, dup2
+# include <fcntl.h> // FOR READ
+# include <sys/wait.h> // waitpid(), WIFEXITED, WEXITSTATUS
+# include <sys/types.h> // pid_t datatype,
+# include <readline/readline.h> // for readline
+# include <readline/history.h> //for readline's history (sh history)
+# include <stdlib.h> //malloc
 
 //**********************************STRUCTS***********************************//
 
@@ -49,17 +49,18 @@ typedef struct s_token
 
 /*~~~~~~~~~~~PARSING~~~~~~~~~~~*/
 // CMD: Linked List of each Command, with flags. Stores REDIR struct
-// REDIR: Linked List of REDIR and where to direct the output. Only Used if REDIR detected.
-typedef struct	s_redir
+// REDIR: Linked List of REDIR and where to direct the output.
+// Only Used if REDIR detected.
+typedef struct s_redir
 {
 	char			*file_name;		// Output file name
 	t_token_type	type;			// Type of REDIR
 	struct s_redir	*next;			// Pointer to next REDIR node
 }	t_redir;
 
-typedef struct	s_cmd
+typedef struct s_cmd
 {
-	char 				**args;			// ARGV: [cmd] [flag]
+	char				**args;			// ARGV: [cmd] [flag]
 	t_redir				*redirections;	// Only used if REDIR is used
 	struct s_cmd		*next;			// Pointer to next CMD node
 }	t_cmd;
@@ -90,7 +91,7 @@ typedef struct s_shell
 char	*ft_path(t_shell *minishell);
 
 //-----------FREE_SHELL.C--------//
-int free_shell(t_shell *shell);
+int		free_shell(t_shell *shell);
 
 //-----------free_utils.C-------------//
 void	free_tokens(t_token **tokens);
@@ -101,8 +102,8 @@ void	free_array(char **array);
 
 //**********************************SRC/TOKENIZE******************************//
 //--------TOKENIZING.C---------//
-t_token *make_new_token(t_token_type type, char *input);
-t_token *tokenize(char *input);
+t_token	*make_new_token(t_token_type type, char *input);
+t_token	*tokenize(char *input);
 
 //**********************************SRC/ENVIRONMENT***************************//
 //--------ENVIRONMENT.C-------//
@@ -141,7 +142,7 @@ int		ft_exit(t_shell *shell);
 
 //**********************************SRC/EXECUTION*****************************//
 //--------EXECUTION.c----------//
-void 	exe_cmdline(t_shell *shell);
+void	exe_cmdline(t_shell *shell);
 
 //--------env_to_array.c-------//
 char	**env_to_array(t_env *env);
@@ -157,10 +158,10 @@ int		open_redir_file(t_redir *redir);
 int		handle_redirects(t_redir *redir);
 
 //-----exec_safety_funct.c-----//
-int 	safe_dup2(int fd, int target_fd);
+int		safe_dup2(int fd, int target_fd);
 pid_t	safe_fork(void);
 int		safe_pipe(int pipe_fd[2]);
-void 	wait_for_children(pid_t last_pid, t_shell *shell);
+void		wait_for_children(pid_t last_pid, t_shell *shell);
 
 //-----exec_get_path.c----------//
 char	*exec_get_valid_path(t_shell *shell, char *cmd);
@@ -175,6 +176,6 @@ int		is_builtin(t_cmd *cmd);
 int		exec_builtin(t_shell *shell, t_cmd *cmd);
 
 //--------exec_child_builtin.c--//
-void exec_child_builtin(t_shell *shell, t_cmd *cmd);
+void	exec_child_builtin(t_shell *shell, t_cmd *cmd);
 
 #endif
