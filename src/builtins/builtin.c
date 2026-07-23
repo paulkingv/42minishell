@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 15:35:37 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/23 12:32:26 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/23 12:55:54 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int	ft_env(t_shell *shell)
 // exit with no options
 int	ft_exit(t_shell *shell)
 {
-	shell->status = 0;
+	shell->status = 1;
 	shell->exit = 0;
 	ft_printf("exit\n");
 	return (0);
