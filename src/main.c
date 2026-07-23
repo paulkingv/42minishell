@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/21 16:06:29 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/21 17:55:49 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 //         cur = cur->next;
 //     }
 // }
+
 // static void print_shell_envi(t_env *head)
 // {
 // 	t_env *tmp;
@@ -35,8 +36,6 @@
 // 		tmp = tmp->next;
 // 	}
 // }
-		// print_tokens(minishell->tokens);
-		// print_cmd(minishell->cmdline);
 
 // static void print_cmd(t_cmd *head)
 // {
@@ -52,6 +51,8 @@
 // 		i = 0;
 // 		redir = cur->redirections;
 // 		printf("Command %d: \n",x);
+// 		if (!cur->args)
+// 			return ;
 // 		while (cur->args[i])
 // 		{
 // 			printf("arg[%d]: %s\n", i, cur->args[i]);
@@ -71,33 +72,35 @@
 // 	}
 // }
 
+		// print_tokens(minishell->tokens);
+		// print_cmd(minishell->cmdline);
+
 int main (int argv, char **argc, char **envp) //added environment table
 {
-	t_shell	*minishell = NULL;
+	t_shell	minishell;
 	char	*input;
-	int		sig_exit;
 
 	(void)argv;
 	(void)argc;
-	minishell = shell_init(envp);
-	while (minishell->status == 1)
+	ft_bzero(&minishell, sizeof(t_shell));
+	minishell.env = init_env(envp);
+	while (minishell.status == 0)
 	{
-		//ft_printf("%s/", ft_path(minishell));
 		input = readline("minishell$ ");
-		if (!input) // Ctrl + D (End of File)
+		if (!input && ft_printf("exit\n")) // Ctrl + D (End of File)
 			break;
 		if (*input) //Only add non empty lines to history
 			add_history(input);
-		minishell->tokens = tokenize(input);
-		minishell->cmdline = parse(minishell->tokens);
-		exe_cmdline(minishell); // WORK REQUIRED!!!
-		free_tokens(&minishell->tokens);
-		free_cmd(&minishell->cmdline);
+		// if (ft_strncmp(input, "\n", 1))
+		// 	continue ;
+		minishell.tokens = tokenize(input);
+		minishell.cmdline = parse(minishell.tokens);
+		exe_cmdline(&minishell); // WORK REQUIRED!!!
+		free_tokens(&minishell.tokens);
+		free_cmd(&minishell.cmdline);
 	}
-	sig_exit = minishell->exit;
-	free_env(&minishell->env);
-	free(minishell);
-	return (sig_exit);
+	free_env(&minishell.env);
+	return (minishell.exit);
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/07/21 16:08:16 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/21 17:43:02 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void exe_cmdline(t_shell *shell)
 	t_cmd	*tmp_cmd = NULL;
 	int		prev_fd;
 	int		pipe_fd[2];
-	pid_t 	pid;
+	pid_t	pid;
 
 	tmp = shell;
 	tmp_cmd = shell->cmdline;

@@ -6,20 +6,31 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 15:35:37 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/21 15:32:30 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/23 11:29:27 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Here we will start working on the main built in functions.
-// useful now that we have environmental table made!
-
 // echo with option -n
-// void	ft_echo(t_shell *shell)
-// {
+void	ft_echo(t_shell *shell)
+{
+	t_cmd	*tmp = NULL;
+	char	**arg;
+	int		i;
 
-// }
+	tmp = shell->cmdline;
+	arg = tmp->args;
+	i = 1;
+	while (arg[i])
+	{
+		ft_printf("%s", arg[i]);
+		if (arg[i+1])
+			ft_printf(" ", arg[i]);
+		i++;
+	}
+	ft_printf("\n", arg[i]);
+}
 
 // cd with only a relative or absolute path
 void	ft_cd(t_shell *shell, t_cmd *cmd)

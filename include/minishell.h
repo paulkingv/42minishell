@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/21 16:08:49 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/23 10:48:15 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct s_shell
 /*~~~~~~~~~~~!!FUNCTIONS!!~~~~~~~~~~~*/
 
 //------------SHELL------------//
-t_shell	*shell_init(char **envp);
+// t_shell	*shell_init(char **envp);
 char	*ft_path(t_shell *minishell);
 
 //---------TOKENIZING----------//
@@ -112,7 +112,7 @@ t_cmd	*parse(t_token *tokens);
 // static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 
 //-----------BUILT-IN----------//
-// void	ft_echo(t_shell *shell);
+void	ft_echo(t_shell *shell);
 void	ft_cd(t_shell *shell, t_cmd *cmd);
 void	ft_pwd();
 void	ft_env(t_shell *shell);

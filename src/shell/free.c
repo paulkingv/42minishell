@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 11:47:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/20 16:36:57 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/21 17:31:29 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	free_cmd(t_cmd **cmdline)
 	{
 		i = 0;
 		next = current->next;
-		while (current->args[i])
+		while (current->args && current->args[i])
 		{
 			free(current->args[i]);
 			i++;

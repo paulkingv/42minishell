@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/07/21 15:35:03 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/23 10:40:31 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_builtin(t_cmd *cmd)
 {
-	if (!cmd || !cmd->args[0])
+	if (!cmd || !cmd->args)
 		return (0);
 	if (!ft_strncmp(cmd->args[0], "echo", 5))
 		return (1);
@@ -42,10 +42,9 @@ void	exec_builtin(t_shell *shell, t_cmd *cmd)
 
 	tmp = shell;
 	tmp_cmd = cmd;
-	// if (!strcmp(shell->cmdline->args[0], "echo"))
-	// 	ft_echo(tmp);
-	// else
-	if (!strcmp(shell->cmdline->args[0], "cd"))
+	if (!strcmp(shell->cmdline->args[0], "echo"))
+		ft_echo(tmp);
+	else	if (!strcmp(shell->cmdline->args[0], "cd"))
 		ft_cd(tmp, tmp_cmd);
 	else if (!strcmp(shell->cmdline->args[0], "pwd"))
 		ft_pwd();
