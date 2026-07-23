@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/23 00:13:50 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/23 12:14:43 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
@@ -25,7 +24,7 @@
 #include <readline/history.h> //for readline's history (sh history)
 #include <stdlib.h> //malloc
 
-/*~~~~~~~~~~~~!!STRUCTS!!~~~~~~~~~~~~*/
+//**********************************STRUCTS***********************************//
 
 /*~~~~~~~~TOKENIZATION~~~~~~~~~*/
 typedef enum e_token_type
@@ -83,11 +82,11 @@ typedef struct s_shell
 	int		exit;
 }	t_shell;
 
-/*~~~~~~~~~~~!!FUNCTIONS!!~~~~~~~~~~~*/
+//******************************FOLDERS/FUNCTIONS*****************************//
 
-//**********************************SRC/SHELL********************************//
+//**********************************SRC/SHELL*********************************//
 //------------SHELL.C------------//
-t_shell	*shell_init(char **envp);
+// t_shell	*shell_init(char **envp);
 char	*ft_path(t_shell *minishell);
 
 //-----------FREE_SHELL.C--------//
@@ -100,12 +99,12 @@ void	free_cmd(t_cmd **cmdline);
 void	free_array(char **array);
 //static void	free_redirections(t_cmd *current);
 
-//**********************************SRC/TOKENIZE********************************//
+//**********************************SRC/TOKENIZE******************************//
 //--------TOKENIZING.C---------//
 t_token *make_new_token(t_token_type type, char *input);
 t_token *tokenize(char *input);
 
-//**********************************SRC/ENVIRONMENT********************************//
+//**********************************SRC/ENVIRONMENT***************************//
 //--------ENVIRONMENT.C-------//
 t_env	*init_env(char **envp);
 t_env	*edit_env(t_env *s_env, char *key, char *new_node);
@@ -118,7 +117,7 @@ t_env	*new_env(char *key, char *value);
 t_env	*find_env(t_env *s_env, char *key);
 char	*get_env(t_env *s_env, char	*key);
 
-//**********************************SRC/PARSING********************************//
+//**********************************SRC/PARSING*******************************//
 //-----------PARSING.C-----------//
 t_cmd	*parse(t_token *tokens);
 // static t_cmd	*new_cmd(void);
@@ -130,19 +129,17 @@ void	sort_redirections(t_cmd *cmd_current, t_token **tmp);
 // static t_redir	*new_redir(char *value, t_token_type num);
 // static void	redir_add_back(t_redir **head, t_redir *new);
 
-//**********************************SRC/BUILTINS********************************//
+//**********************************SRC/BUILTINS******************************//
 //-----------BUILTIN.C-----------//
-// void	ft_echo(t_shell *shell);
+int		ft_echo(t_shell *shell);
 int		ft_cd(t_shell *shell, t_cmd *cmd);
-int		ft_pwd();
+int		ft_pwd(t_shell	*shell);
 int		ft_env(t_shell *shell);
 int		ft_unset(t_shell *shell, t_cmd *cmd);
 int		ft_export(t_shell *shell, t_cmd *cmd);
 int		ft_exit(t_shell *shell);
 
-
-
-//**********************************SRC/EXECUTION********************************//
+//**********************************SRC/EXECUTION*****************************//
 //--------EXECUTION.c----------//
 void 	exe_cmdline(t_shell *shell);
 
@@ -168,19 +165,16 @@ void 	wait_for_children(pid_t last_pid, t_shell *shell);
 //-----exec_get_path.c----------//
 char	*exec_get_valid_path(t_shell *shell, char *cmd);
 
-//**********************************SRC/EXECUTION/INIT**************************//
+//**********************************SRC/EXECUTION/INIT************************//
 //-----EXEC_INIT_PIPEFD.C-------//
 void	exec_init_pipefd(int pipe_fd[2]);
 
-//**********************************SRC/EXECUTION/EXEC_BUILTIN******************//
+//**********************************SRC/EXECUTION/EXEC_BUILTIN****************//
 //--------EXEC_BUILTIN.C-------//
 int		is_builtin(t_cmd *cmd);
 int		exec_builtin(t_shell *shell, t_cmd *cmd);
 
 //--------exec_child_builtin.c--//
 void exec_child_builtin(t_shell *shell, t_cmd *cmd);
-
-
-
 
 #endif

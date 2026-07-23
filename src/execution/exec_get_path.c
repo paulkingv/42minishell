@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_get_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 00:51:05 by pking             #+#    #+#             */
-/*   Updated: 2026/07/22 03:06:47 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/23 12:00:25 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static char *find_path(t_shell *shell)
 }
 
 // 2. We have the path. Lets make the split and access function
-// NOTE ⬇️ This leaks [path_cmd needs to be freed]. Free one layer above 
+// NOTE ⬇️ This leaks [path_cmd needs to be freed]. Free one layer above
 // UPDATE ⬆️ THIS SHOULD BE FIXED NOW
 static char *split_and_try_access(char *path_value, char *cmd)
 {
@@ -74,8 +74,7 @@ static char *split_and_try_access(char *path_value, char *cmd)
 	int paths_count;
 	char *path_cmd;
 	int i;
-	//int j;
-	
+
 	i = 0;
 	paths_count = count_colons(path_value);
 	paths = ft_split(path_value, ':');

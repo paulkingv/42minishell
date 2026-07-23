@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/07/23 00:13:44 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/23 12:04:02 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void exe_cmdline(t_shell *shell)
 	t_cmd	*tmp_cmd = NULL;
 	int		prev_fd;
 	int		pipe_fd[2];
-	pid_t 	pid;
+	pid_t	pid;
 
 	tmp_cmd = shell->cmdline;
 	prev_fd = -1;		// Prev FD exists out of Bounds (aka not registered)

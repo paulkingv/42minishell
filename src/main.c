@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/23 00:13:46 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/23 12:34:13 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 //         cur = cur->next;
 //     }
 // }
+
 // static void print_shell_envi(t_env *head)
 // {
 // 	t_env *tmp;
@@ -35,8 +36,6 @@
 // 		tmp = tmp->next;
 // 	}
 // }
-		// print_tokens(minishell->tokens);
-		// print_cmd(minishell->cmdline);
 
 // static void print_cmd(t_cmd *head)
 // {
@@ -52,6 +51,8 @@
 // 		i = 0;
 // 		redir = cur->redirections;
 // 		printf("Command %d: \n",x);
+// 		if (!cur->args)
+// 			return ;
 // 		while (cur->args[i])
 // 		{
 // 			printf("arg[%d]: %s\n", i, cur->args[i]);
@@ -71,35 +72,36 @@
 // 	}
 // }
 
+		// print_tokens(minishell->tokens);
+		// print_cmd(minishell->cmdline);
+
 int main (int argv, char **argc, char **envp) //added environment table
 {
-	t_shell	*minishell = NULL;
+	t_shell	minishell;
 	char	*input;
-	int		sig_exit;
 
 	(void)argv;
 	(void)argc;
-	minishell = shell_init(envp);
-	while (minishell->status == 1)
+	ft_bzero(&minishell, sizeof(t_shell));
+	minishell.env = init_env(envp);
+	while (minishell.status == 0)
 	{
-		//ft_printf("%s/", ft_path(minishell));
 		input = readline("minishell$ ");
-		if (!input) // Ctrl + D (End of File)
+		if (!input && ft_printf("exit\n")) // Ctrl + D (End of File)
 			break;
 		if (*input) //Only add non empty lines to history
 		{
 			add_history(input);
-			minishell->tokens = tokenize(input);
-			minishell->cmdline = parse(minishell->tokens);
-			exe_cmdline(minishell);
-			free_tokens(&minishell->tokens);
-			free_cmd(&minishell->cmdline);
+			minishell.tokens = tokenize(input);
+			minishell.cmdline = parse(minishell.tokens);
+			exe_cmdline(&minishell); // WORK REQUIRED!!!
+			free_tokens(&minishell.tokens);
+			free_cmd(&minishell.cmdline);
 		}
 	free(input);
 	}
-	sig_exit = minishell->exit;
-	free_shell(minishell);
-	return (sig_exit);
+	free_shell(&minishell);
+	return (minishell.exit);
 }
 
 
