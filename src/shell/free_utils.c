@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 11:47:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/21 17:31:29 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/23 12:04:20 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	free_tokens(t_token **tokens)
 	t_token	*next = NULL;
 
 	current = *tokens;
+	if (!current)
+		return ;
 	while (current)
 	{
 		next = current->next;
@@ -25,6 +27,7 @@ void	free_tokens(t_token **tokens)
 		free(current);
 		current = next;
 	}
+	*tokens = NULL;
 }
 
 void	free_env(t_env **s_env)
@@ -33,6 +36,8 @@ void	free_env(t_env **s_env)
 	t_env	*next = NULL;
 
 	current = *s_env;
+	if (!current)
+		return ;
 	while (current)
 	{
 		next = current->next;
@@ -41,6 +46,7 @@ void	free_env(t_env **s_env)
 		free(current);
 		current = next;
 	}
+	*s_env = NULL;
 }
 
 static void	free_redirections(t_cmd *current)
@@ -49,12 +55,15 @@ static void	free_redirections(t_cmd *current)
 	t_redir	*next = NULL;
 
 	current_redir = current->redirections;
+	if (!current_redir)
+		return ;
 	while (current_redir)
 	{
 		next = current_redir->next;
 		free(current_redir);
 		current_redir = next;
 	}
+	current->redirections = NULL;
 }
 
 void	free_cmd(t_cmd **cmdline)
@@ -64,6 +73,8 @@ void	free_cmd(t_cmd **cmdline)
 	int		i;
 
 	current = *cmdline;
+	if (!current)
+		return ;
 	while (current)
 	{
 		i = 0;
@@ -81,6 +92,7 @@ void	free_cmd(t_cmd **cmdline)
 		free(current);
 		current = next;
 	}
+	*cmdline = NULL;
 }
 
 void	free_array(char **array)

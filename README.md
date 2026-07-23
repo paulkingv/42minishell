@@ -19,4 +19,6 @@ Otherwise, we assume it is a word.
 
 ## LLMs Used:
  - Claude
-*Used for project planning*
+ - Gemini
+**Claude**: Used for project planning.
+**Gemini**: Used to help understand Valgrind output and helped find & fix leaks.

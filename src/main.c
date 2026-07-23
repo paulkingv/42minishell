@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/21 17:55:49 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/23 12:29:01 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,19 @@ int main (int argv, char **argc, char **envp) //added environment table
 		if (!input && ft_printf("exit\n")) // Ctrl + D (End of File)
 			break;
 		if (*input) //Only add non empty lines to history
+		{
 			add_history(input);
-		// if (ft_strncmp(input, "\n", 1))
-		// 	continue ;
-		minishell.tokens = tokenize(input);
-		minishell.cmdline = parse(minishell.tokens);
-		exe_cmdline(&minishell); // WORK REQUIRED!!!
-		free_tokens(&minishell.tokens);
-		free_cmd(&minishell.cmdline);
+			// if (ft_strncmp(input, "\n", 1))
+			// 	continue ;
+			minishell.tokens = tokenize(input);
+			minishell.cmdline = parse(minishell.tokens);
+			exe_cmdline(&minishell); // WORK REQUIRED!!!
+			free_tokens(&minishell.tokens);
+			free_cmd(&minishell.cmdline);
+		}
+	free(input);
 	}
-	free_env(&minishell.env);
+	free_shell(&minishell);
 	return (minishell.exit);
 }
 
