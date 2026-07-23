@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/23 12:29:01 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/23 12:34:13 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ int main (int argv, char **argc, char **envp) //added environment table
 		if (*input) //Only add non empty lines to history
 		{
 			add_history(input);
-			// if (ft_strncmp(input, "\n", 1))
-			// 	continue ;
 			minishell.tokens = tokenize(input);
 			minishell.cmdline = parse(minishell.tokens);
 			exe_cmdline(&minishell); // WORK REQUIRED!!!

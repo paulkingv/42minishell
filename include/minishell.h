@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/23 11:59:05 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/23 12:14:43 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct s_shell
 
 //**********************************SRC/SHELL*********************************//
 //------------SHELL.C------------//
-t_shell	*shell_init(char **envp);
+// t_shell	*shell_init(char **envp);
 char	*ft_path(t_shell *minishell);
 
 //-----------FREE_SHELL.C--------//
@@ -131,13 +131,13 @@ void	sort_redirections(t_cmd *cmd_current, t_token **tmp);
 
 //**********************************SRC/BUILTINS******************************//
 //-----------BUILTIN.C-----------//
-void	ft_echo(t_shell *shell);
-void	ft_cd(t_shell *shell, t_cmd *cmd);
-void	ft_pwd();
-void	ft_env(t_shell *shell);
-void	ft_unset(t_shell *shell, t_cmd *cmd);
-void	ft_export(t_shell *shell, t_cmd *cmd);
-void	ft_exit(t_shell *shell);
+int		ft_echo(t_shell *shell);
+int		ft_cd(t_shell *shell, t_cmd *cmd);
+int		ft_pwd(t_shell	*shell);
+int		ft_env(t_shell *shell);
+int		ft_unset(t_shell *shell, t_cmd *cmd);
+int		ft_export(t_shell *shell, t_cmd *cmd);
+int		ft_exit(t_shell *shell);
 
 //**********************************SRC/EXECUTION*****************************//
 //--------EXECUTION.c----------//
