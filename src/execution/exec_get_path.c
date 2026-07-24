@@ -6,13 +6,13 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 00:51:05 by pking             #+#    #+#             */
-/*   Updated: 2026/07/23 12:00:25 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/24 11:46:13 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char *join_path_cmd (char *path_i, char*cmd)
+static char	*join_path_cmd(char *path_i, char*cmd)
 {
 	char	*s3;
 	size_t	len1;
@@ -34,10 +34,10 @@ static char *join_path_cmd (char *path_i, char*cmd)
 	return (s3);
 }
 
-static int count_colons(char *path_value)
+static int	count_colons(char *path_value)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
 	i = 0;
 	count = 0;
@@ -51,14 +51,15 @@ static int count_colons(char *path_value)
 }
 
 // 1. GO through ENVP Linked List in order to FIND PATH VARIABLE
-static char *find_path(t_shell *shell)
+// Line 61: while != "PATH"
+static char	*find_path(t_shell *shell)
 {
-	t_env *tmp = NULL;
+	t_env	*tmp;
 
 	tmp = shell->env;
 	if (!tmp)
 		return (NULL);
-	while (tmp && (ft_strncmp(tmp->key, "PATH", 5) != 0)) //while the key inside tmp does not equal "PATH"
+	while (tmp && (ft_strncmp(tmp->key, "PATH", 5) != 0))
 		tmp = tmp->next;
 	if (tmp)
 		return (tmp->value);
@@ -68,34 +69,34 @@ static char *find_path(t_shell *shell)
 // 2. We have the path. Lets make the split and access function
 // NOTE ⬇️ This leaks [path_cmd needs to be freed]. Free one layer above
 // UPDATE ⬆️ THIS SHOULD BE FIXED NOW
-static char *split_and_try_access(char *path_value, char *cmd)
+// Line 81: while i is less than our colon amount + 1
+static char	*split_and_try_access(char *path_value, char *cmd)
 {
-	char **paths;
-	int paths_count;
-	char *path_cmd;
-	int i;
+	char	**paths;
+	int		paths_count;
+	char	*path_cmd;
+	int		i;
 
 	i = 0;
 	paths_count = count_colons(path_value);
 	paths = ft_split(path_value, ':');
-	while (i < paths_count + 1) // while i is less than our colon amount + 1
+	while (i < paths_count + 1)
 	{
-			path_cmd = join_path_cmd(paths[i], cmd);
-			if (access(path_cmd, X_OK) == 0)
-			{
-				free_array(paths);
-				return (path_cmd);
-			}
-			free(path_cmd);
-			i++;
+		path_cmd = join_path_cmd(paths[i], cmd);
+		if (access(path_cmd, X_OK) == 0)
+		{
+			free_array(paths);
+			return (path_cmd);
+		}
+		free(path_cmd);
+		i++;
 	}
 	free_array(paths);
 	return (NULL);
 }
 
 //Meat function. Returns the string of the first possible exec path
-
-char *exec_get_valid_path(t_shell *shell, char *cmd)// shell and argv0
+char	*exec_get_valid_path(t_shell *shell, char *cmd)
 {
 	char	*path_value;
 	char	*valid_path_cmd;
@@ -111,10 +112,10 @@ char *exec_get_valid_path(t_shell *shell, char *cmd)// shell and argv0
 				return (NULL);
 		}
 		valid_path_cmd = split_and_try_access(path_value, cmd);
-			if (valid_path_cmd)
-				return (valid_path_cmd);
-			else
-				return (NULL);
+		if (valid_path_cmd)
+			return (valid_path_cmd);
+		else
+			return (NULL);
 	}
 	else
 		return (NULL);

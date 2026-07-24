@@ -3,38 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:04:19 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/23 00:13:43 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/24 12:01:48 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// PK: Changed "new" to "new_node" (new is a keyword & was getting flagged)
-// 		[I did that in 3 functions. Now compiles w/o error. Delete this once read]
 
 // A helper for set env, that actually edits the value.
 t_env	*edit_env(t_env *s_env, char *key, char *new_node)
 {
 	t_env	*tmp;
 
-	// check for variables that you want to change not existing.
 	tmp = find_env(s_env, key);
 	if (!tmp)
-		return(NULL);
+		return (NULL);
 	free(tmp->value);
 	tmp->value = ft_strdup(new_node);
-	return(tmp);
+	return (tmp);
 }
 
 // Change the value of an environment variable using find and a new string.
 // This will be used by export when we do the built ins.
 void	set_env(t_env **s_env, char *key, char *value)
 {
-	t_env	*tmp = NULL;
-	t_env	*new_node = NULL;
+	t_env	*tmp;
+	t_env	*new_node;
 
 	tmp = *s_env;
 	if (find_env(tmp, key))
@@ -50,15 +46,15 @@ void	set_env(t_env **s_env, char *key, char *value)
 // Then we make the previous node point to the next node.
 void	unset_env(t_env **head, char *key)
 {
-	t_env	*current = NULL;
-	t_env	*prev = NULL;
+	t_env	*current;
+	t_env	*prev;
 
 	current = *head;
 	while (current)
 	{
 		if (!ft_strncmp(current->key, key, ft_strlen(key)))
 		{
-			if(current == *head)
+			if (current == *head)
 				*head = current->next;
 			else
 				prev->next = current->next;
@@ -73,11 +69,11 @@ void	unset_env(t_env **head, char *key)
 }
 
 // A simple function to add new data to a chained list.
-// We first fill head if it doesnt exist. Then subsequent calls will move to the
-// end of the chained list and place a node there.
+// We first fill head if it doesnt exist. Then subsequent calls will move to
+// the end of the chained list and place a node there.
 void	env_add_back(t_env **head, t_env *new_node)
 {
-	t_env	*tmp = NULL;
+	t_env	*tmp;
 
 	if (*head == NULL)
 	{
@@ -95,14 +91,12 @@ void	env_add_back(t_env **head, t_env *new_node)
 // Here we go through the string envp and break it into key and value.
 // Cutting it using the = sign in the envp.
 // See above for new_env and env_add back.
-t_env	*init_env(char **envp)
+t_env	*init_env(char **envp, t_env *head, t_env *new)
 {
 	int		i;
 	int		x;
 	char	*key;
 	char	*value;
-	t_env	*head = NULL;
-	t_env	*new = NULL;
 
 	while (*envp)
 	{
@@ -126,7 +120,8 @@ t_env	*init_env(char **envp)
 }
 
 // Notes on env and every single variable in the ENVP list.
-//******ELLIOT COMMENT: env -i ./minishell to launch the project, you get an empty env var list (testing to see if we've hardcoded in certain env vars)
+//******ELLIOT COMMENT: env -i ./minishell to launch the project, you get an
+// empty env var list (testing to see if we've hardcoded in certain env vars)
 // 	All the possible current ENV variables when loading a stock shell.
 // 	unset_env(&s_env, "SYSTEMD_EXEC_PID");
 // 	unset_env(&s_env, "SSH_AUTH_SOCK");

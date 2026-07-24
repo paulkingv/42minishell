@@ -6,30 +6,33 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/07/23 12:04:02 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/24 11:51:21 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Helper just to check if prev_fd is registered
-static void is_prevfd_registered(int prev_fd)
+// line 21: if prev_fd is registered
+// line 23: protect closing standard input
+// line 25: HOOK Up the content as the STDIN then unmaps the value of prev_fd
+static void	is_prevfd_registered(int prev_fd)
 {
-	if (prev_fd != -1) // if prev_fd is registered
+	if (prev_fd != -1)
 	{
-		if (prev_fd != STDIN_FILENO) // protect closing standard input
+		if (prev_fd != STDIN_FILENO)
 		{
-			safe_dup2(prev_fd, STDIN_FILENO);// HOOK Up the content as the STDIN
-			close(prev_fd); // unmaps the value of prev_fd (val points to no existing FD)
+			safe_dup2(prev_fd, STDIN_FILENO);
+			close(prev_fd);
 		}
 	}
 }
 
 // Helper to free our array on close
-static void invalid_cmd_cleanup(t_shell *shell, t_cmd *cmdline, char **envp)
+static void	invalid_cmd_cleanup(t_shell *shell, t_cmd *cmdline, char **envp)
 {
 	write(2, "minishell: ", 11);
-	if(cmdline && cmdline->args && cmdline->args[0])
+	if (cmdline && cmdline->args && cmdline->args[0])
 		write(2, cmdline->args[0], ft_strlen(cmdline->args[0]));
 	write(2, ": command not found\n", 20);
 	free_array(envp);
@@ -37,10 +40,10 @@ static void invalid_cmd_cleanup(t_shell *shell, t_cmd *cmdline, char **envp)
 	exit(127);
 }
 
-// returns the number of the write end of pipe to the prev_fd for use in next iter
-// Also handles cleaning up (closing)
+// returns the number of the write end of pipe to the prev_fd for use in next
+// iter. Also handles cleaning up (closing)
 // Added tmp struct to not touch shell.
-static int parent_cleanup_exe_cmd(int prev_fd, int pipe_fd[2], t_cmd *tmp_cmd)
+static int	parent_cleanup_exe_cmd(int prev_fd, int pipe_fd[2], t_cmd *tmp_cmd)
 {
 	if (prev_fd != -1)
 		close(prev_fd);
@@ -51,14 +54,17 @@ static int parent_cleanup_exe_cmd(int prev_fd, int pipe_fd[2], t_cmd *tmp_cmd)
 	}
 	return (-1);
 }
+
 // Actual child executing the cmd part
-static void child_exe_cmd(int prev_fd, int pipe_fd[2], t_shell *shell, t_cmd *tmp_cmd)
+// line 66: have to set up where we write to. Pipe FD ow STDOUT
+static void	child_exe_cmd(int prev_fd, int pipe_fd[2],
+	t_shell *shell, t_cmd *tmp_cmd)
 {
 	char	*valid_cmd;
 	char	**envp;
 
 	is_prevfd_registered(prev_fd);
-	if (tmp_cmd->next) // have to set up where we write to. Pipe FD overwrite STDOUT
+	if (tmp_cmd->next)
 		safe_dup2(pipe_fd[1], STDOUT_FILENO);
 	if (tmp_cmd->next)
 		exec_close_pipe(pipe_fd);
@@ -79,27 +85,33 @@ static void child_exe_cmd(int prev_fd, int pipe_fd[2], t_shell *shell, t_cmd *tm
 	free_shell(shell);
 	exit(126);
 }
-// The meat function. This is called in order to execute the line that has been parsed.
-void exe_cmdline(t_shell *shell)
+
+// The meat function. This is called to execute the line that has been parsed.
+// line 102; Prev FD exists out of Bounds (aka not registered)
+// line 105: shell->exit set inside the builtin cmd
+// line 106: special case: 1 built in exec
+// line 112: error handling pipe improved function
+// line 13: error handling fork improved function
+void	exe_cmdline(t_shell *shell)
 {
-	t_cmd	*tmp_cmd = NULL;
+	t_cmd	*tmp_cmd;
 	int		prev_fd;
 	int		pipe_fd[2];
 	pid_t	pid;
 
 	tmp_cmd = shell->cmdline;
-	prev_fd = -1;		// Prev FD exists out of Bounds (aka not registered)
+	prev_fd = -1;
 	if (tmp_cmd && !tmp_cmd->next && is_builtin(tmp_cmd))
 	{
-		exec_builtin(shell, tmp_cmd); // shell->exit must be set inside the built in command
-		return ; // special case: 1 built in exec
+		exec_builtin(shell, tmp_cmd);
+		return ;
 	}
 	while (tmp_cmd)
 	{
 		exec_init_pipefd(pipe_fd);
 		if (tmp_cmd->next)
-				safe_pipe(pipe_fd); // error handling pipe improved function
-		pid = safe_fork(); // error handling fork improved function
+			safe_pipe(pipe_fd);
+		pid = safe_fork();
 		if (pid == 0)
 			child_exe_cmd(prev_fd, pipe_fd, shell, tmp_cmd);
 		prev_fd = parent_cleanup_exe_cmd(prev_fd, pipe_fd, tmp_cmd);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pking <pking@student.42.fr>                +#+  +:+       +#+         #
+#    By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/07/23 00:13:36 by pking            ###   ########.fr        #
+#    Updated: 2026/07/24 11:25:47 by jfox             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,15 +25,15 @@ SRC =	main.c \
 		execution/exec_builtin/exec_child_builtin.c \
 		environment/environment.c environment/environment_utils.c \
 		parsing/parsing.c parsing/parsing_redirects.c \
-		builtins/builtin.c \
+		builtins/builtin.c builtins/builtin_utils.c \
 		shell/shell.c shell/free_utils.c shell/free_shell.c
-		
+
 
 NAME = minishell
 OBJ = $(SRC:%.c=$(OBJECT_DIR)/%.o)
 
 CC = cc
-CFLAGS += -Wall -Wextra -Werror -g -I$(INC_DIR) -MMD -MP 
+CFLAGS += -Wall -Wextra -Werror -g -I$(INC_DIR) -MMD -MP
 
 TOOLS = libft.a
 

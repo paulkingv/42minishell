@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 11:47:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/23 12:04:20 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/24 11:20:10 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	free_tokens(t_token **tokens)
 {
-	t_token	*current = NULL;
-	t_token	*next = NULL;
+	t_token	*current;
+	t_token	*next;
 
 	current = *tokens;
 	if (!current)
@@ -32,8 +32,8 @@ void	free_tokens(t_token **tokens)
 
 void	free_env(t_env **s_env)
 {
-	t_env	*current = NULL;
-	t_env	*next = NULL;
+	t_env	*current;
+	t_env	*next;
 
 	current = *s_env;
 	if (!current)
@@ -51,8 +51,8 @@ void	free_env(t_env **s_env)
 
 static void	free_redirections(t_cmd *current)
 {
-	t_redir	*current_redir = NULL;
-	t_redir	*next = NULL;
+	t_redir	*current_redir;
+	t_redir	*next;
 
 	current_redir = current->redirections;
 	if (!current_redir)
@@ -68,8 +68,8 @@ static void	free_redirections(t_cmd *current)
 
 void	free_cmd(t_cmd **cmdline)
 {
-	t_cmd	*current = NULL;
-	t_cmd	*next = NULL;
+	t_cmd	*current;
+	t_cmd	*next;
 	int		i;
 
 	current = *cmdline;
@@ -97,7 +97,7 @@ void	free_cmd(t_cmd **cmdline)
 
 void	free_array(char **array)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!array)

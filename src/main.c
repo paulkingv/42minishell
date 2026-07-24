@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/23 15:13:31 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/24 12:05:11 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	main(int argv, char **argc, char **envp) //added environment table
 	(void)argv;
 	(void)argc;
 	ft_bzero(&minishell, sizeof(t_shell));
-	minishell.env = init_env(envp);
+	minishell.env = init_env(envp, NULL, NULL);
 	while (minishell.status == 0)
 	{
 		input = readline("/minishell$ ");
@@ -92,8 +92,8 @@ int	main(int argv, char **argc, char **envp) //added environment table
 		if (*input)
 		{
 			add_history(input);
-			minishell.tokens = tokenize(input);
-			minishell.cmdline = parse(minishell.tokens);
+			minishell.tokens = tokenize(input, NULL, NULL, NULL);
+			minishell.cmdline = parse(minishell.tokens, NULL, NULL, NULL);
 			exe_cmdline(&minishell);
 			free_tokens(&minishell.tokens);
 			free_cmd(&minishell.cmdline);

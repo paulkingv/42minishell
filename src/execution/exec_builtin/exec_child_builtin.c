@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   exec_child_builtin.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 23:45:27 by pking             #+#    #+#             */
-/*   Updated: 2026/07/23 00:13:39 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/24 11:29:07 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void exec_child_builtin(t_shell *shell, t_cmd *cmd)
+void	exec_child_builtin(t_shell *shell, t_cmd *cmd)
 {
-	int status;
+	int	status;
 
 	status = exec_builtin(shell, cmd);
 	free_shell(shell);
-	exit(status);
+	exit (status);
 }

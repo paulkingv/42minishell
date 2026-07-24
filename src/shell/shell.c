@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 13:49:32 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/23 14:58:08 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/23 15:26:39 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 
 char	*ft_path(t_shell *minishell)
 {
-	t_shell	*tmp_shell =NULL;
-	t_env	*tmp = NULL;
+	t_shell	*tmp_shell;
+	t_env	*tmp;
 	char	*path;
 
 	tmp_shell = minishell;

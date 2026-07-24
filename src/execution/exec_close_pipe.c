@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_close_pipe.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 02:12:32 by pking             #+#    #+#             */
-/*   Updated: 2026/07/16 02:57:09 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/24 11:38:05 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void exec_close_pipe(int pipe_fd[2])
+void	exec_close_pipe(int pipe_fd[2])
 {
 	if (pipe_fd[0] != -1)
 		close(pipe_fd[0]);

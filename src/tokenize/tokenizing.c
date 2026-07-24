@@ -3,39 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/22 21:16:47 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/24 11:23:41 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //goes thru the word until the end to find the last char
-static int find_end_word(char *input, int i, int *word_start)
+static int	find_end_word(char *input, int i, int *word_start)
 {
-	char quote_type;
+	char	quote_type;
 
 	if (input[i] == '"' || input[i] == '\'')
 	{
 		quote_type = input[i];
 		i++;
 		*word_start = i;
-		while(input[i] && input[i] != quote_type)
+		while (input[i] && input[i] != quote_type)
 			i++;
 	}
 	else
 	{
 		while (input[i] && input[i] != ' ' && input[i] != '\t'
- 			&& input[i] != '|' && input[i] != '<' && input[i] != '>')
+			&& input[i] != '|' && input[i] != '<' && input[i] != '>')
 			i++;
 	}
-    return (i);
+	return (i);
 }
 
 // Our Helper for get_type. Returns Enum. Single Char Checker.
-static t_token_type get_type(char *value, int i)
+static t_token_type	get_type(char *value, int i)
 {
 	if (value[i] == '|')
 		return (PIPE);
@@ -64,9 +64,9 @@ static t_token_type get_type(char *value, int i)
 }
 
 // Helper Function to make a New Token Node
-t_token *make_new_token(t_token_type type, char *value)
+t_token	*make_new_token(t_token_type type, char *value)
 {
-	t_token *new_token = NULL;
+	t_token	*new_token;
 
 	new_token = ft_calloc(1, sizeof(t_token));
 	if (!new_token)
@@ -78,25 +78,19 @@ t_token *make_new_token(t_token_type type, char *value)
 }
 
 // Gonna need some helper functions here, function is too long!
-t_token *tokenize(char *input)
+t_token	*tokenize(char *input, t_token *head, t_token *tail, t_token *new)
 {
-	t_token *head = NULL;
-	t_token *tail = NULL;
-	t_token *new = NULL;
-	int word_start;
-	int i;
+	int	word_start;
+	int	i;
 
 	word_start = 0;
 	i = 0;
 	if (!input)
-		return NULL;
+		return (NULL);
 	while (input[i])
 	{
-		if ((input[i] >= 9 && input[i] <= 13) || input [i] == ' ')
-		{
+		while ((input[i] >= 9 && input[i] <= 13) || input [i] == ' ')
 			i++;
-			continue;
-		}
 		word_start = i;
 		if (input[i] == '|' || input[i] == '<' || input[i] == '>')
 		{
@@ -128,4 +122,3 @@ t_token *tokenize(char *input)
 	}
 	return (head);
 }
-

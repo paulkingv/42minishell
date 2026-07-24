@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/07/23 12:13:48 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/24 11:29:53 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ int	is_builtin(t_cmd *cmd)
 
 int	exec_builtin(t_shell *shell, t_cmd *cmd)
 {
-	t_shell	*tmp = NULL;
-	t_cmd	*tmp_cmd = NULL;
-	int status;
+	t_shell	*tmp;
+	t_cmd	*tmp_cmd;
+	int		status;
 
 	tmp = shell;
 	tmp_cmd = cmd;
 	status = 0;
 	if (!ft_strncmp(shell->cmdline->args[0], "echo", 5))
 		status = ft_echo(tmp);
-	else	if (!ft_strncmp(shell->cmdline->args[0], "cd", 3))
+	else if (!ft_strncmp(shell->cmdline->args[0], "cd", 3))
 		status = ft_cd(tmp, tmp_cmd);
 	else if (!ft_strncmp(shell->cmdline->args[0], "pwd", 4))
 		status = ft_pwd(tmp);

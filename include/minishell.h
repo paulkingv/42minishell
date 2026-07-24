@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/23 15:10:26 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/24 12:04:58 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,11 @@ void	free_array(char **array);
 //**********************************SRC/TOKENIZE******************************//
 //--------TOKENIZING.C---------//
 t_token	*make_new_token(t_token_type type, char *input);
-t_token	*tokenize(char *input);
+t_token	*tokenize(char *input, t_token *head, t_token *tail, t_token *new);
 
 //**********************************SRC/ENVIRONMENT***************************//
 //--------ENVIRONMENT.C-------//
-t_env	*init_env(char **envp);
+t_env	*init_env(char **envp, t_env *head, t_env *new);
 t_env	*edit_env(t_env *s_env, char *key, char *new_node);
 void	set_env(t_env **s_env, char *key, char *value);
 void	env_add_back(t_env **head, t_env *new_node);
@@ -120,7 +120,7 @@ char	*get_env(t_env *s_env, char	*key);
 
 //**********************************SRC/PARSING*******************************//
 //-----------PARSING.C-----------//
-t_cmd	*parse(t_token *tokens);
+t_cmd	*parse(t_token *tokens, t_cmd *head, t_cmd *current, t_token *tmp);
 // static t_cmd	*new_cmd(void);
 // static int	count_args(t_token *tokens);
 // static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
@@ -131,10 +131,12 @@ void	sort_redirections(t_cmd *cmd_current, t_token **tmp);
 // static void	redir_add_back(t_redir **head, t_redir *new);
 
 //**********************************SRC/BUILTINS******************************//
-//-----------BUILTIN.C-----------//
+//----------BUILTIN.C----------//
 int		ft_echo(t_shell *shell);
 int		ft_cd(t_shell *shell, t_cmd *cmd);
 int		ft_pwd(t_shell	*shell);
+
+//-------builtin-utils.c-------//
 int		ft_env(t_shell *shell);
 int		ft_unset(t_shell *shell, t_cmd *cmd);
 int		ft_export(t_shell *shell, t_cmd *cmd);
@@ -161,7 +163,7 @@ int		handle_redirects(t_redir *redir);
 int		safe_dup2(int fd, int target_fd);
 pid_t	safe_fork(void);
 int		safe_pipe(int pipe_fd[2]);
-void		wait_for_children(pid_t last_pid, t_shell *shell);
+void	wait_for_children(pid_t last_pid, t_shell *shell);
 
 //-----exec_get_path.c----------//
 char	*exec_get_valid_path(t_shell *shell, char *cmd);

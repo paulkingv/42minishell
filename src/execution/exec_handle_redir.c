@@ -6,16 +6,17 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 14:49:09 by pking             #+#    #+#             */
-/*   Updated: 2026/07/17 12:02:01 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/24 11:51:06 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// This function is used in tandem with handle_redirects() in order to open/create a file to write to or read from.
-int open_redir_file(t_redir *redir)
+// This function is used in tandem with handle_redirects() in order to
+// open/create a file to write to or read from.
+int	open_redir_file(t_redir *redir)
 {
-	int fd;
+	int	fd;
 
 	if (redir->type == REDIR_IN)
 		fd = open(redir->file_name, O_RDONLY);
@@ -30,9 +31,9 @@ int open_redir_file(t_redir *redir)
 	return (fd);
 }
 
-int handle_redirects(t_redir *redir)
+int	handle_redirects(t_redir *redir)
 {
-	int fd;
+	int	fd;
 
 	while (redir)
 	{
