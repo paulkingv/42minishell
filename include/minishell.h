@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/24 12:04:58 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/24 12:22:40 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ void	sort_redirections(t_cmd *cmd_current, t_token **tmp);
 //**********************************SRC/BUILTINS******************************//
 //----------BUILTIN.C----------//
 int		ft_echo(t_shell *shell);
+int		ft_echo_n(t_shell *shell);
 int		ft_cd(t_shell *shell, t_cmd *cmd);
 int		ft_pwd(t_shell	*shell);
 
