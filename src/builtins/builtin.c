@@ -6,72 +6,53 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 15:35:37 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/24 12:50:32 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/27 15:50:57 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// echo with option -n
-int	ft_echo_n(t_shell *shell)
+// -n check for echo
+static int	is_n_option(char *arg)
 {
-//not sur eon exit status, but this function works. However not for all -n cases
-	t_cmd	*tmp;
-	char	**arg;
-	int		i;
+	int	i;
 
-	tmp = shell->cmdline;
-	arg = tmp->args;
-	i = 2;
-	if (arg[i])
-	{
-		while (!(ft_strncmp((arg[i]), "-n", 3)))
-			i++;
-		while (arg[i])
-		{
-			ft_printf("%s", arg[i]);
-			if (arg[i + 1])
-				ft_printf(" ", arg[i]);
-			i++;
-		}
-		shell->exit = 0;
+	if (!arg || arg[0] != '-' || arg[1] != 'n')
 		return (0);
+	i = 2;
+	while (arg[i])
+	{
+		if (arg[i] != 'n')
+			return (0);
+		i++;
 	}
-	shell->exit = 1;
 	return (1);
 }
 
-// echo
+// echo with a check for option -n
 int	ft_echo(t_shell *shell)
 {
-//NOT CONVINCED ABOUT THE EXIT STATUS
-	t_cmd	*tmp;
-	char	**arg;
+	char	**args;
 	int		i;
+	int		newline;
 
-	tmp = shell->cmdline;
-	arg = tmp->args;
+	args = shell->cmdline->args;
 	i = 1;
-	if (!arg[i])
+	newline = 1;
+	while (args[i] && is_n_option(args[i]))
 	{
-		shell->exit = 1;
-		ft_printf("\n");
-		return (1);
-	}
-	if (!(ft_strncmp((arg[1]), "-n", 2)))
-	{
-		shell->exit = ft_echo_n(shell);
-		return (shell->exit);
-	}
-	while (arg[i])
-	{
-		ft_printf("%s", arg[i]);
-		if (arg[i + 1])
-			ft_printf(" ", arg[i]);
+		newline = 0;
 		i++;
 	}
-	ft_printf("\n", arg[i]);
-	shell->exit = 0;
+	while (args[i])
+	{
+		ft_printf("%s", args[i]);
+		if (args[i + 1])
+			ft_printf(" ");
+		i++;
+	}
+	if (newline)
+		ft_printf("\n");
 	return (0);
 }
 
@@ -96,28 +77,24 @@ int	ft_cd(t_shell *shell, t_cmd *cmd)
 		}
 		else
 			ft_printf("No such file or directory.\n");
-		shell->exit = 0;
 		return (0);
 	}
-	shell->exit = 1;
 	return (1);
 }
 
 // pwd with no options
-int	ft_pwd(t_shell	*shell)
+int	ft_pwd(void)
 {
 	char	cwd[PATH_MAX];
 
 	if (getcwd(cwd, sizeof(cwd)))
 	{
 		ft_printf("%s\n", cwd);
-		shell->exit = 0;
 		return (0);
 	}
 	else
 	{
 		perror("pwd");
-		shell->exit = 1;
 		return (1);
 	}
 }
