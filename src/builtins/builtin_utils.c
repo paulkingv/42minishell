@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 11:08:02 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/27 15:49:39 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/28 16:25:38 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,17 @@ int	ft_exit(t_shell *shell)
 	return (0);
 }
 
+// unset with no options
+int	ft_unset(t_shell *shell, t_cmd *cmd)
+{
+	if (cmd)
+	{
+		unset_env(&shell->env, cmd->args[1]);
+		return (0);
+	}
+	return (1);
+}
+
 // env with no options or arguments
 int	ft_env(t_shell *shell)
 {
@@ -50,43 +61,3 @@ int	ft_env(t_shell *shell)
 	return (1);
 }
 
-// unset with no options
-int	ft_unset(t_shell *shell, t_cmd *cmd)
-{
-	if (cmd)
-	{
-		unset_env(&shell->env, cmd->args[1]);
-		return (0);
-	}
-	return (1);
-}
-
-// export with no options
-int	ft_export(t_shell *shell, t_cmd *cmd)
-{
-	t_env	*tmp;
-	t_cmd	*tmp_cmd;
-	char	**strings;
-
-	tmp = shell->env;
-	tmp_cmd = cmd;
-	if (!tmp_cmd->args[1])
-	{
-		shell->exit = ft_env(shell);
-		return (shell->exit);
-	}
-	if (!ft_strchr(tmp_cmd->args[1], '='))
-	{
-		ft_printf("export no val\n");
-		return (1);
-	}
-	strings = ft_split(tmp_cmd->args[1], '=');
-	if (!strings[1])
-	{
-		ft_printf("export empty val\n");
-		return (1);
-	}
-	set_env(&tmp, strings[0], strings[1]);
-	free_array(strings);
-	return (0);
-}
