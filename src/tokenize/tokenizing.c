@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/24 11:23:41 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/28 18:42:01 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ static int	find_end_word(char *input, int i, int *word_start)
 {
 	char	quote_type;
 
-	if (input[i] == '"' || input[i] == '\'')
+	if ((input[i] == '"' || input[i] == '\''))
 	{
 		quote_type = input[i];
 		i++;
 		*word_start = i;
 		while (input[i] && input[i] != quote_type)
 			i++;
+		// if (input[i] == quote_type)
+		// 	i++; dont uncomment this but im saving 4 later -pk
 	}
 	else
 	{
@@ -119,6 +121,8 @@ t_token	*tokenize(char *input, t_token *head, t_token *tail, t_token *new)
 			tail->next = new;
 			tail = tail->next;
 		}
+		if (input[i] == '\'' || input[i] == '"')
+			i++;
 	}
 	return (head);
 }
