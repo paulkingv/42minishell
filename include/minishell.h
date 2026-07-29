@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/28 16:26:35 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/29 15:12:38 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int		ft_exit(t_shell *shell);
 
 //----------export.c-----------//
 int		ft_export(t_shell *shell, t_cmd *cmd, t_env *tmp, t_cmd *tmp_cmd);
-// stat int ft_export_util(t_shell *shel, t_env *tmp, t_cmd *cmd, char **string)
+// static char	**ft_export_util(t_cmd *cmd, int i);
 
 //**********************************SRC/EXECUTION*****************************//
 //--------EXECUTION.c----------//

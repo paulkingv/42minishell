@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 11:08:02 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/28 16:25:38 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/29 14:56:24 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,28 @@ int	ft_exit(t_shell *shell)
 }
 
 // unset with no options
+// int	ft_unset(t_shell *shell, t_cmd *cmd)
+// {
+// 	if (cmd)
+// 	{
+// 		unset_env(&shell->env, cmd->args[1]);
+// 		return (0);
+// 	}
+// 	return (1);
+// }
+
+// unset with no options
 int	ft_unset(t_shell *shell, t_cmd *cmd)
 {
-	if (cmd)
+	int i;
+
+	i = 1;
+	while (cmd->args[i])
 	{
-		unset_env(&shell->env, cmd->args[1]);
-		return (0);
+		unset_env(&shell->env, cmd->args[i]);
+		i++;
 	}
-	return (1);
+	return (0);
 }
 
 // env with no options or arguments
@@ -53,11 +67,13 @@ int	ft_env(t_shell *shell)
 	{
 		while (tmp)
 		{
-			ft_printf("%s=%s\n", tmp->key, tmp->value);
+			if (!tmp->value)
+				ft_printf("%s\n", tmp->key);
+			else
+				ft_printf("%s=%s\n", tmp->key, tmp->value);
 			tmp = tmp->next;
 		}
 		return (0);
 	}
 	return (1);
 }
-
