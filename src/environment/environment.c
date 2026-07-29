@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:04:19 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/24 12:01:48 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/29 16:31:27 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ void	env_add_back(t_env **head, t_env *new_node)
 	tmp->next = new_node;
 }
 
-// Horrible function.
-// To long, too many variables, no error handling or protections...
 // Here we go through the string envp and break it into key and value.
 // Cutting it using the = sign in the envp.
 // See above for new_env and env_add back.
