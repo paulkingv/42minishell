@@ -6,7 +6,7 @@
 #    By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/07/28 16:19:58 by jfox             ###   ########.fr        #
+#    Updated: 2026/07/31 12:34:08 by jfox             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRC =	main.c \
 		environment/environment.c environment/environment_utils.c \
 		parsing/parsing.c parsing/parsing_redirects.c \
 		builtins/builtin.c builtins/builtin_utils.c \
-		builtins/export.c \
+		builtins/export.c builtins/echo.c \
 		shell/shell.c shell/free_utils.c shell/free_shell.c
 
 

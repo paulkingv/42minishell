@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 16:19:26 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/29 17:00:54 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/31 15:22:29 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,15 @@ int	ft_export(t_shell *shell, t_cmd *cmd, t_env *tmp, t_cmd *tmp_cmd)
 		if (ft_isdigit(tmp_cmd->args[i][0]))
 		{
 			if (tmp_cmd->args[i + 1] == NULL)
+			{
+				shell->exit = 1;
 				break ;
+			}
 			i++;
 		}
 		strings = ft_export_util(tmp_cmd, i);
 		set_env(&shell->env, strings[0], strings[1]);
 		i++;
 	}
-	return (0);
+	return (shell->exit);
 }

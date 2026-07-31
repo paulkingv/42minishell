@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 11:08:02 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/29 16:14:21 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/31 12:25:32 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,6 @@ int	ft_exit(t_shell *shell)
 	ft_printf("exit\n");
 	return (0);
 }
-
-// unset with no options
-// int	ft_unset(t_shell *shell, t_cmd *cmd)
-// {
-// 	if (cmd)
-// 	{
-// 		unset_env(&shell->env, cmd->args[1]);
-// 		return (0);
-// 	}
-// 	return (1);
-// }
 
 // unset with no options
 int	ft_unset(t_shell *shell, t_cmd *cmd)
