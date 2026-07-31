@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 16:19:26 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/31 15:22:29 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/31 17:35:15 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	ft_print_export(t_shell *shell)
 			if (!tmp->value)
 				ft_printf("%s=''\n", tmp->key);
 			else
-				ft_printf("%s=\'%s\'\n", tmp->key, tmp->value);
+				ft_printf("%s=%s\n", tmp->key, tmp->value);
 			tmp = tmp->next;
 		}
 	}
@@ -41,7 +41,7 @@ static char	**ft_export_util(t_cmd *cmd, int i)
 	}
 	strings = ft_split(cmd->args[i], '=');
 	if (strings && !strings[1])
-		strings[1] = "";
+		strings[1] = "\'\'";
 	return (strings);
 }
 
@@ -58,7 +58,8 @@ int	ft_export(t_shell *shell, t_cmd *cmd, t_env *tmp, t_cmd *tmp_cmd)
 		ft_print_export(shell);
 	while (tmp_cmd->args[i])
 	{
-		if (ft_isdigit(tmp_cmd->args[i][0]))
+		if (ft_isdigit(tmp_cmd->args[i][0])
+			|| !ft_strncmp(tmp_cmd->args[i], "=", 1))
 		{
 			if (tmp_cmd->args[i + 1] == NULL)
 			{
