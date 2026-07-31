@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle_redir.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 14:49:09 by pking             #+#    #+#             */
-/*   Updated: 2026/07/24 11:51:06 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/31 16:13:33 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,14 @@ int	handle_redirects(t_redir *redir)
 			perror(redir->file_name);
 			exit(1);
 		}
-		//dup2(fd, targetfd)
+		// if (redir->type == HEREDOC)
+		// {
+		// 	fd = handle_heredoc(redir, shell->env);
+		// 	if (fd != -1)
+		// 		safedup2(fd, STDIN_FILENO);
+		// }
 		if (redir->type == REDIR_IN)
-			safe_dup2(fd, 0);
+			safe_dup2(fd, 0); //dup2(fd, targetfd) 
 		if (redir->type == REDIR_OUT || redir->type == APPEND)
 			safe_dup2(fd, 1);
 		close(fd);
