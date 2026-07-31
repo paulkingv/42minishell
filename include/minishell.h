@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
 /*   Updated: 2026/07/31 12:27:06 by jfox             ###   ########.fr       */
@@ -36,8 +36,6 @@ typedef enum e_token_type
 	REDIR_IN = 1 << 3,	// 0x00001000 8		( <  )
 	APPEND = 1 << 4,	// 0x00010000 16	( >> )
 	HEREDOC = 1 << 5,	// 0x00100000 32	( << )
-	D_QUOTED = 1 << 6,	// 0x01000000 64
-	S_QUOTED = 1 << 7	// 0x10000000 128
 }	t_token_type;
 
 typedef struct s_token
@@ -185,5 +183,9 @@ int		exec_builtin(t_shell *shell, t_cmd *cmd);
 
 //--------exec_child_builtin.c--//
 void	exec_child_builtin(t_shell *shell, t_cmd *cmd);
+
+//**********************************SRC/EXECUTION/EXEC_HEREDOC****************//
+// int handle_heredoc(t_redir *redir, t_env *env);
+
 
 #endif
