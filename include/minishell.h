@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/31 16:14:03 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/31 12:27:06 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,14 +132,19 @@ void	sort_redirections(t_cmd *cmd_current, t_token **tmp);
 //----------BUILTIN.C----------//
 int		ft_pwd(void);
 int		ft_cd(t_shell *shell, t_cmd *cmd);
-int		ft_echo(t_shell *shell);
-// static int	is_n_option(char *arg);
 
 //-------builtin-utils.c-------//
 int		ft_env(t_shell *shell);
 int		ft_unset(t_shell *shell, t_cmd *cmd);
-int		ft_export(t_shell *shell, t_cmd *cmd);
 int		ft_exit(t_shell *shell);
+
+//----------export.c-----------//
+int		ft_export(t_shell *shell, t_cmd *cmd, t_env *tmp, t_cmd *tmp_cmd);
+// static char	**ft_export_util(t_cmd *cmd, int i);
+
+//-----------echo.c------------//
+int		ft_echo(t_shell *shell);
+// static int	is_n_option(char *arg);
 
 //**********************************SRC/EXECUTION*****************************//
 //--------EXECUTION.c----------//

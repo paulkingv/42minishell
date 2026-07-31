@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 14:02:16 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/24 12:04:44 by jfox             ###   ########.fr       */
+/*   Updated: 2026/07/29 16:32:46 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 	}
 }
 
-// Function is too long.
 // No real edge case or error handling.
 // This function takes our list of tokens and starts building them into command
 // structs.It creates a head if one does not already exist (it shouldn't) and
