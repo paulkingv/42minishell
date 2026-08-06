@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/31 12:27:06 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/05 01:19:22 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # include <readline/readline.h> // for readline
 # include <readline/history.h> //for readline's history (sh history)
 # include <stdlib.h> //malloc
+
+//**********************************GLOBAL***********************************//
+extern int g_signal_interupt; //
 
 //**********************************STRUCTS***********************************//
 
@@ -53,6 +56,7 @@ typedef struct s_redir
 {
 	char			*file_name;		// Output file name
 	t_token_type	type;			// Type of REDIR
+	int				quoted;			// Quoted Status
 	struct s_redir	*next;			// Pointer to next REDIR node
 }	t_redir;
 
@@ -126,7 +130,11 @@ t_cmd	*parse(t_token *tokens, t_cmd *head, t_cmd *current, t_token *tmp);
 //------parsing_redirects.c------//
 void	sort_redirections(t_cmd *cmd_current, t_token **tmp);
 // static t_redir	*new_redir(char *value, t_token_type num);
-// static void	redir_add_back(t_redir **head, t_redir *new);
+// static void		redir_add_back(t_redir **head, t_redir *new);
+
+//------parsing_heredoc.c------//
+int		is_hd_quoted(char *value);
+char 	*strip_quotes(char *value);
 
 //**********************************SRC/BUILTINS******************************//
 //----------BUILTIN.C----------//
@@ -185,7 +193,7 @@ int		exec_builtin(t_shell *shell, t_cmd *cmd);
 void	exec_child_builtin(t_shell *shell, t_cmd *cmd);
 
 //**********************************SRC/EXECUTION/EXEC_HEREDOC****************//
-// int handle_heredoc(t_redir *redir, t_env *env);
+int handle_heredoc(t_redir *redir, t_env *env);
 
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 17:35:38 by jfox              #+#    #+#             */
-/*   Updated: 2026/06/24 11:04:02 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/05 21:58:25 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_putstr_fd(char *s, int fd)
 {
 	size_t	i;
 
-	if (!s)
+	if (!s || !fd)
 		return ;
 	i = ft_strlen(s);
 	write(fd, s, i);

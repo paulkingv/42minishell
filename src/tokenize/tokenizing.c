@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/29 18:48:18 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/06 02:31:25 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ t_token	*make_new_token(t_token_type type, char *value)
 }
 
 // Tokenize input into an LL of tokens
-// Original tokenize was refactored by Gemini
 t_token	*tokenize(char *input, t_token *head, t_token *tail, t_token *new)
 {
 	int		word_start;

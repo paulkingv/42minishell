@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/07/31 16:12:59 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/03 00:50:00 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void write_heredoc_line(int fd, char *line,t_env *env)
 {
-	line_len = ft_strlen(line);
+	int line_len;
+
+	line_len = (ft_strlen(line) + 1);
 	write(fd, line, line_len);
 }
 char *hd_name(int PID) //also needs to get the PID
@@ -35,6 +37,15 @@ free(pid_str);
 free(num);
 return(filename);
 }
+
+// char	*read_heredoc(char *delim, int quoted)
+// {
+// 	char *line
+// 	while (1)
+// 	{
+
+// 	}
+// }
 
 
 int handle_heredoc(t_redir *redir, t_env *env) //returns FD
@@ -61,6 +72,8 @@ int handle_heredoc(t_redir *redir, t_env *env) //returns FD
 			free(line);
 			break ;
 		}
+		if (!quoted)
+			line = expand_variables(line, env);
 		write_heredoc_line(fd, line, env);
 		free(line);
 	}

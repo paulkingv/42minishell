@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 14:49:09 by pking             #+#    #+#             */
-/*   Updated: 2026/07/31 16:13:33 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/04 22:06:43 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // This function is used in tandem with handle_redirects() in order to
 // open/create a file to write to or read from.
-int	open_redir_file(t_redir *redir)
+int	open_redir_file(t_redir *redir, t_env *env)
 {
 	int	fd;
 
@@ -25,7 +25,7 @@ int	open_redir_file(t_redir *redir)
 	else if (redir->type == APPEND)
 		fd = open(redir->file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else if (redir->type == HEREDOC)
-		return (-1);
+		// exec_handle_heredoc(redir, env);
 	else
 		return (-1);
 	return (fd);
@@ -43,12 +43,12 @@ int	handle_redirects(t_redir *redir)
 			perror(redir->file_name);
 			exit(1);
 		}
-		// if (redir->type == HEREDOC)
-		// {
-		// 	fd = handle_heredoc(redir, shell->env);
-		// 	if (fd != -1)
-		// 		safedup2(fd, STDIN_FILENO);
-		// }
+		if (redir->type == HEREDOC)
+		{
+			fd = handle_heredoc(redir, shell->env);
+			if (fd != -1)
+				safedup2(fd, STDIN_FILENO);
+		}
 		if (redir->type == REDIR_IN)
 			safe_dup2(fd, 0); //dup2(fd, targetfd) 
 		if (redir->type == REDIR_OUT || redir->type == APPEND)

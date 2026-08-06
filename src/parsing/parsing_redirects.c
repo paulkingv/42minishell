@@ -3,27 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_redirects.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 11:44:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/24 11:24:12 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/06 02:23:53 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// used to print error for the heredoc parsing in new_redir
+static int hd_error(t_redir *new, char *value, int qstatus, int etype)
+{
+	if (etype == 1 && (!value)) //check error 1
+	{
+		ft_putstr_fd("minishell: null token passed to parsing HEREDOC\n", 2);
+		free(new);
+		return (1);
+	}
+	if (etype == 2 && (qstatus == -1)) // check error 2
+	{
+		ft_putstr_fd("minishell: syntax error: unclosed quotes\n", 2);
+		free(new);
+		return (1);
+	}
+	return (0);
+}
 // As with all structs, we have a helper to build it.
 // However here we can fill it at the same time and we have passed information
 // to this function.
-static t_redir	*new_redir(char *value, t_token_type num)
+
+// PK: Updated function to now parse heredoc. 
+// Checks if NULL, if Unclosed, and if Closed, Strips
+static t_redir	*new_redir(char *value, t_token_type type)
 {
 	t_redir	*new;
+	int		quote_status;
 
 	new = ft_calloc(sizeof(t_redir), 1);
 	if (!new)
 		return (NULL);
+	quote_status = 0;
+	new->quoted = 0;
+	if (type == HEREDOC)
+	{
+		if (hd_error(new, value, quote_status, 1)) //NULL token passed to HD
+			return (NULL);
+		quote_status = is_hd_quoted(value);
+		if (hd_error(new, value, quote_status, 2))// ERROR: Unclosed Quote
+			return (NULL);
+		if(quote_status == 1) // quotes, and closed
+		{
+			new->quoted = 1;
+			strip_quotes(value);
+		}
+	}
 	new->file_name = value;
-	new->type = num;
+	new->type = type;
 	new->next = NULL;
 	return (new);
 }
@@ -52,6 +88,8 @@ void	sort_redirections(t_cmd *cmd_current, t_token **tmp)
 	t_redir	*new;
 
 	new = new_redir((*tmp)->next->value, (*tmp)->type);
+	if (!new)
+		return ;
 	redir_add_back(&cmd_current->redirections, new);
 	*tmp = (*tmp)->next;
 }

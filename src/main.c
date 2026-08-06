@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/28 16:28:16 by pking            ###   ########.fr       */
+/*   Updated: 2026/07/31 17:36:41 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ static void print_tokens(t_token *head)
     }
 }
 
-// static void print_shell_envi(t_env *head)
-// {
-// 	t_env *tmp;
+static void print_shell_envi(t_env *head)
+{
+	t_env *tmp;
 
-// 	tmp = head;
-// 	while (head)
-// 	{
-// 		ft_printf("Key: %d\n", tmp->key);
-// 		ft_printf("Value: %d\n", tmp->value);
-// 		tmp = tmp->next;
-// 	}
-// }
+	tmp = head;
+	while (head)
+	{
+		ft_printf("Key: %d\n", tmp->key);
+		ft_printf("Value: %d\n", tmp->value);
+		tmp = tmp->next;
+	}
+}
 
 static void print_cmd(t_cmd *head)
 {
