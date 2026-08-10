@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 14:02:16 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/06 02:29:49 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/10 23:37:02 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 	cmd->args = ft_calloc(sizeof(char **), count + 1);
 	if (!cmd->args)
 		return ;
-	while (tmp && i < count)
+	while (tmp)
 	{
 		if (tmp->type == WORD)
 		{

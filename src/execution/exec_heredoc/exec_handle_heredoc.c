@@ -6,19 +6,24 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/10 04:34:27 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/11 00:07:41 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *hd_expandline(char *line, t_env *env, t_redir *redir)
+char *hd_expandline(char *line, t_env *env, int quoted)
 {
 	// MATT:
 	/* here is where you put the function to expand
 		 This function needs to check redir->quoted to know
 		 if it should be expanded. 
 	*/
+	(void)env;
+	(void)quoted;
+	// if (!quoted)
+	//	line = expand_variables(line, env);
+	return (line);
 }
 
 
@@ -65,7 +70,7 @@ static void	hd_loop(int fd, t_redir *redir, t_env *env)
 		line = readline("> ");
 		if (!line)
 		{
-			ft_putstr_fd("error line unterminated hd_loop", 2);
+			ft_putstr_fd("error line unterminated hd_loop\n", 2);
 			break ; // line unterminated (error?)
 		}
 		if (ft_strcmp(line, redir->file_name) == 0)
@@ -79,11 +84,11 @@ static void	hd_loop(int fd, t_redir *redir, t_env *env)
 		free(line);
 	}
 }
+
 int handle_heredoc(t_redir *redir, t_env *env) //returns FD
 {
 	int 	fd;
 	char 	*filename;
-
 
 	filename = hd_name(getpid());
 	if (!filename)
@@ -101,4 +106,3 @@ int handle_heredoc(t_redir *redir, t_env *env) //returns FD
 	free(filename);
 	return (fd);
 }
-

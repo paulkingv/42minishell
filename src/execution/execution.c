@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/07/24 11:51:21 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/10 22:37:27 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,24 @@ static int	parent_cleanup_exe_cmd(int prev_fd, int pipe_fd[2], t_cmd *tmp_cmd)
 
 // Actual child executing the cmd part
 // line 66: have to set up where we write to. Pipe FD ow STDOUT
+
+// Refactor later
 static void	child_exe_cmd(int prev_fd, int pipe_fd[2],
 	t_shell *shell, t_cmd *tmp_cmd)
 {
 	char	*valid_cmd;
 	char	**envp;
-
+	
+	if (tmp_cmd->redirections // try read_heredocs & set up fds
+		&& read_heredocs(tmp_cmd->redirections, shell->env) == -1)
+		exit(1);
 	is_prevfd_registered(prev_fd);
 	if (tmp_cmd->next)
 		safe_dup2(pipe_fd[1], STDOUT_FILENO);
 	if (tmp_cmd->next)
 		exec_close_pipe(pipe_fd);
 	if (tmp_cmd->redirections)
-		handle_redirects(tmp_cmd->redirections);
+		handle_redirects(tmp_cmd->redirections, shell->env);
 	if (!tmp_cmd->args || !tmp_cmd->args[0])
 		exit(free_shell(shell));
 	if (is_builtin(tmp_cmd))
@@ -101,7 +106,8 @@ void	exe_cmdline(t_shell *shell)
 
 	tmp_cmd = shell->cmdline;
 	prev_fd = -1;
-	if (tmp_cmd && !tmp_cmd->next && is_builtin(tmp_cmd))
+	if (tmp_cmd && !tmp_cmd->next && is_builtin(tmp_cmd)
+		&& !tmp_cmd->redirections)
 	{
 		exec_builtin(shell, tmp_cmd);
 		return ;

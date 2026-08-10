@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 11:44:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/06 02:23:53 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/11 00:14:05 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,11 @@ void	sort_redirections(t_cmd *cmd_current, t_token **tmp)
 {
 	t_redir	*new;
 
+	if (!(*tmp)->next || (*tmp)->next->type != WORD)
+	{
+		ft_putstr_fd("minishell: sytanx", 2);
+		return ;
+	}
 	new = new_redir((*tmp)->next->value, (*tmp)->type);
 	if (!new)
 		return ;

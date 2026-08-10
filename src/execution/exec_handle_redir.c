@@ -6,15 +6,32 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 14:49:09 by pking             #+#    #+#             */
-/*   Updated: 2026/08/04 22:06:43 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/11 00:05:34 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// CC created this function so that we scan the cmdline's redirs for HD
+// in main.
+int read_heredocs(t_redir *redir, t_env *env)
+{
+	while (redir)
+	{
+		if (redir->type == HEREDOC)
+		{
+			redir->heredoc_fd = handle_heredoc(redir, env);
+			if (redir->heredoc_fd == -1)
+				return (-1);
+		}
+		redir = redir->next;
+	}
+	return (0);
+}
 // This function is used in tandem with handle_redirects() in order to
 // open/create a file to write to or read from.
-int	open_redir_file(t_redir *redir, t_env *env)
+//		CC told me to remove HD case
+int	open_redir_file(t_redir *redir)
 {
 	int	fd;
 
@@ -24,37 +41,41 @@ int	open_redir_file(t_redir *redir, t_env *env)
 		fd = open(redir->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (redir->type == APPEND)
 		fd = open(redir->file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else if (redir->type == HEREDOC)
-		// exec_handle_heredoc(redir, env);
 	else
 		return (-1);
 	return (fd);
 }
 
-int	handle_redirects(t_redir *redir)
+// CC says this should work
+int	handle_redirects(t_redir *redir, t_env *env)
 {
 	int	fd;
 
+	(void)*env; // have to change this later for the expansion
+	fd = 0;
 	while (redir)
 	{
-		fd = open_redir_file(redir);
-		if (fd == -1)
+		
+		if (redir->type == HEREDOC) // essential: do this in loop to read multiple HDs
 		{
-			perror(redir->file_name);
-			exit(1);
+			fd = redir->heredoc_fd;
+			safe_dup2(fd, STDIN_FILENO);
 		}
-		if (redir->type == HEREDOC)
+		else
 		{
-			fd = handle_heredoc(redir, shell->env);
-			if (fd != -1)
-				safedup2(fd, STDIN_FILENO);
-		}
-		if (redir->type == REDIR_IN)
-			safe_dup2(fd, 0); //dup2(fd, targetfd) 
-		if (redir->type == REDIR_OUT || redir->type == APPEND)
-			safe_dup2(fd, 1);
+			fd = open_redir_file(redir);
+			if (fd == -1)
+			{
+				perror(redir->file_name);
+				exit(1);
+			}
+			if (redir->type == REDIR_IN)
+				safe_dup2(fd, 0); //dup2(fd, targetfd) 
+			else if (redir->type == REDIR_OUT || redir->type == APPEND)
+				safe_dup2(fd, 1);
+		}	
 		close(fd);
 		redir = redir->next;
 	}
-	return (fd);
+	return (0);
 }
