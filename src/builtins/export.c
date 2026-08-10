@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 16:19:26 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/31 17:35:15 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/10 19:53:29 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	ft_export(t_shell *shell, t_cmd *cmd, t_env *tmp, t_cmd *tmp_cmd)
 	char	**strings;
 	int		i;
 
-	tmp = shell->env;
+	// tmp = shell->env; <- can be deleted, left for reference
+	(void)tmp; // tmp was never used
 	tmp_cmd = cmd;
 	i = 1;
 	if (!tmp_cmd->args[i])

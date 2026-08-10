@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 14:02:16 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/29 16:32:46 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/10 23:37:02 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ static int	count_args(t_token *tokens)
 	i = 0;
 	while (tmp && tmp->type != PIPE)
 	{
-		i++;
+		// claude suggested this ⬇️
+		if (tmp->type == WORD) // only count words
+			i++;
 		tmp = tmp->next;
 	}
 	return (i);
@@ -64,7 +66,7 @@ static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 	cmd->args = ft_calloc(sizeof(char **), count + 1);
 	if (!cmd->args)
 		return ;
-	while (tmp && i < count)
+	while (tmp)
 	{
 		if (tmp->type == WORD)
 		{
@@ -75,11 +77,11 @@ static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 			|| tmp->type == APPEND || tmp->type == HEREDOC)
 		{
 			sort_redirections(cmd, &tmp);
-			if (!tmp->next)
-			{
-				// error
-				return ;
-			}
+			// if (!tmp->next) 	// Claude says its redundant after te work in sort_redirs. 
+			// { 				// If this works without, delete me and the brackets-- we're under 25
+			// 	// error
+			// 	return ;
+			// }
 		}
 		if (tmp->type == PIPE)
 			return ;

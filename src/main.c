@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/07/31 16:26:29 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/10 23:40:44 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,9 @@ int	main(int argv, char **argc, char **envp) //added environment table
 		{
 			add_history(input);
 			minishell.tokens = tokenize(input, NULL, NULL, NULL);
+			// print_tokens(minishell.tokens);
 			minishell.cmdline = parse(minishell.tokens, NULL, NULL, NULL);
+			// print_cmd(minishell.cmdline);
 			exe_cmdline(&minishell);
 			free_tokens(&minishell.tokens);
 			free_cmd(&minishell.cmdline);

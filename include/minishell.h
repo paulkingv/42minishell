@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/07/31 12:27:06 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/11 00:16:32 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 # define MINISHELL_H
 
 # include "libft.h"
-# include <linux/limits.h>
+# if defined(__APPLE__)
+# 	include <sys/syslimits.h> //PATH_MAX, ARG_MAX on macOS
+# else 
+#	include <linux/limits.h>
+# endif
+// # include <linux/limits.h>
 # include <stdio.h> // printf
 # include <unistd.h> // pipes, fork, getpid, execve, dup2
 # include <fcntl.h> // FOR READ
@@ -23,6 +28,9 @@
 # include <readline/readline.h> // for readline
 # include <readline/history.h> //for readline's history (sh history)
 # include <stdlib.h> //malloc
+
+//**********************************GLOBAL***********************************//
+extern int g_signal_interupt; //
 
 //**********************************STRUCTS***********************************//
 
@@ -53,6 +61,8 @@ typedef struct s_redir
 {
 	char			*file_name;		// Output file name
 	t_token_type	type;			// Type of REDIR
+	int				quoted;			// Quoted Status
+	int 			heredoc_fd;
 	struct s_redir	*next;			// Pointer to next REDIR node
 }	t_redir;
 
@@ -126,7 +136,11 @@ t_cmd	*parse(t_token *tokens, t_cmd *head, t_cmd *current, t_token *tmp);
 //------parsing_redirects.c------//
 void	sort_redirections(t_cmd *cmd_current, t_token **tmp);
 // static t_redir	*new_redir(char *value, t_token_type num);
-// static void	redir_add_back(t_redir **head, t_redir *new);
+// static void		redir_add_back(t_redir **head, t_redir *new);
+
+//------parsing_heredoc.c------//
+int		is_hd_quoted(char *value);
+int		strip_quotes(char *value);
 
 //**********************************SRC/BUILTINS******************************//
 //----------BUILTIN.C----------//
@@ -161,7 +175,8 @@ char	**env_to_array(t_env *env);
 
 //-----exec_handle_redir.c-----//
 int		open_redir_file(t_redir *redir);
-int		handle_redirects(t_redir *redir);
+int		read_heredocs(t_redir *redir, t_env *env);
+int		handle_redirects(t_redir *redir, t_env *env);
 
 //-----exec_safety_funct.c-----//
 int		safe_dup2(int fd, int target_fd);
@@ -185,7 +200,7 @@ int		exec_builtin(t_shell *shell, t_cmd *cmd);
 void	exec_child_builtin(t_shell *shell, t_cmd *cmd);
 
 //**********************************SRC/EXECUTION/EXEC_HEREDOC****************//
-// int handle_heredoc(t_redir *redir, t_env *env);
+int handle_heredoc(t_redir *redir, t_env *env);
 
 
 #endif
