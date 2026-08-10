@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
 /*   Updated: 2026/08/10 23:40:44 by pking            ###   ########.fr       */
@@ -72,8 +72,10 @@
 // 	}
 // }
 
+			// print_tokens(minishell.tokens);
+			// print_cmd(minishell.cmdline);
+			// print_cmd(minishell->cmdline);
 
-// print_cmd(minishell->cmdline);
 
 int	main(int argv, char **argc, char **envp) //added environment table
 {
