@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/06 02:31:25 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/06 21:50:49 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	find_end_word(char *input, int i)
 			while (input[i] && input[i] != quote_type)
 				i++;
 			if (!input[i])
-				return (-1);
+				return (-1); //unclosed quote error
 			i++; //fixes the i to be at index outside the quotes
 		}
 		else

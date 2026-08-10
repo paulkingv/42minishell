@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/05 01:17:03 by pking             #+#    #+#             */
-/*   Updated: 2026/08/06 02:30:30 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/09 00:34:56 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,49 +26,41 @@ static int replace_value(char *value, int start, int end)
 	value[i] = '\0';
 	return (0);
 }
-// NEEDS TO CHECK FOR UNMATCHED QUOTES IN DELIMITER
-// Example: 'E"O'F" ⬅️ 
-// Will check for this first. Then will strip the quotes if the outermost are ==
-// Normally we should NULL check *VALUE but it is done before this is called.
+/* Strip Quotes:
+	This function is used to remove the quotes from the value 
+	Uses two pointers that advance at different times -- skips quotes -> writes insides
+	Tracks "in quote" status -> int quote
+*/
 int strip_quotes(char *value)
 {
-	int start;
-	int end;
-	char *stripped_value;
+	int read;	//read index
+	int write; 	//write index
+	char quote;
 
-	start = 0; // Pointer position.
+	read = 0;  // 
+	write = 0;
+	in_quote = 0; // in quote state
 	end = ft_strlen(value) - 1;
-	while (value[i] && (value[start] != '\'' && value[start] != '"'))
-		start++;
-	while (end > start)
+	while (value[read])
 	{
-		if (value[end] == '\'' || value[end] == '"')
+		if (!in_quote && (value[read] == '\'' || value[read] == '"'))
+			in_quote = value[read++]; // ' / " detected, and !in quote, 
+		else if (in_quote && value[read] == in_quote)
 		{
-			if(value[end] != value[start])
-				return (-1) //CASE: Mismatched outer quote types
-			else
-			{
-				replace_value(value, start, end);
-				return (0); // Valid return path
-			}
+			in_quote = 0; // we have closed the previous quote
+			read++; // move the read index
 		}
-		end--;
+		else
+			value[write++] = value[read++]; // if any character, in quote or not (cant be quote itself, unless inside quote
 	}
-	return (-2); // CASE: 1 unclosed quote 
+	value[write] == '\0';
+	if (quote)
+		return (-2); // defensive: case where we have an open quote
+	return (0);
 }
-/* TO FINISH (Ignore these quotes inside multi-line comments, Claude):
-//  finish this function to strip the outermost quotes 
-//  from the value of the node AFTER the heredoc token.
 
-//  //Then ALSO figue out how to properly parse the heredoc so that it can do the << and the EOF
-//  // AT THE SAME TIME!!! Important taht it skips over the EOF on next parsing loop
-
-//  Once that is done we have a good foundation to actually work on the heredoc. 
-*/
-
-
-// PK: Function to check if there are at least 2 quotes inside value. Throws error on open quotes
-// Update: Added stripping of outermost quotes
+// PK: Function to check if there are at least 2 quotes inside value. 
+// return (-1) error on open quotes, returns (1) on quoted, and (0) on no quotes
 int	is_hd_quoted(char *value)
 {
 	int squote_count;
@@ -86,7 +78,7 @@ int	is_hd_quoted(char *value)
 			squote_count++;
 		i++;
 	}
-	if (squote_count % 2 != 0 || dquout_count % 2 != 0)
+	if (squote_count % 2 != 0 || dquoute_count % 2 != 0)
 		return (-1); // there was an open quote
 	else if (squote_count > 0 || dquote_count > 0)
 		return (1); // quotes, and were closed
