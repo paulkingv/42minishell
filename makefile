@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pking <pking@student.42.fr>                +#+  +:+       +#+         #
+#    By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/08/11 00:15:20 by pking            ###   ########.fr        #
+#    Updated: 2026/08/11 12:12:58 by jfox             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC =	main.c \
 		execution/exec_builtin/exec_child_builtin.c \
 		execution/exec_heredoc/exec_handle_heredoc.c \
 		environment/environment.c environment/environment_utils.c \
+		expansion/process.c expansion/expand_tokens.c \
 		parsing/parsing.c parsing/parsing_redirects.c \
 		parsing/parsing_heredoc.c \
 		builtins/builtin.c builtins/builtin_utils.c \

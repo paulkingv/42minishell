@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/11 00:16:32 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/11 18:38:31 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "libft.h"
 # if defined(__APPLE__)
 # 	include <sys/syslimits.h> //PATH_MAX, ARG_MAX on macOS
-# else 
+# else
 #	include <linux/limits.h>
 # endif
 // # include <linux/limits.h>
@@ -125,6 +125,15 @@ void	unset_env(t_env **head, char *key);
 t_env	*new_env(char *key, char *value);
 t_env	*find_env(t_env *s_env, char *key);
 char	*get_env(t_env *s_env, char	*key);
+
+//*********************************SRC/EXPANSION******************************//
+//-----------process.C-----------//
+int		process(t_shell *shell, t_token *tokens);
+
+//-------_expand_tokens.c--------//
+int		expand_tokens(t_shell *shell, t_token *tokens);
+char	*expand_word(t_shell *shell, char *word);
+char	*expansion(t_shell *shell, char *word);
 
 //**********************************SRC/PARSING*******************************//
 //-----------PARSING.C-----------//

@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/22 12:50:23 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/11 19:37:45 by jfox             ###   ########.fr       */
+/*   Created: 2026/08/11 11:43:21 by jfox              #+#    #+#             */
+/*   Updated: 2026/08/11 12:17:12 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "minishell.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+// saves lines in main by building a function to handle expand and then parse.
+// possible need to change parse to take the whole shell and not just tokens.
+int		process(t_shell *shell, t_token *tokens)
 {
-	size_t	i;
-	size_t	x;
-
-	i = 0;
-	x = ft_strlen(src);
-	if (size == 0)
-	{
-		return (x);
-	}
-	while (src[i] && i < size - 1)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (x);
+	if (expand_tokens(shell, tokens))
+		return (1);
+	shell->cmdline = parse(shell->tokens, NULL, NULL, NULL);
+	if (!shell->cmdline)
+		return (1);
+	return (0);
 }
