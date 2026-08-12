@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/11 18:38:31 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/12 13:46:10 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,10 @@ int		process(t_shell *shell, t_token *tokens);
 
 //-------_expand_tokens.c--------//
 int		expand_tokens(t_shell *shell, t_token *tokens);
-char	*expand_word(t_shell *shell, char *word);
-char	*expansion(t_shell *shell, char *word);
+//static char	*expand_word(t_shell *shell, char *word);
+//static char	*expansion(t_shell *shell, char *word, int i);
+//static char	*append_char(char *string, char c);
+//static char	*append_string(char *s1, char *s2)
 
 //**********************************SRC/PARSING*******************************//
 //-----------PARSING.C-----------//
@@ -162,7 +164,7 @@ int		ft_unset(t_shell *shell, t_cmd *cmd);
 int		ft_exit(t_shell *shell);
 
 //----------export.c-----------//
-int		ft_export(t_shell *shell, t_cmd *cmd, t_env *tmp, t_cmd *tmp_cmd);
+int		ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tmp_cmd);
 // static char	**ft_export_util(t_cmd *cmd, int i);
 
 //-----------echo.c------------//

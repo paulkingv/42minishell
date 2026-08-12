@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/07/28 12:15:20 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/12 13:47:27 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	exec_builtin(t_shell *shell, t_cmd *cmd)
 	else if (!ft_strncmp(shell->cmdline->args[0], "pwd", 4))
 		status = ft_pwd();
 	else if (!ft_strncmp(shell->cmdline->args[0], "export", 7))
-		status = ft_export(tmp, tmp_cmd, NULL, NULL);
+		status = ft_export(tmp, tmp_cmd, NULL);
 	else if (!ft_strncmp(shell->cmdline->args[0], "unset", 6))
 		status = ft_unset(tmp, tmp_cmd);
 	else if (!ft_strncmp(shell->cmdline->args[0], "env", 4))
