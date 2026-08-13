@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 14:49:09 by pking             #+#    #+#             */
-/*   Updated: 2026/08/11 00:05:34 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/13 02:03:45 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int read_heredocs(t_redir *redir, t_env *env)
 		}
 		redir = redir->next;
 	}
+	reset_signals();
 	return (0);
 }
 // This function is used in tandem with handle_redirects() in order to

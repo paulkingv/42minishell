@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/11 00:16:32 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/13 00:20:01 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@
 # include <readline/readline.h> // for readline
 # include <readline/history.h> //for readline's history (sh history)
 # include <stdlib.h> //malloc
+# include <signals.h> // signals
 
 //**********************************GLOBAL***********************************//
-extern int g_signal_interupt; //
+extern int g_signal_status; //
 
 //**********************************STRUCTS***********************************//
 
@@ -202,5 +203,9 @@ void	exec_child_builtin(t_shell *shell, t_cmd *cmd);
 //**********************************SRC/EXECUTION/EXEC_HEREDOC****************//
 int handle_heredoc(t_redir *redir, t_env *env);
 
-
+//**********************************SRC/SIGNAL****************//
+//------------SIGNAL.C------------//
+void	init_signals(void);
+void	heredoc_signals(void);
+void	reset_signals(void);
 #endif

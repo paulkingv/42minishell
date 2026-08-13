@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/10 23:40:44 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/13 01:43:24 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,20 @@ int	main(int argv, char **argc, char **envp) //added environment table
 	(void)argc;
 	ft_bzero(&minishell, sizeof(t_shell));
 	minishell.env = init_env(envp, NULL, NULL);
+	init_signals();
 	while (minishell.status == 0)
 	{
+		set_signals_prompt();
 		input = readline("/minishell$ ");
 		if (!input && ft_printf("exit\n"))
 			break ;
+		if (g_interrupt_signal == SIGINT)
+		{
+			g_interrupt_signal = 0;
+			minishell.exit = 130;
+			free(input);
+			continue;
+		}
 		if (*input)
 		{
 			add_history(input);
