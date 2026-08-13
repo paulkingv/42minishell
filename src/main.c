@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/13 01:43:24 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/13 03:30:16 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,17 @@ int	main(int argv, char **argc, char **envp) //added environment table
 	init_signals();
 	while (minishell.status == 0)
 	{
-		set_signals_prompt();
+		init_signals();
 		input = readline("/minishell$ ");
 		if (!input && ft_printf("exit\n"))
 			break ;
-		if (g_interrupt_signal == SIGINT)
+		if (g_signal_status == SIGINT)
 		{
-			g_interrupt_signal = 0;
+			g_signal_status = 0;
 			minishell.exit = 130;
 			free(input);
 			continue;
-		}
+		} 
 		if (*input)
 		{
 			add_history(input);

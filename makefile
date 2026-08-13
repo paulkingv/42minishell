@@ -6,7 +6,7 @@
 #    By: pking <pking@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/08/11 00:15:20 by pking            ###   ########.fr        #
+#    Updated: 2026/08/13 03:32:23 by pking            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRC =	main.c \
 		parsing/parsing_heredoc.c \
 		builtins/builtin.c builtins/builtin_utils.c \
 		builtins/export.c builtins/echo.c \
-		shell/shell.c shell/free_utils.c shell/free_shell.c
+		shell/shell.c shell/free_utils.c shell/free_shell.c \
+		signal/signal.c
 
 
 NAME = minishell

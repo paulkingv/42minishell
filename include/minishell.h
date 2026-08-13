@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/13 00:20:01 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/13 03:35:32 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@
 # include <readline/readline.h> // for readline
 # include <readline/history.h> //for readline's history (sh history)
 # include <stdlib.h> //malloc
-# include <signals.h> // signals
+# include <signal.h> // signals
 
 //**********************************GLOBAL***********************************//
-extern int g_signal_status; //
+extern volatile sig_atomic_t g_signal_status; // pk- I will finish this l8r
 
 //**********************************STRUCTS***********************************//
 
