@@ -6,7 +6,7 @@
 #    By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/08/11 12:12:58 by jfox             ###   ########.fr        #
+#    Updated: 2026/08/13 17:56:32 by jfox             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRC_DIR = ./src
 INC_DIR = ./include
 
 SRC =	main.c \
-		tokenize/tokenizing.c \
+		tokenize/tokenizing.c tokenize/token_utils.c \
 		execution/env_to_array.c \
 		execution/exec_close_pipe.c execution/exec_handle_redir.c \
 		execution/exec_safety_funct.c execution/execution.c \
@@ -26,6 +26,7 @@ SRC =	main.c \
 		execution/exec_heredoc/exec_handle_heredoc.c \
 		environment/environment.c environment/environment_utils.c \
 		expansion/process.c expansion/expand_tokens.c \
+		expansion/expand_utils.c \
 		parsing/parsing.c parsing/parsing_redirects.c \
 		parsing/parsing_heredoc.c \
 		builtins/builtin.c builtins/builtin_utils.c \

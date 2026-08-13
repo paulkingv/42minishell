@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/12 13:46:10 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/13 17:55:33 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,9 @@ void	free_array(char **array);
 t_token	*make_new_token(t_token_type type, char *input);
 t_token	*tokenize(char *input, t_token *head, t_token *tail, t_token *new);
 
+//-------token_utils.C--------//
+void	remove_token(t_token **head, t_token *key);
+
 //**********************************SRC/ENVIRONMENT***************************//
 //--------ENVIRONMENT.C-------//
 t_env	*init_env(char **envp, t_env *head, t_env *new);
@@ -130,12 +133,16 @@ char	*get_env(t_env *s_env, char	*key);
 //-----------process.C-----------//
 int		process(t_shell *shell, t_token *tokens);
 
-//-------_expand_tokens.c--------//
+//--------expand_tokens.c--------//
 int		expand_tokens(t_shell *shell, t_token *tokens);
 //static char	*expand_word(t_shell *shell, char *word);
 //static char	*expansion(t_shell *shell, char *word, int i);
-//static char	*append_char(char *string, char c);
-//static char	*append_string(char *s1, char *s2)
+
+//---------expand_utils.c--------//
+char	*append_char(char *string, char c);
+char	*append_string(char *s1, char *s2);
+char	*find_word(char *word);
+int		is_quoted(char *word);
 
 //**********************************SRC/PARSING*******************************//
 //-----------PARSING.C-----------//
@@ -164,7 +171,7 @@ int		ft_unset(t_shell *shell, t_cmd *cmd);
 int		ft_exit(t_shell *shell);
 
 //----------export.c-----------//
-int		ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tmp_cmd);
+int		ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd);
 // static char	**ft_export_util(t_cmd *cmd, int i);
 
 //-----------echo.c------------//

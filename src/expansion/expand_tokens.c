@@ -6,51 +6,11 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 12:06:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/12 18:10:12 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/13 18:26:08 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static char	*append_string(char *s1, char *s2)
-{
-	char	*tmp;
-
-	if (!s2)
-		s2 = "";
-	tmp = ft_strjoin(s1, s2);
-	free(s1);
-	return (tmp);
-}
-
-static char	*append_char(char *string, char c)
-{
-	char	r[2];
-	char	*tmp;
-
-	r[0] = c;
-	r[1] = '\0';
-	tmp = ft_strjoin(string, r);
-	free(string);
-	return (tmp);
-}
-
-static char	*find_word(char *word)
-{
-	char	*ret;
-	int		i;
-
-	ret = "";
-	i = 0;
-	while (ft_isalnum(word[i]))
-		i++;
-	i++;
-	ret = malloc(i + 1);
-	if (!ret)
-		return (NULL);
-	ft_strlcpy(ret, word, i);
-	return (ret);
-}
 
 static char	*expansion(t_shell *shell, char *word, int *i)
 {
@@ -60,13 +20,23 @@ static char	*expansion(t_shell *shell, char *word, int *i)
 	char	*string;
 
 	tenv = shell->env;
-	word++;
-	if (!ft_strcmp(word, "?"))
+	if (!word[1])
 	{
-		value = ft_itoa(shell->exit);
-		*i += ft_strlen(word);
+		value = ft_strdup("$");
 		return (value);
 	}
+	if (word[1] == '?')
+	{
+		value = ft_itoa(shell->exit);
+		*i += 1;
+		return (value);
+	}
+	if (!ft_isalnum(word[1]) && word[1] != '_')
+	{
+		value = ft_strdup("$");
+		return (value);
+	}
+	word++;
 	string = find_word(word);
 	if (!find_env(tenv, string))
 	{
@@ -110,6 +80,7 @@ static char	*expand_word(t_shell *shell, char *word)
 	return (string);
 }
 
+// fix the remove token, needs to switch to next before being removed or save with a tmp
 int	expand_tokens(t_shell *shell, t_token *tokens)
 {
 	t_shell	*tmpshel;
@@ -125,8 +96,13 @@ int	expand_tokens(t_shell *shell, t_token *tokens)
 			expanded = expand_word(tmpshel, tmptok->value);
 			if (!expanded)
 				return (1);
-			free(tmptok->value);
-			tmptok->value = expanded;
+			if (expanded[0] == '\0' && !is_quoted(tmptok->value))
+				remove_token(&shell->tokens, tmptok);
+			else
+			{
+				free(tmptok->value);
+				tmptok->value = expanded;
+			}
 		}
 		tmptok = tmptok->next;
 	}

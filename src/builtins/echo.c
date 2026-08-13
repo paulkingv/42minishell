@@ -6,28 +6,11 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 12:25:55 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/12 15:48:39 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/13 15:52:04 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// handle $?
-// static void	ft_echo_exit(t_shell *shell, char **args, int i)
-// {
-// 	while (args[i])
-// 	{
-// 		if (args[i + 1])
-// 		{
-// 			if (!ft_strncmp(args[i + 1], "+", 2)
-// 				&& !ft_strncmp(args[i + 2], "$?", 3))
-// 				ft_printf("%d", shell->exit + shell->exit);
-// 		}
-// 		else
-// 			ft_printf("%d", shell->exit);
-// 		return ;
-// 	}
-// }
 
 // -n check for echo
 static int	is_n_option(char *arg)
@@ -63,11 +46,6 @@ int	ft_echo(t_shell *shell)
 	}
 	while (args[i])
 	{
-		// if (!ft_strncmp(args[i], "$?", 3))
-		// {
-		// 	ft_echo_exit(shell, args, i);
-		// 	break;
-		// }
 		ft_printf("%s", args[i]);
 		if (args[i + 1])
 			ft_printf(" ");
