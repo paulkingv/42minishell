@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/07/28 12:15:20 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/15 00:30:13 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_builtin(t_cmd *cmd)
 {
-	if (!cmd || !cmd->args)
+	if (!cmd || !cmd->args || !cmd->args[0]) // !cmd->args[0]: so that << EOF works 
 		return (0);
 	if (!ft_strncmp(cmd->args[0], "echo", 5))
 		return (1);
