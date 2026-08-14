@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/13 17:55:33 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/14 14:03:08 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ char	*get_env(t_env *s_env, char	*key);
 int		process(t_shell *shell, t_token *tokens);
 
 //--------expand_tokens.c--------//
-int		expand_tokens(t_shell *shell, t_token *tokens);
+int		expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n);
 //static char	*expand_word(t_shell *shell, char *word);
 //static char	*expansion(t_shell *shell, char *word, int i);
 
@@ -218,7 +218,7 @@ int		exec_builtin(t_shell *shell, t_cmd *cmd);
 void	exec_child_builtin(t_shell *shell, t_cmd *cmd);
 
 //**********************************SRC/EXECUTION/EXEC_HEREDOC****************//
-int handle_heredoc(t_redir *redir, t_env *env);
+int		handle_heredoc(t_redir *redir, t_env *env);
 
 
 #endif

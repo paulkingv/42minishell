@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 12:06:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/13 18:26:08 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/14 14:03:44 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,31 +80,31 @@ static char	*expand_word(t_shell *shell, char *word)
 	return (string);
 }
 
-// fix the remove token, needs to switch to next before being removed or save with a tmp
-int	expand_tokens(t_shell *shell, t_token *tokens)
+int	expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n)
 {
-	t_shell	*tmpshel;
-	t_token	*tmptok;
 	char	*expanded;
 
-	tmptok = tokens;
-	tmpshel = shell;
-	while (tmptok)
+	ttok = tok;
+	while (ttok)
 	{
-		if (tmptok->type == WORD)
+		n = ttok->next;
+		if (ttok->type == WORD)
 		{
-			expanded = expand_word(tmpshel, tmptok->value);
+			expanded = expand_word(shell, ttok->value);
 			if (!expanded)
 				return (1);
-			if (expanded[0] == '\0' && !is_quoted(tmptok->value))
-				remove_token(&shell->tokens, tmptok);
+			if (expanded[0] == '\0' && !is_quoted(ttok->value))
+			{
+				free(expanded);
+				remove_token(&shell->tokens, ttok);
+			}
 			else
 			{
-				free(tmptok->value);
-				tmptok->value = expanded;
+				free(ttok->value);
+				ttok->value = expanded;
 			}
 		}
-		tmptok = tmptok->next;
+		ttok = n;
 	}
 	return (0);
 }

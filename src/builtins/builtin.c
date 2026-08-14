@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 15:35:37 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/31 12:26:15 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/14 14:18:36 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 // cd with only a relative or absolute path
 int	ft_cd(t_shell *shell, t_cmd *cmd)
 {
-// NEED TO WORK ON RELATIVE PATH VERSION
 	char	*new_path;
 	char	*old_path;
 

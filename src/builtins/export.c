@@ -6,34 +6,57 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 16:19:26 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/13 17:22:24 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/14 16:15:44 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_print_export(t_shell *shell)
+static void	sort_array(t_env **array)
 {
 	t_env	*tmp;
+	int i;
 
-	tmp = shell->env;
-	if (tmp)
+	i = 0;
+	while (array[i] && array[i + 1])
 	{
-		while (tmp)
+		if (ft_strcmp(array[i]->key,array[i + 1]->key) > 0)
 		{
-			ft_printf("declare - x ");
-			if (!tmp->value)
-				ft_printf("%s\n", tmp->key);
-			else if (!ft_strcmp(tmp->value, "\"\""))
-				ft_printf("%s=\n", tmp->key);
-			else
-				ft_printf("%s=\"%s\"\n", tmp->key, tmp->value);
-			tmp = tmp->next;
+			tmp = array[i];
+			array[i] = array[i + 1];
+			array[i + 1] = tmp;
+			i = 0;
 		}
+		else
+			i++;
 	}
 }
 
+// adjust this to print in alpha order. add helper
+static void	ft_print_export(t_shell *shell)
+{
+	t_env	**tmp;
+	int		i;
 
+	//tmp = env_to_array(shell->env);
+	tmp = export_array(shell->env); //needs building
+	if (!tmp)
+		return ;
+	sort_array(tmp);
+	i = 0;
+	while (tmp[i])
+	{
+		ft_printf("declare -x ");
+		if (!tmp[i]->value)
+			ft_printf("%s\n", tmp[i]->key);
+		else if (!ft_strcmp(tmp[i]->value, "\"\""))
+			ft_printf("%s=\n", tmp[i]->key);
+		else
+			ft_printf("%s=\"%s\"\n", tmp[i]->key, tmp[i]->value);
+		i++;
+	}
+	free(tmp);
+}
 
 static char	**ft_export_util(t_cmd *cmd, int i)
 {
@@ -42,9 +65,9 @@ static char	**ft_export_util(t_cmd *cmd, int i)
 
 	strings = ft_calloc(3, sizeof(char *));
 	equal = ft_strchr(cmd->args[i], '=');
-	if (!ft_strchr(cmd->args[i], '='))
+	if (!equal)
 	{
-		strings[0] = ft_substr(cmd->args[i], 0, equal - cmd->args[i]);
+		strings[0] = ft_strdup(cmd->args[i]);
 		return (strings);
 	}
 	strings[0] = ft_substr(cmd->args[i], 0, equal - cmd->args[i]);
@@ -53,6 +76,7 @@ static char	**ft_export_util(t_cmd *cmd, int i)
 }
 
 // export with no options
+// add helper to reject not alpha chars in var names.
 int	ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd)
 {
 	char	**strings;
