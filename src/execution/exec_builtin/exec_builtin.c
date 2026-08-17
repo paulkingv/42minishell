@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/08/12 13:47:27 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/17 12:06:16 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_builtin(t_cmd *cmd)
 {
-	if (!cmd || !cmd->args)
+	if (!cmd || !cmd->args || !cmd->args[0])
 		return (0);
 	if (!ft_strncmp(cmd->args[0], "echo", 5))
 		return (1);
@@ -43,6 +43,8 @@ int	exec_builtin(t_shell *shell, t_cmd *cmd)
 	tmp = shell;
 	tmp_cmd = cmd;
 	status = 0;
+	if (!shell->cmdline->args[0])
+		return (status);
 	if (!ft_strncmp(shell->cmdline->args[0], "echo", 5))
 		status = ft_echo(tmp);
 	else if (!ft_strncmp(shell->cmdline->args[0], "cd", 3))

@@ -6,31 +6,11 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 16:19:26 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/14 16:15:44 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/17 11:16:01 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	sort_array(t_env **array)
-{
-	t_env	*tmp;
-	int i;
-
-	i = 0;
-	while (array[i] && array[i + 1])
-	{
-		if (ft_strcmp(array[i]->key,array[i + 1]->key) > 0)
-		{
-			tmp = array[i];
-			array[i] = array[i + 1];
-			array[i + 1] = tmp;
-			i = 0;
-		}
-		else
-			i++;
-	}
-}
 
 // adjust this to print in alpha order. add helper
 static void	ft_print_export(t_shell *shell)
@@ -38,8 +18,7 @@ static void	ft_print_export(t_shell *shell)
 	t_env	**tmp;
 	int		i;
 
-	//tmp = env_to_array(shell->env);
-	tmp = export_array(shell->env); //needs building
+	tmp = export_array(shell->env);
 	if (!tmp)
 		return ;
 	sort_array(tmp);
@@ -58,6 +37,7 @@ static void	ft_print_export(t_shell *shell)
 	free(tmp);
 }
 
+// break the valid command argument into a string array holding key and value
 static char	**ft_export_util(t_cmd *cmd, int i)
 {
 	char	**strings;
@@ -76,7 +56,6 @@ static char	**ft_export_util(t_cmd *cmd, int i)
 }
 
 // export with no options
-// add helper to reject not alpha chars in var names.
 int	ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd)
 {
 	char	**strings;
@@ -88,14 +67,14 @@ int	ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd)
 		ft_print_export(shell);
 	while (tcmd->args[i])
 	{
-		if (ft_isdigit(tcmd->args[i][0]) || !ft_strncmp(tcmd->args[i], "=", 1))
+		if (!valid_export(tcmd->args[i]))
 		{
-			if (tcmd->args[i + 1] == NULL)
-			{
-				shell->exit = 1;
-				break ;
-			}
+			ft_putstr_fd("export: `", 2);
+			ft_putstr_fd(tcmd->args[i], 2);
+			ft_putstr_fd("not a valid identifier\n", 2);
+			shell->exit = 1;
 			i++;
+			continue;
 		}
 		strings = ft_export_util(tcmd, i);
 		set_env(&shell->env, strings[0], strings[1]);

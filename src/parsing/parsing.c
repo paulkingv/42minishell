@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 14:02:16 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/11 10:55:44 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/17 13:14:59 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,7 @@ static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 		}
 		if (tmp->type == REDIR_OUT || tmp->type == REDIR_IN
 			|| tmp->type == APPEND || tmp->type == HEREDOC)
-		{
 			sort_redirections(cmd, &tmp);
-			// if (!tmp->next) 	// Claude says its redundant after te work in sort_redirs.
-			// { 				// If this works without, delete me and the brackets-- we're under 25
-			// 	// error
-			// 	return ;
-			// }
-		}
 		if (tmp->type == PIPE)
 			return ;
 		tmp = tmp->next;

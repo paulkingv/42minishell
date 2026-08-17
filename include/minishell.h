@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/14 14:03:08 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/17 12:37:15 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,13 @@ int		ft_exit(t_shell *shell);
 //----------export.c-----------//
 int		ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd);
 // static char	**ft_export_util(t_cmd *cmd, int i);
+//static void	ft_print_export(t_shell *shell);
+
+//-------export_utils.c--------//
+int	valid_export(char *arg);
+void	sort_array(t_env **array);
+t_env	**export_array(t_env *env);
+//static int		env_count(t_env	*env);
 
 //-----------echo.c------------//
 int		ft_echo(t_shell *shell);
@@ -194,7 +201,7 @@ char	**env_to_array(t_env *env);
 //-----exec_handle_redir.c-----//
 int		open_redir_file(t_redir *redir);
 int		read_heredocs(t_redir *redir, t_env *env);
-int		handle_redirects(t_redir *redir, t_env *env);
+int		handle_redirects(t_redir *redir, t_env *env, t_shell *shell);
 
 //-----exec_safety_funct.c-----//
 int		safe_dup2(int fd, int target_fd);
@@ -219,6 +226,5 @@ void	exec_child_builtin(t_shell *shell, t_cmd *cmd);
 
 //**********************************SRC/EXECUTION/EXEC_HEREDOC****************//
 int		handle_heredoc(t_redir *redir, t_env *env);
-
 
 #endif
