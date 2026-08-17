@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 11:08:02 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/17 11:06:49 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/17 14:53:10 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ int	ft_exit(t_shell *shell)
 	{
 		i = ft_atoi(tmp->args[1]);
 		shell->status = 1;
-		ft_putstr_fd("exit\n", 2);
 		return (i);
 	}
 	shell->status = 1;
-	ft_putstr_fd("exit\n", 2);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/17 12:37:15 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/17 15:42:25 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,9 +176,9 @@ int		ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd);
 //static void	ft_print_export(t_shell *shell);
 
 //-------export_utils.c--------//
-int	valid_export(char *arg);
-void	sort_array(t_env **array);
 t_env	**export_array(t_env *env);
+void	sort_array(t_env **array);
+int		valid_export(char *arg);
 //static int		env_count(t_env	*env);
 
 //-----------echo.c------------//
@@ -226,5 +226,6 @@ void	exec_child_builtin(t_shell *shell, t_cmd *cmd);
 
 //**********************************SRC/EXECUTION/EXEC_HEREDOC****************//
 int		handle_heredoc(t_redir *redir, t_env *env);
+
 
 #endif
