@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/08/10 22:37:27 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/17 12:36:37 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	child_exe_cmd(int prev_fd, int pipe_fd[2],
 {
 	char	*valid_cmd;
 	char	**envp;
-	
+
 	if (tmp_cmd->redirections // try read_heredocs & set up fds
 		&& read_heredocs(tmp_cmd->redirections, shell->env) == -1)
 		exit(1);
@@ -74,7 +74,7 @@ static void	child_exe_cmd(int prev_fd, int pipe_fd[2],
 	if (tmp_cmd->next)
 		exec_close_pipe(pipe_fd);
 	if (tmp_cmd->redirections)
-		handle_redirects(tmp_cmd->redirections, shell->env);
+		handle_redirects(tmp_cmd->redirections, shell->env, shell);
 	if (!tmp_cmd->args || !tmp_cmd->args[0])
 		exit(free_shell(shell));
 	if (is_builtin(tmp_cmd))

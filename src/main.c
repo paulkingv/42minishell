@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/10 23:40:44 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/17 15:28:40 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 //     cur = head;
 //     while (cur)
 //     {
-//         printf("type: %d | value: '%s'\n", cur->type, cur->value);
+//         printf("type: %d | value: %s\n", cur->type, cur->value);
 //         cur = cur->next;
 //     }
 // }
@@ -76,8 +76,8 @@
 			// print_cmd(minishell.cmdline);
 			// print_cmd(minishell->cmdline);
 
-
-int	main(int argv, char **argc, char **envp) //added environment table
+//added environment table
+int	main(int argv, char **argc, char **envp)
 {
 	t_shell	minishell;
 	char	*input;
@@ -96,7 +96,7 @@ int	main(int argv, char **argc, char **envp) //added environment table
 			add_history(input);
 			minishell.tokens = tokenize(input, NULL, NULL, NULL);
 			// print_tokens(minishell.tokens);
-			minishell.cmdline = parse(minishell.tokens, NULL, NULL, NULL);
+			minishell.exit = process(&minishell, minishell.tokens);
 			// print_cmd(minishell.cmdline);
 			exe_cmdline(&minishell);
 			free_tokens(&minishell.tokens);
