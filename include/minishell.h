@@ -28,9 +28,10 @@
 # include <readline/readline.h> // for readline
 # include <readline/history.h> //for readline's history (sh history)
 # include <stdlib.h> //malloc
+# include <signal.h> // signals
 
 //**********************************GLOBAL***********************************//
-extern int g_signal_interupt; //
+extern volatile sig_atomic_t g_signal_status; // pk- I will finish this l8r
 
 //**********************************STRUCTS***********************************//
 
@@ -227,5 +228,9 @@ void	exec_child_builtin(t_shell *shell, t_cmd *cmd);
 //**********************************SRC/EXECUTION/EXEC_HEREDOC****************//
 int		handle_heredoc(t_redir *redir, t_env *env);
 
-
+//**********************************SRC/SIGNAL****************//
+//------------SIGNAL.C------------//
+void	init_signals(void);
+void	heredoc_signals(void);
+void	reset_signals(void);
 #endif

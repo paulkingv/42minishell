@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 11:08:02 by jfox              #+#    #+#             */
 /*   Updated: 2026/08/17 14:53:10 by jfox             ###   ########.fr       */
@@ -24,9 +24,13 @@ int	ft_exit(t_shell *shell)
 	{
 		i = ft_atoi(tmp->args[1]);
 		shell->status = 1;
+		shell->exit	= i;
+		ft_printf("exit\n");
 		return (i);
 	}
 	shell->status = 1;
+	shell->exit = 0;
+	ft_printf("exit\n");
 	return (0);
 }
 

@@ -32,6 +32,7 @@ SRC =	main.c \
 		builtins/builtin.c builtins/builtin_utils.c \
 		builtins/export.c builtins/export_utils.c \
 		builtins/echo.c \
+    signal/signal.c \
 		shell/shell.c shell/free_utils.c shell/free_shell.c
 
 NAME = minishell

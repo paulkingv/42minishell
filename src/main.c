@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/17 15:28:40 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/13 16:51:17 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void print_tokens(t_token *head)
-// {
-//     t_token *cur;
+static void print_tokens(t_token *head)
+{
+    t_token *cur;
 
-//     cur = head;
-//     while (cur)
-//     {
-//         printf("type: %d | value: %s\n", cur->type, cur->value);
-//         cur = cur->next;
-//     }
-// }
+    cur = head;
+    while (cur)
+    {
+        printf("type: %d | value: '%s'\n", cur->type, cur->value);
+        cur = cur->next;
+    }
+}
 
 // static void print_shell_envi(t_env *head)
 // {
@@ -37,40 +37,40 @@
 // 	}
 // }
 
-// static void print_cmd(t_cmd *head)
-// {
-// 	t_cmd	*cur = NULL;
-// 	t_redir *redir = NULL;
-// 	int		i;
-// 	int		x;
+static void print_cmd(t_cmd *head)
+{
+	t_cmd	*cur = NULL;
+	t_redir *redir = NULL;
+	int		i;
+	int		x;
 
-// 	cur = head;
-// 	x = 1;
-// 	while (cur)
-// 	{
-// 		i = 0;
-// 		redir = cur->redirections;
-// 		printf("Command %d: \n",x);
-// 		if (!cur->args)
-// 			return ;
-// 		while (cur->args[i])
-// 		{
-// 			printf("arg[%d]: %s\n", i, cur->args[i]);
-// 			i++;
-// 			if (redir)
-// 			{
-// 				while (redir)
-// 				{
-// 					printf("redirection: %d\n", redir->type);
-// 					printf("File: %s\n", redir->file_name);
-// 					redir = redir->next;
-// 				}
-// 			}
-// 		}
-// 		x++;
-// 		cur = cur->next;
-// 	}
-// }
+	cur = head;
+	x = 1;
+	while (cur)
+	{
+		i = 0;
+		redir = cur->redirections;
+		printf("Command %d: \n",x);
+		if (!cur->args)
+			return ;
+		while (cur->args[i])
+		{
+			printf("arg[%d]: %s\n", i, cur->args[i]);
+			i++;
+			if (redir)
+			{
+				while (redir)
+				{
+					printf("redirection: %d\n", redir->type);
+					printf("File: %s\n", redir->file_name);
+					redir = redir->next;
+				}
+			}
+		}
+		x++;
+		cur = cur->next;
+	}
+}
 
 			// print_tokens(minishell.tokens);
 			// print_cmd(minishell.cmdline);
@@ -86,11 +86,20 @@ int	main(int argv, char **argc, char **envp)
 	(void)argc;
 	ft_bzero(&minishell, sizeof(t_shell));
 	minishell.env = init_env(envp, NULL, NULL);
+	init_signals();
 	while (minishell.status == 0)
 	{
+		init_signals();
 		input = readline("/minishell$ ");
 		if (!input && ft_printf("exit\n"))
 			break ;
+		if (g_signal_status == SIGINT)
+		{
+			g_signal_status = 0;
+			minishell.exit = 130;
+			free(input);
+			continue;
+		} 
 		if (*input)
 		{
 			add_history(input);

@@ -26,6 +26,7 @@ int read_heredocs(t_redir *redir, t_env *env)
 		}
 		redir = redir->next;
 	}
+	reset_signals();
 	return (0);
 }
 // This function is used in tandem with handle_redirects() in order to
