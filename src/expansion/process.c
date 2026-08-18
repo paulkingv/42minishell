@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_shell.c                                       :+:      :+:    :+:   */
+/*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/22 02:21:00 by pking             #+#    #+#             */
-/*   Updated: 2026/08/17 15:42:41 by jfox             ###   ########.fr       */
+/*   Created: 2026/08/11 11:43:21 by jfox              #+#    #+#             */
+/*   Updated: 2026/08/14 14:01:43 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// changed the structure of shell in main.
-// meaning there is no memory to free for the shell.
-// commented out free shell for the time being.
-int	free_shell(t_shell *shell)
+// saves lines in main by building a function to handle expand and then parse.
+// possible need to change parse to take the whole shell and not just tokens.
+int		process(t_shell *shell, t_token *tokens)
 {
-	if (shell->cmdline)
-	{
-		free_cmd(&shell->cmdline);
-		shell->cmdline = NULL;
-	}
-	if (shell->tokens)
-	{
-		free_tokens(&shell->tokens);
-		shell->tokens = NULL;
-	}
-	if (shell->env)
-	{
-		free_env(&shell->env);
-		shell->env = NULL;
-	}
+	if (expand_tokens(shell, tokens, NULL, NULL))
+		return (1);
+	shell->cmdline = parse(shell->tokens, NULL, NULL, NULL);
+	if (!shell->cmdline)
+		return (1);
 	return (0);
 }

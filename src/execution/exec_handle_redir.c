@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle_redir.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 14:49:09 by pking             #+#    #+#             */
-/*   Updated: 2026/08/13 02:03:45 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/17 12:37:25 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	open_redir_file(t_redir *redir)
 }
 
 // CC says this should work
-int	handle_redirects(t_redir *redir, t_env *env)
+int	handle_redirects(t_redir *redir, t_env *env, t_shell *shell)
 {
 	int	fd;
 
@@ -56,7 +56,7 @@ int	handle_redirects(t_redir *redir, t_env *env)
 	fd = 0;
 	while (redir)
 	{
-		
+
 		if (redir->type == HEREDOC) // essential: do this in loop to read multiple HDs
 		{
 			fd = redir->heredoc_fd;
@@ -68,13 +68,14 @@ int	handle_redirects(t_redir *redir, t_env *env)
 			if (fd == -1)
 			{
 				perror(redir->file_name);
+				free_shell(shell);
 				exit(1);
 			}
 			if (redir->type == REDIR_IN)
-				safe_dup2(fd, 0); //dup2(fd, targetfd) 
+				safe_dup2(fd, 0); //dup2(fd, targetfd)
 			else if (redir->type == REDIR_OUT || redir->type == APPEND)
 				safe_dup2(fd, 1);
-		}	
+		}
 		close(fd);
 		redir = redir->next;
 	}

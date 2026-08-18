@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/08/15 00:30:13 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/17 12:06:16 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_builtin(t_cmd *cmd)
 {
-	if (!cmd || !cmd->args || !cmd->args[0]) // !cmd->args[0]: so that << EOF works 
+	if (!cmd || !cmd->args || !cmd->args[0])
 		return (0);
 	if (!ft_strncmp(cmd->args[0], "echo", 5))
 		return (1);
@@ -43,6 +43,8 @@ int	exec_builtin(t_shell *shell, t_cmd *cmd)
 	tmp = shell;
 	tmp_cmd = cmd;
 	status = 0;
+	if (!shell->cmdline->args[0])
+		return (status);
 	if (!ft_strncmp(shell->cmdline->args[0], "echo", 5))
 		status = ft_echo(tmp);
 	else if (!ft_strncmp(shell->cmdline->args[0], "cd", 3))
@@ -50,7 +52,7 @@ int	exec_builtin(t_shell *shell, t_cmd *cmd)
 	else if (!ft_strncmp(shell->cmdline->args[0], "pwd", 4))
 		status = ft_pwd();
 	else if (!ft_strncmp(shell->cmdline->args[0], "export", 7))
-		status = ft_export(tmp, tmp_cmd, NULL, NULL);
+		status = ft_export(tmp, tmp_cmd, NULL);
 	else if (!ft_strncmp(shell->cmdline->args[0], "unset", 6))
 		status = ft_unset(tmp, tmp_cmd);
 	else if (!ft_strncmp(shell->cmdline->args[0], "env", 4))

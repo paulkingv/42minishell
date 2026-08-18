@@ -1,36 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_shell.c                                       :+:      :+:    :+:   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/22 02:21:00 by pking             #+#    #+#             */
-/*   Updated: 2026/08/17 15:42:41 by jfox             ###   ########.fr       */
+/*   Created: 2026/08/13 17:43:07 by jfox              #+#    #+#             */
+/*   Updated: 2026/08/13 17:59:23 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// changed the structure of shell in main.
-// meaning there is no memory to free for the shell.
-// commented out free shell for the time being.
-int	free_shell(t_shell *shell)
+void	remove_token(t_token **head, t_token *key)
 {
-	if (shell->cmdline)
+	t_token	*current;
+	t_token	*prev;
+
+	current = *head;
+	while (current)
 	{
-		free_cmd(&shell->cmdline);
-		shell->cmdline = NULL;
+		if (current == key)
+		{
+			if (current == *head)
+				*head = current->next;
+			else
+				prev->next = current->next;
+			free(current->value);
+			free(current);
+			return ;
+		}
+		prev = current;
+		current = current->next;
 	}
-	if (shell->tokens)
-	{
-		free_tokens(&shell->tokens);
-		shell->tokens = NULL;
-	}
-	if (shell->env)
-	{
-		free_env(&shell->env);
-		shell->env = NULL;
-	}
-	return (0);
 }

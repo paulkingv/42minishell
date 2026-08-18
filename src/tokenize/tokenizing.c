@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/06 21:50:49 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/17 15:29:15 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* WORKING VERSION: */
-// 		Desc: 
-//			This function will "tokenize" the input array. 
+// 		Desc:
+//			This function will "tokenize" the input array.
 //			It does this by separating based on the space.
 //			Returns the LL of args (including quotes).
 //goes thru the word until the end to find the last char
@@ -109,7 +109,8 @@ t_token	*tokenize(char *input, t_token *head, t_token *tail, t_token *new)
 			i = find_end_word(input, i);
 			if(i == -1)
 			{
-				write (2, "minishell: syntax error: unclosed quote\n", 40);
+				// write (2, "minishell: syntax error: unclosed quote\n", 40);
+				ft_putstr_fd("unexpected EOF while looking for matching `\"' syntax error: unexpected end of file", 2);
 				free_tokens(&head);
 				return (NULL); // Unclosed quote edge case. Normally opens dsquote doc
 			}

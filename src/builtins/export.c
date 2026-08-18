@@ -3,74 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 16:19:26 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/10 19:53:29 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/17 11:16:01 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// adjust this to print in alpha order. add helper
 static void	ft_print_export(t_shell *shell)
 {
-	t_env	*tmp;
+	t_env	**tmp;
+	int		i;
 
-	tmp = shell->env;
-	if (tmp)
+	tmp = export_array(shell->env);
+	if (!tmp)
+		return ;
+	sort_array(tmp);
+	i = 0;
+	while (tmp[i])
 	{
-		while (tmp)
-		{
-			if (!tmp->value)
-				ft_printf("%s=''\n", tmp->key);
-			else
-				ft_printf("%s=%s\n", tmp->key, tmp->value);
-			tmp = tmp->next;
-		}
+		ft_printf("declare -x ");
+		if (!tmp[i]->value)
+			ft_printf("%s\n", tmp[i]->key);
+		else if (!ft_strcmp(tmp[i]->value, "\"\""))
+			ft_printf("%s=\n", tmp[i]->key);
+		else
+			ft_printf("%s=\"%s\"\n", tmp[i]->key, tmp[i]->value);
+		i++;
 	}
+	free(tmp);
 }
 
+// break the valid command argument into a string array holding key and value
 static char	**ft_export_util(t_cmd *cmd, int i)
 {
 	char	**strings;
+	char	*equal;
 
-	if (!ft_strchr(cmd->args[i], '='))
+	strings = ft_calloc(3, sizeof(char *));
+	equal = ft_strchr(cmd->args[i], '=');
+	if (!equal)
 	{
-		strings = ft_split(cmd->args[i], '=');
+		strings[0] = ft_strdup(cmd->args[i]);
 		return (strings);
 	}
-	strings = ft_split(cmd->args[i], '=');
-	if (strings && !strings[1])
-		strings[1] = "\'\'";
+	strings[0] = ft_substr(cmd->args[i], 0, equal - cmd->args[i]);
+	strings[1] = ft_strdup(equal + 1);
 	return (strings);
 }
 
 // export with no options
-int	ft_export(t_shell *shell, t_cmd *cmd, t_env *tmp, t_cmd *tmp_cmd)
+int	ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd)
 {
 	char	**strings;
 	int		i;
 
-	// tmp = shell->env; <- can be deleted, left for reference
-	(void)tmp; // tmp was never used
-	tmp_cmd = cmd;
+	tcmd = cmd;
 	i = 1;
-	if (!tmp_cmd->args[i])
+	if (!tcmd->args[i])
 		ft_print_export(shell);
-	while (tmp_cmd->args[i])
+	while (tcmd->args[i])
 	{
-		if (ft_isdigit(tmp_cmd->args[i][0])
-			|| !ft_strncmp(tmp_cmd->args[i], "=", 1))
+		if (!valid_export(tcmd->args[i]))
 		{
-			if (tmp_cmd->args[i + 1] == NULL)
-			{
-				shell->exit = 1;
-				break ;
-			}
+			ft_putstr_fd("export: `", 2);
+			ft_putstr_fd(tcmd->args[i], 2);
+			ft_putstr_fd("not a valid identifier\n", 2);
+			shell->exit = 1;
 			i++;
+			continue;
 		}
-		strings = ft_export_util(tmp_cmd, i);
+		strings = ft_export_util(tcmd, i);
 		set_env(&shell->env, strings[0], strings[1]);
+		free_array(strings);
 		i++;
 	}
 	return (shell->exit);

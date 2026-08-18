@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 11:08:02 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/12 03:16:55 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/17 14:53:10 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	ft_env(t_shell *shell)
 	{
 		if (tmp->value != NULL)
 		{
-			if (!ft_strncmp(tmp->value, "\'\'", 3))
+			if (!ft_strncmp(tmp->value, "\"\"", 3))
 				ft_printf("%s=\n", tmp->key);
 			else
 				ft_printf("%s=%s\n", tmp->key, tmp->value);

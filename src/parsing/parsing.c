@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 14:02:16 by jfox              #+#    #+#             */
 /*   Updated: 2026/08/13 23:57:13 by pking            ###   ########.fr       */
@@ -46,7 +46,6 @@ static int	count_args(t_token *tokens)
 	return (i);
 }
 
-// Function needs work, much too big and complicated.
 // No error handling also, although some protections are here.
 // Here we take an empty command struct and start to fill it with either
 // arguments or Redirects.
@@ -75,14 +74,7 @@ static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 		}
 		if (tmp->type == REDIR_OUT || tmp->type == REDIR_IN
 			|| tmp->type == APPEND || tmp->type == HEREDOC)
-		{
 			sort_redirections(cmd, &tmp);
-			// if (!tmp->next) 	// Claude says its redundant after te work in sort_redirs. 
-			// { 				// If this works without, delete me and the brackets-- we're under 25
-			// 	// error
-			// 	return ;
-			// }
-		}
 		if (tmp->type == PIPE)
 			return ;
 		tmp = tmp->next;

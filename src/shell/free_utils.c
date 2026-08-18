@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 11:47:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/24 11:20:10 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/17 13:09:02 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	free_tokens(t_token **tokens)
 	while (current)
 	{
 		next = current->next;
-		free(current->value);
+		if (current->value)
+			free(current->value);
 		free(current);
 		current = next;
 	}

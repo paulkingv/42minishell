@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 00:51:05 by pking             #+#    #+#             */
-/*   Updated: 2026/07/24 11:46:13 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/17 13:41:31 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,21 +96,54 @@ static char	*split_and_try_access(char *path_value, char *cmd)
 }
 
 //Meat function. Returns the string of the first possible exec path
+// char	*exec_get_valid_path(t_shell *shell, char *cmd)
+// {
+// 	char	*path_value;
+// 	char	*valid_path_cmd;
+
+// 	path_value = find_path(shell);
+// 	if (path_value)
+// 	{
+// 		if (ft_strchr(cmd, '/'))
+// 		{
+// 			if (access(cmd, X_OK) == 0)
+// 			{
+// 				valid_path_cmd = ft_strdup(cmd);
+// 				return (valid_path_cmd);
+// 			}
+// 			else
+// 				return (NULL);
+// 		}
+// 		valid_path_cmd = split_and_try_access(path_value, cmd);
+// 		if (valid_path_cmd)
+// 			return (valid_path_cmd);
+// 		else
+// 			return (NULL);
+// 	}
+// 	else
+// 		return (NULL);
+// }
+
+//Meat function. Returns the string of the first possible exec path
+// I REORDERED THIS TO HOPEFULLY COVER COMMANDS THAT ONLY HAVE /
 char	*exec_get_valid_path(t_shell *shell, char *cmd)
 {
 	char	*path_value;
 	char	*valid_path_cmd;
 
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, X_OK) == 0)
+		{
+			valid_path_cmd = ft_strdup(cmd);
+			return (valid_path_cmd);
+		}
+		else
+			return (NULL);
+	}
 	path_value = find_path(shell);
 	if (path_value)
 	{
-		if (ft_strchr(cmd, '/'))
-		{
-			if (access(cmd, X_OK) == 0)
-				return (cmd);
-			else
-				return (NULL);
-		}
 		valid_path_cmd = split_and_try_access(path_value, cmd);
 		if (valid_path_cmd)
 			return (valid_path_cmd);

@@ -76,8 +76,8 @@ static void print_cmd(t_cmd *head)
 			// print_cmd(minishell.cmdline);
 			// print_cmd(minishell->cmdline);
 
-
-int	main(int argv, char **argc, char **envp) //added environment table
+//added environment table
+int	main(int argv, char **argc, char **envp)
 {
 	t_shell	minishell;
 	char	*input;
@@ -104,9 +104,9 @@ int	main(int argv, char **argc, char **envp) //added environment table
 		{
 			add_history(input);
 			minishell.tokens = tokenize(input, NULL, NULL, NULL);
-			print_tokens(minishell.tokens);
-			minishell.cmdline = parse(minishell.tokens, NULL, NULL, NULL);
-			print_cmd(minishell.cmdline);
+			// print_tokens(minishell.tokens);
+			minishell.exit = process(&minishell, minishell.tokens);
+			// print_cmd(minishell.cmdline);
 			exe_cmdline(&minishell);
 			free_tokens(&minishell.tokens);
 			free_cmd(&minishell.cmdline);
