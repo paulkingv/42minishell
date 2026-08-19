@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 14:02:16 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/13 23:57:13 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/19 18:11:46 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	count_args(t_token *tokens)
 // Redirections using the sort redirects function.
 // If we hit a pipe we break out of this function as that means the command
 // is finished.
-static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
+static void	sort_tokens(t_shell *shell, t_cmd *cmd_current, t_token *token, int count)
 {
 	t_token	*tmp;
 	t_cmd	*cmd;
@@ -74,7 +74,7 @@ static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 		}
 		if (tmp->type == REDIR_OUT || tmp->type == REDIR_IN
 			|| tmp->type == APPEND || tmp->type == HEREDOC)
-			sort_redirections(cmd, &tmp);
+			sort_redirections(shell, cmd, &tmp);
 		if (tmp->type == PIPE)
 			return ;
 		tmp = tmp->next;
@@ -87,11 +87,11 @@ static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 // then starts to fill that head by moving through the token chained list.
 // Sort tokens does the bulk of the work, it fills command structs with data.
 // This function is simply to build command structs and move through a list.
-t_cmd	*parse(t_token *tokens, t_cmd *head, t_cmd *current, t_token *tmp)
+t_cmd	*parse(t_shell *shell, t_cmd *head, t_cmd *current, t_token *tmp)
 {
 	int		count;
 
-	tmp = tokens;
+	tmp = shell->tokens;
 	head = new_cmd();
 	if (!head)
 		return (NULL);
@@ -99,7 +99,7 @@ t_cmd	*parse(t_token *tokens, t_cmd *head, t_cmd *current, t_token *tmp)
 	while (tmp)
 	{
 		count = count_args(tmp);
-		sort_tokens(current, tmp, count);
+		sort_tokens(shell, current, tmp, count);
 		while (tmp && tmp->type != PIPE)
 			tmp = tmp->next;
 		if (tmp)

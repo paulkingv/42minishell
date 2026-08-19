@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_redirects.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 11:44:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/11 00:14:05 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/19 18:35:38 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int hd_error(t_redir *new, char *value, int qstatus, int etype)
 // However here we can fill it at the same time and we have passed information
 // to this function.
 
-// PK: Updated function to now parse heredoc. 
+// PK: Updated function to now parse heredoc.
 // Checks if NULL, if Unclosed, and if Closed, Strips
 static t_redir	*new_redir(char *value, t_token_type type)
 {
@@ -83,13 +83,14 @@ static void	redir_add_back(t_redir **head, t_redir *new)
 
 // A simple helper to build new redirects as needed, and fill them with the info
 // passed to it by sort_tokens.
-void	sort_redirections(t_cmd *cmd_current, t_token **tmp)
+void	sort_redirections(t_shell *shell, t_cmd *cmd_current, t_token **tmp)
 {
 	t_redir	*new;
 
 	if (!(*tmp)->next || (*tmp)->next->type != WORD)
 	{
-		ft_putstr_fd("minishell: sytanx", 2);
+		ft_putstr_fd("minishell: syntax", 2);
+		shell->exit = 2;
 		return ;
 	}
 	new = new_redir((*tmp)->next->value, (*tmp)->type);

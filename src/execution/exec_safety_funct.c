@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 02:16:14 by pking             #+#    #+#             */
-/*   Updated: 2026/07/24 11:45:10 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/19 18:28:20 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	wait_for_children(pid_t last_pid, t_shell *shell)
 	{
 		if (reaped_pid == last_pid)
 		{
-			if (WIFEXITED(status))
+			if (shell->exit == 0 && WIFEXITED(status))
 				shell->exit = WEXITSTATUS(status);
 			if (WIFSIGNALED(status))
 				shell->exit = 128 + WTERMSIG(status);

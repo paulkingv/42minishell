@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/17 15:42:25 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/19 18:12:39 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,13 +147,13 @@ int		is_quoted(char *word);
 
 //**********************************SRC/PARSING*******************************//
 //-----------PARSING.C-----------//
-t_cmd	*parse(t_token *tokens, t_cmd *head, t_cmd *current, t_token *tmp);
+t_cmd	*parse(t_shell *shell, t_cmd *head, t_cmd *current, t_token *tmp);
 // static t_cmd	*new_cmd(void);
 // static int	count_args(t_token *tokens);
 // static void	sort_tokens(t_cmd *cmd_current, t_token *token, int count)
 
 //------parsing_redirects.c------//
-void	sort_redirections(t_cmd *cmd_current, t_token **tmp);
+void	sort_redirections(t_shell *shell, t_cmd *cmd_current, t_token **tmp);
 // static t_redir	*new_redir(char *value, t_token_type num);
 // static void		redir_add_back(t_redir **head, t_redir *new);
 
