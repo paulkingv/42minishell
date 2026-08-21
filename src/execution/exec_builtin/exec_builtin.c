@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/08/17 12:06:16 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/21 15:25:17 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	exec_builtin(t_shell *shell, t_cmd *cmd)
 	else if (!ft_strncmp(shell->cmdline->args[0], "cd", 3))
 		status = ft_cd(tmp, tmp_cmd);
 	else if (!ft_strncmp(shell->cmdline->args[0], "pwd", 4))
-		status = ft_pwd();
+		status = ft_pwd(tmp);
 	else if (!ft_strncmp(shell->cmdline->args[0], "export", 7))
 		status = ft_export(tmp, tmp_cmd, NULL);
 	else if (!ft_strncmp(shell->cmdline->args[0], "unset", 6))

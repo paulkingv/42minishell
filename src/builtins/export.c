@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 16:19:26 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/17 11:16:01 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/21 18:10:58 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd)
 		{
 			ft_putstr_fd("export: `", 2);
 			ft_putstr_fd(tcmd->args[i], 2);
-			ft_putstr_fd("not a valid identifier\n", 2);
+			ft_putstr_fd("' not a valid identifier\n", 2);
 			shell->exit = 1;
 			i++;
 			continue;
