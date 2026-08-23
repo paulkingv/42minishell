@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/11 00:07:41 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/23 19:01:01 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,30 +34,24 @@ char *hd_expandline(char *line, t_env *env, int quoted)
 				so I reuse prefix as a container to become
 				the string.
 */
-static char *hd_name(int pid) //also needs to get the PID
+static char *hd_name(void) //also needs to get the PID
 {
-	static int 	s_count;
-	char		*num;
-	char		*prefix;
-	char		*filename;
+	char			*ptr;
+	char			filename[128];
+	unsigned long	start_counter;
+	int				fd;
 
-	if(!(num = ft_itoa(s_count++)))
-		return (NULL);
-	if (!(prefix = ft_itoa(pid)))
-		return (NULL);
-	filename = ft_strjoin ("./heredoc_", prefix);
-	free(prefix);
-	if (!filename)
+	ptr = malloc(1);
+	start_counter = (unsigned long)ptr;
+	fd = -1;
+	while (fd == -1)
 	{
-		free(num);
-		return (NULL);
+		filename = ft_itoa(start_counter)
+		fd = open(filename, O_WRONLY | O_CREAT |O_TRUNC | O_EXCL, 0644);
+		start_counter++;
 	}
-	prefix = ft_strjoin(filename, num);
-	free(filename);
-	free(num);
-	if (!prefix)
-		return (NULL);
-	return(prefix);
+
+	return(filename); //not finished
 }
 
 
@@ -88,11 +82,11 @@ static void	hd_loop(int fd, t_redir *redir, t_env *env)
 int handle_heredoc(t_redir *redir, t_env *env) //returns FD
 {
 	int 	fd;
-	char 	*filename;
+	// char 	*filename;
 
-	filename = hd_name(getpid());
-	if (!filename)
-		return (-1);
+	// filename = hd_name();
+	// if (!filename)
+	// 	return (-1);
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if(fd < 0)
 	{
