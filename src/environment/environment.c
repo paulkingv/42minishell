@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:04:19 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/29 16:31:27 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/21 14:37:59 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ t_env	*edit_env(t_env *s_env, char *key, char *new_node)
 	if (!tmp)
 		return (NULL);
 	free(tmp->value);
-	tmp->value = ft_strdup(new_node);
+	if (new_node)
+		tmp->value = ft_strdup(new_node);
+	else
+		tmp->value = NULL;
 	return (tmp);
 }
 
@@ -30,15 +33,15 @@ t_env	*edit_env(t_env *s_env, char *key, char *new_node)
 void	set_env(t_env **s_env, char *key, char *value)
 {
 	t_env	*tmp;
-	t_env	*new_node;
 
-	tmp = *s_env;
-	if (find_env(tmp, key))
+	tmp = find_env(*s_env, key);
+	if (tmp)
 		edit_env(tmp, key, value);
 	else
 	{
-		new_node = new_env(key, value);
-		env_add_back(s_env, new_node);
+		tmp = new_env(key, value);
+		if (tmp)
+			env_add_back(s_env, tmp);
 	}
 }
 
@@ -52,7 +55,7 @@ void	unset_env(t_env **head, char *key)
 	current = *head;
 	while (current)
 	{
-		if (!ft_strncmp(current->key, key, ft_strlen(key)))
+		if (!ft_strcmp(current->key, key))
 		{
 			if (current == *head)
 				*head = current->next;

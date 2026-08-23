@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_get_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 00:51:05 by pking             #+#    #+#             */
-/*   Updated: 2026/08/17 13:41:31 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/20 20:39:40 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static char	*find_path(t_shell *shell)
 // NOTE ⬇️ This leaks [path_cmd needs to be freed]. Free one layer above
 // UPDATE ⬆️ THIS SHOULD BE FIXED NOW
 // Line 81: while i is less than our colon amount + 1
+// line 87 added path_cmd to condition to stop an incorrect memory access.
 static char	*split_and_try_access(char *path_value, char *cmd)
 {
 	char	**paths;
@@ -83,7 +84,7 @@ static char	*split_and_try_access(char *path_value, char *cmd)
 	while (i < paths_count + 1)
 	{
 		path_cmd = join_path_cmd(paths[i], cmd);
-		if (access(path_cmd, X_OK) == 0)
+		if (path_cmd && access(path_cmd, X_OK) == 0)
 		{
 			free_array(paths);
 			return (path_cmd);

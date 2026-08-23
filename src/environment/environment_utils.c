@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 11:38:11 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/24 11:14:59 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/21 14:11:37 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ t_env	*new_env(char *key, char *value)
 	if (!new)
 		return (NULL);
 	new->key = ft_strdup(key);
-	new->value = ft_strdup(value);
+	if (value)
+		new->value = ft_strdup(value);
+	else	
+		new->value = NULL;
 	new->next = NULL;
 	return (new);
 }
@@ -32,16 +35,13 @@ t_env	*new_env(char *key, char *value)
 t_env	*find_env(t_env *s_env, char *key)
 {
 	t_env	*tmp;
-	int		i;
 
 	tmp = s_env;
-	i = ft_strlen(key);
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->key, key, i) != 0)
-			tmp = tmp->next;
-		else
+		if (ft_strcmp(tmp->key, key) == 0)
 			return (tmp);
+		tmp = tmp->next;
 	}
 	return (NULL);
 }
@@ -51,16 +51,9 @@ t_env	*find_env(t_env *s_env, char *key)
 char	*get_env(t_env *s_env, char	*key)
 {
 	t_env	*tmp;
-	int		i;
 
-	tmp = s_env;
-	i = ft_strlen(key);
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->key, key, i) != 0)
-			tmp = tmp->next;
-		else
-			return (tmp->value);
-	}
-	return (NULL);
+	tmp = find_env(s_env, key);
+	if (!tmp)
+		return (NULL);
+	return (tmp->value);
 }

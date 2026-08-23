@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/21 04:31:29 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/21 18:36:21 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <readline/history.h> //for readline's history (sh history)
 # include <stdlib.h> //malloc
 # include <signal.h> // signals
+# include <limits.h>
 
 //**********************************GLOBAL***********************************//
 extern volatile sig_atomic_t g_signal_status; // pk- I will finish this l8r
@@ -169,13 +170,12 @@ int		strip_quotes(char *value);
 
 //**********************************SRC/BUILTINS******************************//
 //----------BUILTIN.C----------//
-int		ft_pwd(void);
+int		ft_pwd(t_shell *shell);
 int		ft_cd(t_shell *shell, t_cmd *cmd);
 
 //-------builtin-utils.c-------//
 int		ft_env(t_shell *shell);
 int		ft_unset(t_shell *shell, t_cmd *cmd);
-int		ft_exit(t_shell *shell);
 
 //----------export.c-----------//
 int		ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd);
@@ -191,6 +191,11 @@ int		valid_export(char *arg);
 //-----------echo.c------------//
 int		ft_echo(t_shell *shell);
 // static int	is_n_option(char *arg);
+
+//-----------exit.c------------//
+int		ft_exit(t_shell *shell);
+// static int  check_number(char *str, long long *val);
+// static void  require_number(t_shell *shell, char *arg);
 
 //**********************************SRC/EXECUTION*****************************//
 //--------EXECUTION.c----------//
@@ -239,4 +244,5 @@ int		handle_heredoc(t_redir *redir, t_env *env);
 void	init_signals(void);
 void	heredoc_signals(void);
 void	reset_signals(void);
+
 #endif
