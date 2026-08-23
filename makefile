@@ -16,6 +16,7 @@ INC_DIR = ./include
 
 SRC =	main.c \
 		tokenize/tokenizing.c tokenize/token_utils.c \
+		tokenize/token_validation.c \
 		execution/env_to_array.c \
 		execution/exec_close_pipe.c execution/exec_handle_redir.c \
 		execution/exec_safety_funct.c execution/execution.c \
@@ -33,7 +34,7 @@ SRC =	main.c \
 		builtins/export.c builtins/export_utils.c \
 		builtins/echo.c \
 		builtins/exit.c \
-    	signal/signal.c \
+    signal/signal.c \
 		shell/shell.c shell/free_utils.c shell/free_shell.c
 
 NAME = minishell

@@ -34,6 +34,9 @@
 //**********************************GLOBAL***********************************//
 extern volatile sig_atomic_t g_signal_status; // pk- I will finish this l8r
 
+//**********************************DEFINES***********************************//
+#define REDIR_MASK (REDIR_OUT | REDIR_IN | APPEND | HEREDOC)
+#define OPERATOR_MASK (REDIR_OUT | REDIR_IN | APPEND | HEREDOC | PIPE)
 //**********************************STRUCTS***********************************//
 
 /*~~~~~~~~TOKENIZATION~~~~~~~~~*/
@@ -113,10 +116,13 @@ void	free_array(char **array);
 //**********************************SRC/TOKENIZE******************************//
 //--------TOKENIZING.C---------//
 t_token	*make_new_token(t_token_type type, char *input);
-t_token	*tokenize(char *input, t_token *head, t_token *tail, t_token *new);
+t_token	*tokenize(char *input, t_shell *shell);
 
 //-------token_utils.C--------//
 void	remove_token(t_token **head, t_token *key);
+
+//-------token_validation.C--------//
+int token_validation(t_token *token, t_shell *shell);
 
 //**********************************SRC/ENVIRONMENT***************************//
 //--------ENVIRONMENT.C-------//

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/19 13:55:17 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/23 14:44:08 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,16 @@ int	main(int argv, char **argc, char **envp)
 		if (*input)
 		{
 			add_history(input);
-			minishell.tokens = tokenize(input, NULL, NULL, NULL);
-			// print_tokens(minishell.tokens);
-			minishell.exit = process(&minishell, minishell.tokens);
-			// print_cmd(minishell.cmdline);
-			exe_cmdline(&minishell);
-			free_tokens(&minishell.tokens);
-			free_cmd(&minishell.cmdline);
+			minishell.tokens = tokenize(input, &minishell);
+			if (minishell.tokens)
+			{
+				// print_tokens(minishell.tokens);
+				minishell.exit = process(&minishell, minishell.tokens);
+				// print_cmd(minishell.cmdline);
+				exe_cmdline(&minishell);
+				free_tokens(&minishell.tokens);
+				free_cmd(&minishell.cmdline);
+			}
 		}
 		free(input);
 	}
