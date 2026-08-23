@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/08/17 12:36:37 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/23 14:40:56 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	child_exe_cmd(int prev_fd, int pipe_fd[2],
 	if (valid_cmd == NULL)
 		invalid_cmd_cleanup(shell, tmp_cmd, envp);
 	execve(valid_cmd, tmp_cmd->args, envp);
-	perror("execve error in child");
+	ft_putstr_fd("execve error in child", 2);
 	free(valid_cmd);
 	free_array(envp);
 	free_shell(shell);

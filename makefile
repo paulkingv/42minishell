@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+         #
+#    By: pking <pking@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/08/17 11:10:48 by jfox             ###   ########.fr        #
+#    Updated: 2026/08/21 04:33:02 by pking            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ INC_DIR = ./include
 
 SRC =	main.c \
 		tokenize/tokenizing.c tokenize/token_utils.c \
+		tokenize/token_validation.c \
 		execution/env_to_array.c \
 		execution/exec_close_pipe.c execution/exec_handle_redir.c \
 		execution/exec_safety_funct.c execution/execution.c \
@@ -32,7 +33,7 @@ SRC =	main.c \
 		builtins/builtin.c builtins/builtin_utils.c \
 		builtins/export.c builtins/export_utils.c \
 		builtins/echo.c \
-    signal/signal.c \
+    	signal/signal.c \
 		shell/shell.c shell/free_utils.c shell/free_shell.c
 
 NAME = minishell
