@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/21 04:26:45 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/23 14:44:08 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,15 @@ int	main(int argv, char **argc, char **envp)
 		{
 			add_history(input);
 			minishell.tokens = tokenize(input, &minishell);
-			// print_tokens(minishell.tokens);
-			minishell.exit = process(&minishell, minishell.tokens);
-			// print_cmd(minishell.cmdline);
-			exe_cmdline(&minishell);
-			free_tokens(&minishell.tokens);
-			free_cmd(&minishell.cmdline);
+			if (minishell.tokens)
+			{
+				// print_tokens(minishell.tokens);
+				minishell.exit = process(&minishell, minishell.tokens);
+				// print_cmd(minishell.cmdline);
+				exe_cmdline(&minishell);
+				free_tokens(&minishell.tokens);
+				free_cmd(&minishell.cmdline);
+			}
 		}
 		free(input);
 	}

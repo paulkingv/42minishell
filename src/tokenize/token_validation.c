@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 02:31:14 by pking             #+#    #+#             */
-/*   Updated: 2026/08/22 00:29:36 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/23 14:58:37 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,21 @@ static void token_syntax_error (t_token *token)
 {
 	if (token->type == PIPE)
 	{
-		if (token->type == NULL)
+		if (token->next == NULL)
 			ft_putstr_fd("syntax error near unexpected token `newline'\n", 2); 
 		else
-
-		type = 127;
+			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
 	}
 	else
 	{
 		if(token->next == NULL)
-			ft_putstr_fd("syntax error near unexpected token `newline'\n");
+			ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
 		else
 		{
-			ft_putstr_fd("syntax error near unexpected token `")
+			ft_putstr_fd("syntax error near unexpecte fd token `", 2);
 			ft_putstr_fd(token->next->value, 2);
 		}
-		if (token->next != NUll)
+		if (token->next != NULL)
 			ft_putstr_fd("'\n", 2);
 	}
 }
@@ -41,36 +40,32 @@ static int validate_tokens(t_token *token) // exit value needs to get changed
 	t_token *clone;
 
 	clone = token;
-	if (!clone)
-		return (-1);
-	if ((clone->type & PIPE)) //only happens first time funct runs - check pipe as first
-		error = token_syntax_error (clone);
 	while (clone) // check the rest of tokens
 	{
-	// first, pipe cant be last or followed by pipe
-		if ((clone->type & PIPE)) // >,<,>>
+	// pipe cant be last or first or followed by pipe
+		if (clone->type == PIPE && (clone == token || clone->next == NULL )) //check: Node 1 = PIPE; Node[i+1] = PIPE; NULL
 		{
-			if ((clone->next == NULL) || (clone->next->type & PIPE))
-				error = token_syntax_error(clone);
+				token_syntax_error(clone);
+				return (1);
 		}
 	// if clone == REDIR && (we are last token || next->type isnt word)
-		if (((clone->type & REDIR_MASK))
-		&& ((clone->next == NULL) || (clone->next->type != WORD)))
-			error = token_syntax_error(clone);
+		if ((clone->type & REDIR_MASK)
+		&& (clone->next == NULL || clone->next->type != WORD))
+		{
+			token_syntax_error(clone);
+			return (1);
+		}
 		clone = clone->next;
 	}
-	return (error);
+	return (0);
 }
 
 int token_validation(t_token *token, t_shell *shell)
 {
-	int error;
-
-	error = 0;
-	error = validate_tokens(token, error);
-	shell->exit = error;
-	if (error != 0)
+	if (validate_tokens(token))
+	{
+		shell->exit = 2;
 		return (1);
-	else
+	}
 		return (0);
 }

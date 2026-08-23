@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/21 22:24:25 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/23 14:34:26 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,9 @@ t_token	*tokenize(char *input, t_shell *shell)
 	word_start = 0;
 	i = 0;
 	// init_tokens
+	head = NULL;
+	tail = NULL;
+	new = NULL;
 	if (!input)
 		return (NULL);
 	while (input[i])
@@ -123,7 +126,8 @@ t_token	*tokenize(char *input, t_shell *shell)
 			if(i == -1)
 			{
 				// write (2, "minishell: syntax error: unclosed quote\n", 40);
-				ft_putstr_fd("unexpected EOF while looking for matching `\"' syntax error: unexpected end of file", 2);
+				ft_putstr_fd("unexpected EOF while looking for matching quote\n", 2);
+				shell->exit = 2;
 				free_tokens(&head);
 				return (NULL); // Unclosed quote edge case. Normally opens dsquote doc
 			}
