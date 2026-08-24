@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/23 14:44:08 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/24 23:20:49 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static void print_tokens(t_token *head)
-// {
-//     t_token *cur;
-
-//     cur = head;
-//     while (cur)
-//     {
-//         printf("type: %d | value: '%s'\n", cur->type, cur->value);
-//         cur = cur->next;
-//     }
-// }
 
 // static void print_shell_envi(t_env *head)
 // {
@@ -35,6 +23,18 @@
 // 		ft_printf("Value: %d\n", tmp->value);
 // 		tmp = tmp->next;
 // 	}
+// }
+
+// static void print_tokens(t_token *head)
+// {
+//     t_token *cur;
+
+//     cur = head;
+//     while (cur)
+//     {
+//         printf("type: %d | value: '%s'\n", cur->type, cur->value);
+//         cur = cur->next;
+//     }
 // }
 
 // static void print_cmd(t_cmd *head)

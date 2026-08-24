@@ -6,7 +6,7 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:04:19 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/21 14:37:59 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/24 15:39:15 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,16 @@ t_env	*init_env(char **envp, t_env *head, t_env *new)
 	char	*key;
 	char	*value;
 
+	if (!envp || !envp[0])
+	{
+		value = getcwd(NULL, 0);
+		if (value)
+		{
+			set_env(&head, "PWD", value);
+			set_env(&head, "OLDPWD", NULL);
+			free(value);
+		}
+	}
 	while (*envp)
 	{
 		i = 0;
