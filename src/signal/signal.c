@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 03:23:35 by pking             #+#    #+#             */
-/*   Updated: 2026/08/13 03:44:17 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/25 14:35:40 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ static void sigint_heredoc(int sig)
 	// close(STDIN_FILENO); del if ok s
 }
 
-void init_signals(void)
+void init_signals(int argc, char **argv)
 {
 	struct sigaction	sa; // required to set up the struct to use
 
+	(void)argc;
+	(void)argv;
 	ft_bzero(&sa, sizeof(sa)); // make sure no random data
 	sa.sa_handler = handle_sigint; // setting the function as reaction
 	sigaction(SIGINT, &sa, NULL); // setting up the signal response. (When SIGINT, use sa)

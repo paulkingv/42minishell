@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/24 23:19:31 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/25 14:33:19 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,7 @@ int		handle_heredoc(t_redir *redir, t_env *env);
 
 //**********************************SRC/SIGNAL****************//
 //------------SIGNAL.C------------//
-void	init_signals(void);
+void	init_signals(int argc, char **argv);
 void	heredoc_signals(void);
 void	reset_signals(void);
 
