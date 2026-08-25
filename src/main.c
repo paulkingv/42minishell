@@ -6,7 +6,7 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/24 23:20:49 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/25 14:13:28 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,43 +76,54 @@
 			// print_cmd(minishell.cmdline);
 			// print_cmd(minishell->cmdline);
 
-//added environment table
+// helper to take signal setting out of main to save lines.
+int	run_signal(t_shell *shell, char *input)
+{
+	g_signal_status = 0;
+	shell->exit = 130;
+	free(input);
+	return (1);
+}
+
+// helper to take running of the whole shell out of main to save lines.
+void	run_shell(t_shell *minishell)
+{
+	minishell->exit = process(minishell, minishell->tokens);
+	exe_cmdline(minishell);
+	free_tokens(&minishell->tokens);
+	free_cmd(&minishell->cmdline);
+}
+
+// simple main, declare our shell, bzero to set it to 0 then populate env.
+// enter while loop and initiate signal handling.
+// set prompt. input becomes user input.
+// if we have no input or the input is exit, we break and quit the shell.
+// if our signal handler detects SIGINT, we continue, resetting back at prompt.
+// if input is present we add the input to history, then tokenize.
+// if we have a valid set of tokens we finally run the shell, we process, expand
+// and execute before freeing everything and returning back to the shell input.
+// once we leave the main loop, free shell insures we have freed everything.
 int	main(int argv, char **argc, char **envp)
 {
 	t_shell	minishell;
 	char	*input;
 
-	(void)argv;
-	(void)argc;
 	ft_bzero(&minishell, sizeof(t_shell));
 	minishell.env = init_env(envp, NULL, NULL);
-	init_signals();
 	while (minishell.status == 0)
 	{
-		init_signals();
+		init_signals(argv, argc);
 		input = readline("/minishell$ ");
 		if (!input && ft_printf("exit\n"))
 			break ;
-		if (g_signal_status == SIGINT)
-		{
-			g_signal_status = 0;
-			minishell.exit = 130;
-			free(input);
-			continue;
-		}
+		if (g_signal_status == SIGINT && run_signal(&minishell, input))
+			continue ;
 		if (*input)
 		{
 			add_history(input);
 			minishell.tokens = tokenize(input, &minishell);
 			if (minishell.tokens)
-			{
-				// print_tokens(minishell.tokens);
-				minishell.exit = process(&minishell, minishell.tokens);
-				// print_cmd(minishell.cmdline);
-				exe_cmdline(&minishell);
-				free_tokens(&minishell.tokens);
-				free_cmd(&minishell.cmdline);
-			}
+				run_shell(&minishell);
 		}
 		free(input);
 	}

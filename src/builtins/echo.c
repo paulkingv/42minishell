@@ -6,7 +6,7 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 12:25:55 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/24 13:53:57 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/25 12:43:58 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	ft_echo(t_shell *shell, int newline, int i)
 			perror("echo");
 			return (1);
 		}
-		// ft_printf("%s", args[i]);
 		if (args[i + 1])
 			ft_printf(" ");
 		i++;

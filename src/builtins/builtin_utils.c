@@ -22,7 +22,7 @@ int	ft_unset(t_shell *shell, t_cmd *cmd)
 	{
 		unset_env(&shell->env, cmd->args[i]);
 		if (ft_strcmp(cmd->args[i], "PATH") == 0)
-    		shell->path_was_unset = 1;
+			shell->path_was_unset = 1;
 		i++;
 	}
 	return (0);

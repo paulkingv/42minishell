@@ -6,7 +6,7 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 00:51:05 by pking             #+#    #+#             */
-/*   Updated: 2026/08/24 16:01:50 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 00:35:51 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,39 +118,10 @@ char	*exec_get_valid_path(t_shell *shell, char *cmd)
 	{
 		if (shell->path_was_unset)
 			return (NULL);
-    	path_value = DEFAULT_PATH;
+		path_value = DEFLT_PTH;
 	}
 	valid_path_cmd = split_and_try_access(path_value, cmd);
 	if (valid_path_cmd)
 		return (valid_path_cmd);
 	return (NULL);
 }
-
-//Meat function. Returns the string of the first possible exec path
-// char	*exec_get_valid_path(t_shell *shell, char *cmd)
-// {
-// 	char	*path_value;
-// 	char	*valid_path_cmd;
-
-// 	path_value = find_path(shell);
-// 	if (path_value)
-// 	{
-// 		if (ft_strchr(cmd, '/'))
-// 		{
-// 			if (access(cmd, X_OK) == 0)
-// 			{
-// 				valid_path_cmd = ft_strdup(cmd);
-// 				return (valid_path_cmd);
-// 			}
-// 			else
-// 				return (NULL);
-// 		}
-// 		valid_path_cmd = split_and_try_access(path_value, cmd);
-// 		if (valid_path_cmd)
-// 			return (valid_path_cmd);
-// 		else
-// 			return (NULL);
-// 	}
-// 	else
-// 		return (NULL);
-// }

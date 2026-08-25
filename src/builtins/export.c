@@ -6,7 +6,7 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 16:19:26 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/24 17:34:24 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/25 23:25:59 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	ft_print_export(t_shell *shell)
 		i++;
 	}
 	free(tmp);
+	return ;
 }
 
 // break the valid command argument into a string array holding key and value
@@ -61,39 +62,45 @@ static char	**ft_export_util(t_cmd *cmd, int i)
 	return (strings);
 }
 
+// check if the argument after export has a += and needs to append
 static int	append(char *arg)
 {
-    char    *equal;
+	char	*equal;
 
-    equal = ft_strchr(arg, '=');
-    if (!equal || equal == arg)
-        return (0);
-    if (*(equal - 1) == '+')
-        return (1);
-    return (0);
+	equal = ft_strchr(arg, '=');
+	if (!equal || equal == arg)
+		return (0);
+	if (*(equal - 1) == '+')
+		return (1);
+	return (0);
 }
 
+// if we need to append, call this function, find the key in the environment
+// if not findable, add the variable without the +=
+// if found but empty, set the value of key
+// otherwise append the value after += onto the existing value.
 static void	append_env(t_shell *shell, char *key, char *value)
 {
-    t_env   *env;
-    char    *joined;
+	t_env	*env;
+	char	*joined;
 
-    env = find_env(shell->env, key);
-    if (!env)
-    {
-        set_env(&shell->env, key, value);
-        return ;
-    }
-    if (!env->value)
-    {
-        set_env(&shell->env, key, value);
-        return ;
-    }
-    joined = ft_strjoin(env->value, value);
-    if (!joined)
-        return ;
-    set_env(&shell->env, key, joined);
-    free(joined);
+	env = find_env(shell->env, key);
+	if (!env)
+	{
+		set_env(&shell->env, key, value);
+		return ;
+	}
+	if (!env->value)
+	{
+		set_env(&shell->env, key, value);
+		return ;
+	}
+	joined = ft_strjoin(env->value, value);
+	if (!joined)
+		return ;
+	set_env(&shell->env, key, joined);
+	free(joined);
+	return ;
 }
 
 // export with no options
@@ -110,9 +117,7 @@ int	ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd)
 	{
 		if (!valid_export(tcmd->args[i]))
 		{
-			ft_putstr_fd("export: `", 2);
-			ft_putstr_fd(tcmd->args[i], 2);
-			ft_putstr_fd("' not a valid identifier\n", 2);
+			print_export_error(tcmd->args[i]);
 			shell->exit = 1;
 			i++;
 			continue;

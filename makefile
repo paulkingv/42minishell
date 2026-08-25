@@ -6,7 +6,7 @@
 #    By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/08/21 17:19:14 by j.fox            ###   ########.fr        #
+#    Updated: 2026/08/26 00:40:01 by j.fox            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,11 +30,12 @@ SRC =	main.c \
 		expansion/expand_utils.c \
 		parsing/parsing.c parsing/parsing_redirects.c \
 		parsing/parsing_heredoc.c \
-		builtins/builtin.c builtins/builtin_utils.c \
+		builtins/builtin_utils.c \
+		builtins/cd.c builtins/pwd.c \
 		builtins/export.c builtins/export_utils.c \
 		builtins/echo.c \
-		builtins/exit.c \
-    signal/signal.c \
+		builtins/exit.c builtins/exit_utils.c \
+		signal/signal.c \
 		shell/shell.c shell/free_utils.c shell/free_shell.c
 
 NAME = minishell

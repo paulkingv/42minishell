@@ -6,20 +6,19 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 12:06:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/25 00:07:16 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 01:38:43 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*expansion(t_shell *shell, char *word, int *i)
+// helper to resolve if the current character is either a single doller,
+// or if it needs to be exanded to the exit status.
+// edge case handling for multiple $$$
+static char	*find_value(t_shell *shell, char *word, int *i)
 {
-	t_env	*tenv;
-	char	*tmp;
 	char	*value;
-	char	*string;
-
-	tenv = shell->env;
+	
 	if (!word[1])
 	{
 		value = ft_strdup("$");
@@ -36,6 +35,23 @@ static char	*expansion(t_shell *shell, char *word, int *i)
 		value = ft_strdup("$");
 		return (value);
 	}
+	return (NULL);
+}
+
+// using our environment we look for value of the desired variable name
+// returning it to be appended by expand word.
+// before that we check the value is simply a $ or needs to expand to exit state
+static char	*expansion(t_shell *shell, char *word, int *i)
+{
+	t_env	*tenv;
+	char	*tmp;
+	char	*value;
+	char	*string;
+
+	tenv = shell->env;
+	value = find_value(shell, word, i);
+	if (value)
+		return (value);
 	word++;
 	string = find_word(word);
 	if (!find_env(tenv, string))
@@ -51,10 +67,35 @@ static char	*expansion(t_shell *shell, char *word, int *i)
 	return (value);
 }
 
-static char	*expand_word(t_shell *shell, char *word)
+// simple helper to set quote bools to 0 or 1 depending on the char recieved
+// this is critical following the execution of this function as it helps us
+// determine if strings are literal or need expanding
+static int	set_quotes(char c, int *dquote, int *squote)
 {
-	int		dquote = 0;
-	int		squote = 0;
+	if (c == '\'' && !*dquote)
+	{
+		*squote = !*squote;
+		return (1);
+	}
+	else if (c == '"' && !*squote)
+	{
+		*dquote = !*dquote;
+		return (1);
+	}
+	return (0);
+}
+
+// we initially decide if the word is quoted in single or double quotes
+// tokenize has already removed any cases of words with missing quotes, so here
+// we check for quotes at the start of the word and then what follows.
+// if we detect $ we move to expansion, but before that we check and we can
+// even handle $" situations by simply appending an empty string, then we move
+// into expansion on the next pass of the while loop.
+// expansion will return us a string value that we can append onto the string
+// we currently have, we use a pointer to i to move through the string in this
+// function and in the other, so we can jump over the word we are expanding.
+static char	*expand_word(t_shell *shell, char *word, int dquote, int squote)
+{
 	int		i;
 	char	*string;
 	char	*tmp;
@@ -63,15 +104,12 @@ static char	*expand_word(t_shell *shell, char *word)
 	string = ft_strdup("");
 	while (word[i])
 	{
-		if (word[i] == '\'' && !dquote)
-			squote = !squote;
-		else if (word[i] == '"' && !squote)
-			dquote = !dquote;
+		if (set_quotes(word[i], &dquote, &squote));
 		else if (word[i] == '$' && !squote)
 		{
 			if (word[i + 1] == '"' && !dquote)
-        		string = append_string(string, "");
-    		else
+				string = append_string(string, "");
+			else
 			{
 				tmp = expansion(shell, &word[i], &i);
 				string = append_string(string, tmp);
@@ -85,6 +123,13 @@ static char	*expand_word(t_shell *shell, char *word)
 	return (string);
 }
 
+// work though a list of tokens finding quotes, $ and ? and expanding all cases
+// we take the next token in the list, then expand the token we are on.
+// pass to expand word.
+// expand word returns a fully expanded and complete string, if that string is
+// empty we free the string and remove the token.
+// if the expansion resolves we replace the value at our current position with
+// the new value.
 int	expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n)
 {
 	char	*expanded;
@@ -95,7 +140,7 @@ int	expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n)
 		n = ttok->next;
 		if (ttok->type == WORD)
 		{
-			expanded = expand_word(shell, ttok->value);
+			expanded = expand_word(shell, ttok->value, 0, 0);
 			if (!expanded)
 				return (1);
 			if (expanded[0] == '\0' && !is_quoted(ttok->value))
