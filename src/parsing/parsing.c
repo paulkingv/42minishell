@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 14:02:16 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/19 18:11:46 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/24 23:50:32 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	count_args(t_token *tokens)
 
 	tmp = tokens;
 	i = 0;
-	while (tmp && tmp->type != PIPE)
+	while (tmp && tmp->type != PIPE && tmp->type != SEMICOLON)
 	{
 		// claude suggested this ⬇️
 		if (tmp->type == WORD) // only count words
@@ -70,12 +70,13 @@ static void	sort_tokens(t_shell *shell, t_cmd *cmd_current, t_token *token, int 
 		if (tmp->type == WORD)
 		{
 			cmd->args[i] = ft_strdup(tmp->value);
+			// printf("ADDING WORD [%s] at args[%d]\n", tmp->value, i);
 			i++;
 		}
 		if (tmp->type == REDIR_OUT || tmp->type == REDIR_IN
 			|| tmp->type == APPEND || tmp->type == HEREDOC)
 			sort_redirections(shell, cmd, &tmp);
-		if (tmp->type == PIPE)
+		if (tmp->type == PIPE || tmp->type == SEMICOLON)
 			return ;
 		tmp = tmp->next;
 	}
@@ -99,8 +100,9 @@ t_cmd	*parse(t_shell *shell, t_cmd *head, t_cmd *current, t_token *tmp)
 	while (tmp)
 	{
 		count = count_args(tmp);
+		// printf("COUNT = %d\n", count);
 		sort_tokens(shell, current, tmp, count);
-		while (tmp && tmp->type != PIPE)
+		while (tmp && tmp->type != PIPE && tmp->type != SEMICOLON)
 			tmp = tmp->next;
 		if (tmp)
 		{

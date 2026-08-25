@@ -6,7 +6,7 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 11:08:02 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/21 17:18:19 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/24 16:03:07 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	ft_unset(t_shell *shell, t_cmd *cmd)
 	while (cmd->args[i])
 	{
 		unset_env(&shell->env, cmd->args[i]);
+		if (ft_strcmp(cmd->args[i], "PATH") == 0)
+    		shell->path_was_unset = 1;
 		i++;
 	}
 	return (0);

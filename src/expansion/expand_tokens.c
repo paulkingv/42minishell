@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 12:06:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/14 14:03:44 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/25 00:07:16 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,14 @@ static char	*expand_word(t_shell *shell, char *word)
 			dquote = !dquote;
 		else if (word[i] == '$' && !squote)
 		{
-			tmp = expansion(shell, &word[i], &i);
-			string = append_string(string, tmp);
-			free(tmp);
+			if (word[i + 1] == '"' && !dquote)
+        		string = append_string(string, "");
+    		else
+			{
+				tmp = expansion(shell, &word[i], &i);
+				string = append_string(string, tmp);
+				free(tmp);
+			}
 		}
 		else
 			string = append_char(string, word[i]);

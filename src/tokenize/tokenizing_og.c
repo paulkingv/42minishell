@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing_og.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/07/29 18:21:11 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/24 22:41:18 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	find_end_word(char *input, int i, int *word_start)
 // Our Helper for get_type. Returns Enum. Single Char Checker.
 static t_token_type	get_type(char *value, int i)
 {
-	if (value[i] == '|')
+	if (value[i] == '|' || value[i] == ';')
 		return (PIPE);
 	if (value[i] == '<')
 	{
@@ -104,7 +104,7 @@ t_token	*tokenize(char *input, t_token *head, t_token *tail, t_token *new)
 		if (!input[i])
 			break ;
 		word_start = i;
-		if (input[i] == '|' || input[i] == '<' || input[i] == '>')
+		if (input[i] == '|' || input[i] == '<' || input[i] == '>' )
 		{
 			if (input[i] == '<' && input[i + 1] == '<')
 				i++;

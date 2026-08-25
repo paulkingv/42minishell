@@ -6,7 +6,7 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/17 11:10:00 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/21 18:52:54 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/24 15:29:54 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int	valid_export(char *arg)
 	i++;
 	while (arg[i] && arg[i] != '=')
 	{
+		if (arg[i] == '+' && arg[i + 1] == '=')
+            return (1);
 		if (!ft_isalnum(arg[i]) && arg[i] != '_')
 			return (0);
 		i++;

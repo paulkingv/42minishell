@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/23 14:34:26 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/24 23:18:50 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	find_end_word(char *input, int i)
 {
 	char	quote_type;
 
-	while (input[i] && input[i] != ' ' && input[i] != '\t'
+	while (input[i] && input[i] != ' ' && input[i] != '\t' && input[i] != ';'
 			&& input[i] != '|' && input[i] != '<' && input[i] != '>')
 	{
 		if ((input[i] == '"' || input[i] == '\''))
@@ -46,6 +46,8 @@ static t_token_type	get_type(char *value, int i)
 {
 	if (value[i] == '|')
 		return (PIPE);
+	if (value[i] == ';')
+		return (SEMICOLON);
 	if (value[i] == '<')
 	{
 		if (value[i + 1] == '<')
@@ -110,7 +112,7 @@ t_token	*tokenize(char *input, t_shell *shell)
 		if (!input[i])
 			break ;
 		word_start = i;
-		if (input[i] == '|' || input[i] == '<' || input[i] == '>')
+		if (input[i] == '|' || input[i] == '<' || input[i] == '>' || input[i] == ';')
 		{
 			if (input[i] == '<' && input[i + 1] == '<')
 				i++;
