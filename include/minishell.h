@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/25 14:33:19 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 00:55:16 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,14 @@
 # include <signal.h> // signals
 # include <limits.h>
 
-//**********************************GLOBAL***********************************//
+//**********************************GLOBAL************************************//
 extern volatile sig_atomic_t g_signal_status; // pk- I will finish this l8r
 
 //**********************************DEFINES***********************************//
 #define REDIR_MASK (REDIR_OUT | REDIR_IN | APPEND | HEREDOC)
 #define OPERATOR_MASK (REDIR_OUT | REDIR_IN | APPEND | HEREDOC | PIPE)
-#define DEFAULT_PATH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+#define DEFLT_PTH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+typedef unsigned long long t_ull;
 //**********************************STRUCTS***********************************//
 
 /*~~~~~~~~TOKENIZATION~~~~~~~~~*/
@@ -94,6 +95,7 @@ typedef struct s_shell
 	t_env	*env;
 	t_token	*tokens;
 	t_cmd	*cmdline;
+	char	*input;
 	int		status;
 	int		exit;
 	int		path_was_unset;
@@ -125,20 +127,22 @@ t_token	*tokenize(char *input, t_shell *shell);
 void	remove_token(t_token **head, t_token *key);
 
 //-------token_validation.C--------//
-int token_validation(t_token *token, t_shell *shell);
+int		token_validation(t_token *token, t_shell *shell);
 
 //**********************************SRC/ENVIRONMENT***************************//
 //--------ENVIRONMENT.C-------//
 t_env	*init_env(char **envp, t_env *head, t_env *new);
 t_env	*edit_env(t_env *s_env, char *key, char *new_node);
 void	set_env(t_env **s_env, char *key, char *value);
-void	env_add_back(t_env **head, t_env *new_node);
 void	unset_env(t_env **head, char *key);
+void	env_add_back(t_env **head, t_env *new_node);
 
 //----environment_utils.c-----//
 t_env	*new_env(char *key, char *value);
 t_env	*find_env(t_env *s_env, char *key);
 char	*get_env(t_env *s_env, char	*key);
+void	free_vals(char *key, char *value);
+void	setPWD(t_env **head);
 
 //*********************************SRC/EXPANSION******************************//
 //-----------process.C-----------//
@@ -146,8 +150,9 @@ int		process(t_shell *shell, t_token *tokens);
 
 //--------expand_tokens.c--------//
 int		expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n);
-//static char	*expand_word(t_shell *shell, char *word);
-//static char	*expansion(t_shell *shell, char *word, int i);
+// static char	*find_value(t_shell *shell, char *word, int *i);
+// static char *expansion(t_shell *shell, char *word, int i);
+//static char *expand_word(t_shell *shell, char *word, int dquote, int squote));
 
 //---------expand_utils.c--------//
 char	*append_char(char *string, char c);
@@ -164,6 +169,7 @@ t_cmd	*parse(t_shell *shell, t_cmd *head, t_cmd *current, t_token *tmp);
 
 //------parsing_redirects.c------//
 void	sort_redirections(t_shell *shell, t_cmd *cmd_current, t_token **tmp);
+// static int	hd_error(t_redir *new, char *value, int qstatus, int etype);
 // static t_redir	*new_redir(char *value, t_token_type num);
 // static void		redir_add_back(t_redir **head, t_redir *new);
 
@@ -172,24 +178,15 @@ int		is_hd_quoted(char *value);
 int		strip_quotes(char *value);
 
 //**********************************SRC/BUILTINS******************************//
-//----------BUILTIN.C----------//
-int		ft_pwd(t_shell *shell);
-int		ft_cd(t_shell *shell, t_cmd *cmd);
-
 //-------builtin-utils.c-------//
-int		ft_env(t_shell *shell);
 int		ft_unset(t_shell *shell, t_cmd *cmd);
+int		ft_env(t_shell *shell);
 
-//----------export.c-----------//
-int		ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd);
-// static char	**ft_export_util(t_cmd *cmd, int i);
-//static void	ft_print_export(t_shell *shell);
-
-//-------export_utils.c--------//
-t_env	**export_array(t_env *env);
-void	sort_array(t_env **array);
-int		valid_export(char *arg);
-//static int		env_count(t_env	*env);
+//------------cd.c-------------//
+int		ft_cd(t_shell *shell, t_cmd *cmd, char *new_path, char *old_path);
+// static int	no_chdir(t_shell *shell, char *old_path, char *new_path);
+// static void	print_newpath(char *new_path);
+// static int act_cd(t_shell *shell, t_cmd *cmd, char *new_path, char *old_path)
 
 //-----------echo.c------------//
 int		ft_echo(t_shell *shell, int newline, int i);
@@ -198,7 +195,29 @@ int		ft_echo(t_shell *shell, int newline, int i);
 //-----------exit.c------------//
 int		ft_exit(t_shell *shell);
 // static int  check_number(char *str, long long *val);
-// static void  require_number(t_shell *shell, char *arg);
+
+//--------exit_utils.c---------//
+void	require_number(t_shell *shell, char *arg);
+void	handle_whitespace(char *str, int *i);
+t_ull	find_limit(int sign);
+int	set_sign(char c, int *i);
+
+//----------export.c-----------//
+int		ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd);
+// static void	ft_print_export(t_shell *shell);
+// static char	**ft_export_util(t_cmd *cmd, int i);
+// static int	append(char *arg);
+// static void	append_env(t_shell *shell, char *key, char *value);
+
+//-------export_utils.c--------//
+t_env	**export_array(t_env *env);
+void	sort_array(t_env **array);
+int		valid_export(char *arg);
+void	print_export_error(char *arg);
+//static int		env_count(t_env	*env);
+
+//------------pwd.c------------//
+int		ft_pwd(t_shell *shell);
 
 //**********************************SRC/EXECUTION*****************************//
 //--------EXECUTION.c----------//
@@ -244,7 +263,7 @@ int		handle_heredoc(t_redir *redir, t_env *env);
 
 //**********************************SRC/SIGNAL****************//
 //------------SIGNAL.C------------//
-void	init_signals(int argc, char **argv);
+void	init_signals(int argv, char **argc);
 void	heredoc_signals(void);
 void	reset_signals(void);
 

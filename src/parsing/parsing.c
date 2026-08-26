@@ -6,7 +6,7 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 14:02:16 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/24 23:50:32 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 00:30:56 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ static int	count_args(t_token *tokens)
 	return (i);
 }
 
-// No error handling also, although some protections are here.
 // Here we take an empty command struct and start to fill it with either
 // arguments or Redirects.
 // We store words and other arguments in the ARGS, and Redirects in the
 // Redirections using the sort redirects function.
-// If we hit a pipe we break out of this function as that means the command
+// If we hit a pipe or ; we break out of this function as that means the command
 // is finished.
-static void	sort_tokens(t_shell *shell, t_cmd *cmd_current, t_token *token, int count)
+static void	sort_tokens(t_shell *shell, t_cmd *cmd_current,
+	t_token *token, int count)
 {
 	t_token	*tmp;
 	t_cmd	*cmd;
@@ -70,7 +70,6 @@ static void	sort_tokens(t_shell *shell, t_cmd *cmd_current, t_token *token, int 
 		if (tmp->type == WORD)
 		{
 			cmd->args[i] = ft_strdup(tmp->value);
-			// printf("ADDING WORD [%s] at args[%d]\n", tmp->value, i);
 			i++;
 		}
 		if (tmp->type == REDIR_OUT || tmp->type == REDIR_IN
@@ -82,9 +81,8 @@ static void	sort_tokens(t_shell *shell, t_cmd *cmd_current, t_token *token, int 
 	}
 }
 
-// No real edge case or error handling.
 // This function takes our list of tokens and starts building them into command
-// structs.It creates a head if one does not already exist (it shouldn't) and
+// structs. It creates a head if one does not already exist (it shouldn't) and
 // then starts to fill that head by moving through the token chained list.
 // Sort tokens does the bulk of the work, it fills command structs with data.
 // This function is simply to build command structs and move through a list.
@@ -100,7 +98,6 @@ t_cmd	*parse(t_shell *shell, t_cmd *head, t_cmd *current, t_token *tmp)
 	while (tmp)
 	{
 		count = count_args(tmp);
-		// printf("COUNT = %d\n", count);
 		sort_tokens(shell, current, tmp, count);
 		while (tmp && tmp->type != PIPE && tmp->type != SEMICOLON)
 			tmp = tmp->next;

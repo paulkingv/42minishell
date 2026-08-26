@@ -13,15 +13,15 @@
 #include "minishell.h"
 
 // used to print error for the heredoc parsing in new_redir
-static int hd_error(t_redir *new, char *value, int qstatus, int etype)
+static int	hd_error(t_redir *new, char *value, int qstatus, int etype)
 {
-	if (etype == 1 && (!value)) //check error 1
+	if (etype == 1 && (!value))
 	{
 		ft_putstr_fd("minishell: null token passed to parsing HEREDOC\n", 2);
 		free(new);
 		return (1);
 	}
-	if (etype == 2 && (qstatus == -1)) // check error 2
+	if (etype == 2 && (qstatus == -1))
 	{
 		ft_putstr_fd("minishell: syntax error: unclosed quotes\n", 2);
 		free(new);
@@ -47,12 +47,12 @@ static t_redir	*new_redir(char *value, t_token_type type)
 	new->quoted = 0;
 	if (type == HEREDOC)
 	{
-		if (hd_error(new, value, quote_status, 1)) //NULL token passed to HD
+		if (hd_error(new, value, quote_status, 1))
 			return (NULL);
 		quote_status = is_hd_quoted(value);
-		if (hd_error(new, value, quote_status, 2))// ERROR: Unclosed Quote
+		if (hd_error(new, value, quote_status, 2))
 			return (NULL);
-		if(quote_status == 1) // quotes, and closed
+		if(quote_status == 1)
 		{
 			new->quoted = 1;
 			strip_quotes(value);

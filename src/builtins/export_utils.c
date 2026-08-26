@@ -6,14 +6,14 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/17 11:10:00 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/24 15:29:54 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/25 23:21:17 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // count the number of env structs in the environment list
-static int		env_count(t_env	*env)
+static int	env_count(t_env	*env)
 {
 	int	count;
 
@@ -66,6 +66,7 @@ void	sort_array(t_env **array)
 		else
 			i++;
 	}
+	return ;
 }
 
 // check that the export is valid, return a 1 if it is.
@@ -80,10 +81,19 @@ int	valid_export(char *arg)
 	while (arg[i] && arg[i] != '=')
 	{
 		if (arg[i] == '+' && arg[i + 1] == '=')
-            return (1);
+			return (1);
 		if (!ft_isalnum(arg[i]) && arg[i] != '_')
 			return (0);
 		i++;
 	}
 	return (1);
+}
+
+// print the error report from export.
+void	print_export_error(char *arg)
+{
+	ft_putstr_fd("export: `", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putstr_fd("' not a valid identifier\n", 2);
+	return ;
 }

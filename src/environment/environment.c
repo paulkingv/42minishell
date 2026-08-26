@@ -6,7 +6,7 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:04:19 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/24 15:39:15 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/25 15:34:57 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,7 @@ t_env	*init_env(char **envp, t_env *head, t_env *new)
 	char	*value;
 
 	if (!envp || !envp[0])
-	{
-		value = getcwd(NULL, 0);
-		if (value)
-		{
-			set_env(&head, "PWD", value);
-			set_env(&head, "OLDPWD", NULL);
-			free(value);
-		}
-	}
+		setPWD(&head);
 	while (*envp)
 	{
 		i = 0;
@@ -123,70 +115,8 @@ t_env	*init_env(char **envp, t_env *head, t_env *new)
 		value = ft_substr((*envp), x, i);
 		new = new_env(key, value);
 		env_add_back(&head, new);
-		free(key);
-		free(value);
+		free_vals(key, value);
 		envp++;
 	}
 	return (head);
 }
-
-// Notes on env and every single variable in the ENVP list.
-//******ELLIOT COMMENT: env -i ./minishell to launch the project, you get an
-// empty env var list (testing to see if we've hardcoded in certain env vars)
-// 	All the possible current ENV variables when loading a stock shell.
-// 	unset_env(&s_env, "SYSTEMD_EXEC_PID");
-// 	unset_env(&s_env, "SSH_AUTH_SOCK");
-// 	unset_env(&s_env, "SESSION_MANAGER");
-// 	unset_env(&s_env, "SSH_AGENT_PID");
-// 	unset_env(&s_env, "GNOME_TERMINAL_SCREEN");
-// 	unset_env(&s_env, "XDG_CURRENT_DESKTOP");
-// 	unset_env(&s_env, "LANG");
-// 	unset_env(&s_env, "GPG_AGENT_INFO");
-// 	unset_env(&s_env, "DESKTOP_SESSION");
-// 	unset_env(&s_env, "QT_IM_MODULE");
-// 	unset_env(&s_env, "XDG_MENU_PREFIX");
-// 	unset_env(&s_env, "XDG_SESSION_PAT");
-// 	unset_env(&s_env, "NIX_PROFILES");
-// 	unset_env(&s_env, "NIX_REMOTE");
-// 	unset_env(&s_env, "DBUS_SESSION_BUS_ADDRESS");
-// 	unset_env(&s_env, "DOCKER_HOST");
-// 	unset_env(&s_env, "GTK_MODULES");
-// 	unset_env(&s_env, "XDG_DATA_DIRS");
-// 	unset_env(&s_env, "GTK_IM_MODULE");
-// 	unset_env(&s_env, "__ETC_PROFILE_NIX_SOURCED");
-// 	unset_env(&s_env, "USER");
-// 	unset_env(&s_env, "XDG_SESSION_DESKTOP");
-// 	unset_env(&s_env, "XDG_CONFIG_DIRS");
-// 	unset_env(&s_env, "QT_ACCESSIBILITY");
-// 	unset_env(&s_env, "GNOME_DESKTOP_SESSION_ID");
-// 	unset_env(&s_env, "KRB5CCNAME");
-// 	unset_env(&s_env, "LOGNAME");
-// 	unset_env(&s_env, "XDG_SEAT_PATH");
-// 	unset_env(&s_env, "GNOME_TERMINAL_SERVICE");
-// 	unset_env(&s_env, "HOME");
-// 	unset_env(&s_env, "PATH");
-// 	unset_env(&s_env, "XDG_RUNTIME_DIR");
-// 	unset_env(&s_env, "XMODIFIERS");
-// 	unset_env(&s_env, "SHELL");
-// 	unset_env(&s_env, "DBUS_STARTER_BUS_TYPE");
-// 	unset_env(&s_env, "XDG_SESSION_TYPE");
-// 	unset_env(&s_env, "NIX_SSL_CERT_FILE");
-// 	unset_env(&s_env, "VTE_VERSION");
-// 	unset_env(&s_env, "COLORTERM");
-// 	unset_env(&s_env, "XAUTHORITY");
-// 	unset_env(&s_env, "PWD");
-// 	unset_env(&s_env, "DBUS_STARTER_ADDRESS");
-// 	unset_env(&s_env, "DISPLAY");
-// 	unset_env(&s_env, "TERM");
-// 	unset_env(&s_env, "GDMSESSION");
-// 	unset_env(&s_env, "XDG_SESSION_CLASS");
-// 	unset_env(&s_env, "SHLVL");
-// 	unset_env(&s_env, "OLDPWD");
-// 	unset_env(&s_env, "FT_HOOK_NAME");
-// 	unset_env(&s_env, "FT_HOOK_PATHNAME");
-// 	unset_env(&s_env, "XDG_GREETER_DATA_DIR");
-// 	unset_env(&s_env, "LIBVIRT_DEFAULT_URI");
-// 	unset_env(&s_env, "LS_COLORS");
-// 	unset_env(&s_env, "_");
-// 	unset_env(&s_env, "NEW_VAL");
-// 	unset_env(&s_env, "NEW_VAL_NEXT");
