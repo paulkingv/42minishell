@@ -6,7 +6,7 @@
 #    By: pking <pking@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/30 17:04:58 by jfox              #+#    #+#              #
-#    Updated: 2026/08/10 01:40:37 by pking            ###   ########.fr        #
+#    Updated: 2026/08/26 01:27:37 by pking            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
        ft_putendl_fd.c ft_putstr_fd.c ft_putnbr_fd.c ft_split.c ft_strchr.c \
        ft_strtrim.c ft_strdup.c ft_striteri.c ft_strjoin.c ft_strlcat.c \
        ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strcmp.c ft_strncmp.c \
-	   ft_strnstr.c \
+	   ft_strnstr.c ft_ltoa.c \
        ft_strrchr.c ft_substr.c ft_toupper.c ft_tolower.c get_next_line.c \
        ft_printf.c ft_printf_putchar_fd.c ft_printf_putnbr_fd.c \
        ft_printf_pvoid.c ft_printf_putnbr_unsigned_fd.c \
