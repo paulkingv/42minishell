@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 07:02:23 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 14:22:27 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char *hd_gen(char *ptr, unsigned long *memaddr, int *fd, char *filename)
 // HD_NAME is used to gen a random* name for the HD
 // Combines a static int val with pointer value
 // This was changed to generate value from memory space
-static char *hd_name(void) 
+static char *hd_name(void)
 {
 	char			*ptr;
 	char			*filename;
@@ -53,7 +53,6 @@ static char *hd_name(void)
 	return (filename);
 }
 
-
 static int	hd_loop(int fd, t_redir *redir, t_env *env)
 {
 	char *line;
@@ -68,7 +67,7 @@ static int	hd_loop(int fd, t_redir *redir, t_env *env)
 		{
 			if (g_signal_status != SIGINT)
 				ft_putstr_fd("warning: heredoc delimited by EOF\n", 2);
-			break ; // line unterminated 
+			break ; // line unterminated
 		}
 		if (ft_strcmp(line, redir->file_name) == 0)
 		{
@@ -88,7 +87,8 @@ static int	hd_loop(int fd, t_redir *redir, t_env *env)
 	return (0);
 }
 
-int handle_heredoc(t_redir *redir, t_env *env) //returns FD
+//returns FD
+int handle_heredoc(t_redir *redir, t_env *env)
 {
 	int 	fd;
 	char 	*filename;

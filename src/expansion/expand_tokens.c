@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 12:06:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 13:27:49 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/26 15:57:08 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ static char	*expand_word(t_shell *shell, char *word, int dquote, int squote)
 
 	i = 0;
 	string = ft_strdup("");
+	if (!string)
+		return (NULL);
 	while (word[i])
 	{
 		if (set_quotes(word[i], &dquote, &squote))

@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:04:19 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 11:52:04 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/26 15:32:00 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	set_env(t_env **s_env, char *key, char *value)
 		if (tmp)
 			env_add_back(s_env, tmp);
 	}
+	return ;
 }
 
 // Allows you to remove an environment variable by freeing the data sorted there
@@ -69,6 +70,7 @@ void	unset_env(t_env **head, char *key)
 		prev = current;
 		current = current->next;
 	}
+	return ;
 }
 
 // A simple function to add new data to a chained list.
@@ -113,6 +115,11 @@ t_env	*init_env(char **envp, t_env *head, t_env *new)
 		while ((*envp)[i] != '\0')
 			i++;
 		value = ft_substr((*envp), x, i);
+		if (!key || !value)
+		{
+			free_vals(key, value);
+			return (NULL);
+		}
 		new = new_env(key, value);
 		env_add_back(&head, new);
 		free_vals(key, value);

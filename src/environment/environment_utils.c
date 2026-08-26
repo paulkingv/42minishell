@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 11:38:11 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 11:51:25 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/26 15:32:59 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,11 @@ char	*get_env(t_env *s_env, char	*key)
 // free the 2 strings used in init env to save some lines.
 void	free_vals(char *key, char *value)
 {
-	free(key);
-	free(value);
+	if (key)
+		free(key);
+	if (value)
+		free(value);
+	return ;
 }
 
 // pull the setting of PWD and OLDPWD into a helper to clean up init env.
@@ -77,4 +80,5 @@ void	setpwd(t_env **head)
 		set_env(head, "OLDPWD", NULL);
 		free(value);
 	}
+	return ;
 }

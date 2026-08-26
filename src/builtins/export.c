@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 16:19:26 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 11:49:09 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/26 15:27:31 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ static char	**ft_export_util(t_cmd *cmd, int i)
 		key_len = key_len - 1;
 	strings[0] = ft_substr(cmd->args[i], 0, key_len);
 	strings[1] = ft_strdup(equal + 1);
+	if (!strings [0] || !strings [1])
+	{
+		free_array(strings);
+		return (NULL);
+	}
 	return (strings);
 }
 
@@ -123,6 +128,8 @@ int	ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd)
 			continue ;
 		}
 		strings = ft_export_util(tcmd, i);
+		if (!strings)
+			return (2);
 		if (append(tcmd->args[i]))
 			append_env(shell, strings[0], strings[1]);
 		else

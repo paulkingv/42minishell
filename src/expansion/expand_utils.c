@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/13 14:33:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 13:30:29 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/26 15:36:03 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	*append_string(char *s1, char *s2)
 	if (!s2)
 		s2 = "";
 	tmp = ft_strjoin(s1, s2);
+	if (!tmp)
+		return (NULL);
 	free(s1);
 	return (tmp);
 }
@@ -49,6 +51,8 @@ char	*append_char(char *string, char c)
 	r[0] = c;
 	r[1] = '\0';
 	tmp = ft_strjoin(string, r);
+	if (!tmp)
+		return (NULL);
 	free(string);
 	return (tmp);
 }
