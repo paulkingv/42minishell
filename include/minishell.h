@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 08:57:07 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 12:59:21 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 # define MINISHELL_H
 
 # include "libft.h"
-# if defined(__APPLE__)
-# 	include <sys/syslimits.h> //PATH_MAX, ARG_MAX on macOS
-# else
-#	include <linux/limits.h>
-# endif
+// # if defined(__APPLE__)
+// # include <sys/syslimits.h> //PATH_MAX, ARG_MAX on macOS
+// # else
 // # include <linux/limits.h>
+// # endif
 # include <stdio.h> // printf
 # include <unistd.h> // pipes, fork, getpid, execve, dup2
 # include <fcntl.h> // FOR READ
@@ -33,13 +32,14 @@
 # include <errno.h> // EINTR
 
 //**********************************GLOBAL************************************//
-extern volatile sig_atomic_t g_signal_status; // pk- I will finish this l8r
+extern volatile sig_atomic_t	g_signal_status; // pk- I will finish this l8r
 
 //**********************************DEFINES***********************************//
-#define REDIR_MASK (REDIR_OUT | REDIR_IN | APPEND | HEREDOC)
-#define OPERATOR_MASK (REDIR_OUT | REDIR_IN | APPEND | HEREDOC | PIPE)
-#define DEFLT_PTH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-typedef unsigned long long t_ull;
+typedef unsigned long long		t_ull;
+// # define REDIR_MASK (REDIR_OUT | REDIR_IN | APPEND | HEREDOC)
+// # define OPERATOR_MASK (REDIR_OUT | REDIR_IN | APPEND | HEREDOC | PIPE)
+# define DFLT_PTH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 //**********************************STRUCTS***********************************//
 
 /*~~~~~~~~TOKENIZATION~~~~~~~~~*/
@@ -71,7 +71,7 @@ typedef struct s_redir
 	char			*file_name;		// Output file name
 	t_token_type	type;			// Type of REDIR
 	int				quoted;			// Quoted Status
-	int 			heredoc_fd;
+	int				heredoc_fd;
 	struct s_redir	*next;			// Pointer to next REDIR node
 }	t_redir;
 
@@ -143,7 +143,7 @@ t_env	*new_env(char *key, char *value);
 t_env	*find_env(t_env *s_env, char *key);
 char	*get_env(t_env *s_env, char	*key);
 void	free_vals(char *key, char *value);
-void	setPWD(t_env **head);
+void	setpwd(t_env **head);
 
 //*********************************SRC/EXPANSION******************************//
 //-----------process.C-----------//
@@ -154,6 +154,7 @@ int		expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n);
 // static char	*find_value(t_shell *shell, char *word, int *i);
 // static char *expansion(t_shell *shell, char *word, int i);
 //static char *expand_word(t_shell *shell, char *word, int dquote, int squote));
+// static int	set_quotes(char c, int *dquote, int *squote);
 
 //---------expand_utils.c--------//
 char	*append_char(char *string, char c);
@@ -201,7 +202,7 @@ int		ft_exit(t_shell *shell);
 void	require_number(t_shell *shell, char *arg);
 void	handle_whitespace(char *str, int *i);
 t_ull	find_limit(int sign);
-int	set_sign(char c, int *i);
+int		set_sign(char c, int *i);
 
 //----------export.c-----------//
 int		ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd);
@@ -266,9 +267,10 @@ int		handle_heredoc(t_redir *redir, t_env *env);
 //--------signal_parent.C-------//
 void	init_signals(int argc, char **argv);
 void	reset_signals(void);
-void parent_wait_signals(void);
+void	parent_wait_signals(void);
 
 //--------signal_child.C--------//
-void default_signals(void);
+void	default_signals(void);
 void	heredoc_signals(void);
+
 #endif

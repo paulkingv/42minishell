@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 14:02:16 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 00:30:56 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 11:54:11 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ static int	count_args(t_token *tokens)
 	i = 0;
 	while (tmp && tmp->type != PIPE && tmp->type != SEMICOLON)
 	{
-		// claude suggested this ⬇️
-		if (tmp->type == WORD) // only count words
+		if (tmp->type == WORD)
 			i++;
 		tmp = tmp->next;
 	}

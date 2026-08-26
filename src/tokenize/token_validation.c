@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 02:31:14 by pking             #+#    #+#             */
-/*   Updated: 2026/08/25 00:44:41 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 12:45:31 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void token_syntax_error (t_token *token)
 	if (token->type == PIPE)
 	{
 		if (token->next == NULL)
-			ft_putstr_fd("syntax error near unexpected token `newline'\n", 2); 
+			ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
 		else
 			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
 	}
@@ -49,8 +49,8 @@ static int validate_tokens(t_token *token) // exit value needs to get changed
 				return (1);
 		}
 	// if clone == REDIR && (we are last token || next->type isnt word)
-		if ((clone->type & REDIR_MASK)
-		&& (clone->next == NULL || clone->next->type != WORD))
+		if ((clone->type & (REDIR_OUT | REDIR_IN | APPEND | HEREDOC) //REDIR_MASK)
+		&& (clone->next == NULL || clone->next->type != WORD)))
 		{
 			token_syntax_error(clone);
 			return (1);

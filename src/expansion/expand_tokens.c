@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 12:06:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 01:38:43 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 13:27:49 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 static char	*find_value(t_shell *shell, char *word, int *i)
 {
 	char	*value;
-	
+
 	if (!word[1])
 	{
 		value = ft_strdup("$");
@@ -104,7 +104,9 @@ static char	*expand_word(t_shell *shell, char *word, int dquote, int squote)
 	string = ft_strdup("");
 	while (word[i])
 	{
-		if (set_quotes(word[i], &dquote, &squote));
+		if (set_quotes(word[i], &dquote, &squote))
+		{
+		}
 		else if (word[i] == '$' && !squote)
 		{
 			if (word[i + 1] == '"' && !dquote)

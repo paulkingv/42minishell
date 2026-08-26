@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 11:38:11 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 00:29:00 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 11:51:25 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_env	*new_env(char *key, char *value)
 	new->key = ft_strdup(key);
 	if (value)
 		new->value = ft_strdup(value);
-	else	
+	else
 		new->value = NULL;
 	new->next = NULL;
 	return (new);
@@ -66,10 +66,10 @@ void	free_vals(char *key, char *value)
 }
 
 // pull the setting of PWD and OLDPWD into a helper to clean up init env.
-void	setPWD(t_env **head)
+void	setpwd(t_env **head)
 {
-	char *value;
-	
+	char	*value;
+
 	value = getcwd(NULL, 0);
 	if (value)
 	{

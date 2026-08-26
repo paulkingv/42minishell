@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_get_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 00:51:05 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 00:35:51 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 12:29:57 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ char	*exec_get_valid_path(t_shell *shell, char *cmd)
 	{
 		if (shell->path_was_unset)
 			return (NULL);
-		path_value = DEFLT_PTH;
+		path_value = DFLT_PTH;
 	}
 	valid_path_cmd = split_and_try_access(path_value, cmd);
 	if (valid_path_cmd)

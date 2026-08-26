@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/17 11:10:00 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/25 23:21:17 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 11:49:46 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ t_env	**export_array(t_env *env)
 void	sort_array(t_env **array)
 {
 	t_env	*tmp;
-	int i;
+	int		i;
 
 	i = 0;
 	while (array[i] && array[i + 1])
 	{
-		if (ft_strcmp(array[i]->key,array[i + 1]->key) > 0)
+		if (ft_strcmp(array[i]->key, array[i + 1]->key) > 0)
 		{
 			tmp = array[i];
 			array[i] = array[i + 1];

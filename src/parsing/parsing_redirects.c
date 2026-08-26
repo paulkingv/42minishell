@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 11:44:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/19 18:35:38 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/26 11:53:44 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static t_redir	*new_redir(char *value, t_token_type type)
 		quote_status = is_hd_quoted(value);
 		if (hd_error(new, value, quote_status, 2))
 			return (NULL);
-		if(quote_status == 1)
+		if (quote_status == 1)
 		{
 			new->quoted = 1;
 			strip_quotes(value);

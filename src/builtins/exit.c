@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 17:17:53 by j.fox             #+#    #+#             */
-/*   Updated: 2026/08/21 17:17:53 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 11:48:21 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_exit(t_shell *shell)
 	if (tmp->args[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		shell->exit	= 1;
+		shell->exit = 1;
 		return (shell->exit);
 	}
 	shell->status = 1;

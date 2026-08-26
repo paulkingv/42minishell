@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 15:35:37 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/25 21:30:02 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 11:41:41 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	act_cd(t_shell *shell, t_cmd *cmd, char *new_path, char *old_path)
 		if (no_chdir(shell, old_path, new_path))
 			return (0);
 	}
-	else if(new_path[0])
+	else if (new_path[0])
 	{
 		print_newpath(new_path);
 		return (1);

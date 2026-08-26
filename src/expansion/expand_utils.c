@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/13 14:33:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/25 12:50:47 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 13:30:29 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*append_string(char *s1, char *s2)
 {
 	char	*tmp;
 
+	if (!s1)
+		return (NULL);
 	if (!s2)
 		s2 = "";
 	tmp = ft_strjoin(s1, s2);
@@ -42,6 +44,8 @@ char	*append_char(char *string, char c)
 	char	r[2];
 	char	*tmp;
 
+	if (!string)
+		return (NULL);
 	r[0] = c;
 	r[1] = '\0';
 	tmp = ft_strjoin(string, r);

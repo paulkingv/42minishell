@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:04:19 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/25 15:34:57 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 11:52:04 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_env	*init_env(char **envp, t_env *head, t_env *new)
 	char	*value;
 
 	if (!envp || !envp[0])
-		setPWD(&head);
+		setpwd(&head);
 	while (*envp)
 	{
 		i = 0;

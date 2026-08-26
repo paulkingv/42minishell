@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 00:16:35 by j.fox             #+#    #+#             */
-/*   Updated: 2026/08/26 00:16:35 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 11:48:49 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void	require_number(t_shell *shell, char *arg)
 {
 	if (!ft_strcmp(arg, "--"))
 	{
-		shell->exit	= 0;
+		shell->exit = 0;
 		return ;
 	}
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
 	shell->status = 1;
-	shell->exit	= 2;
+	shell->exit = 2;
 	return ;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 08:54:54 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 11:47:51 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,10 @@ void	run_shell(t_shell *minishell)
 // if we have a valid set of tokens we finally run the shell, we process, expand
 // and execute before freeing everything and returning back to the shell input.
 // once we leave the main loop, free shell insures we have freed everything.
-int    main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-   t_shell  minishell;
-   char     *input;
+	t_shell	minishell;
+	char	*input;
 
 	ft_bzero(&minishell, sizeof(t_shell));
 	minishell.env = init_env(envp, NULL, NULL);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ltoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 00:57:52 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 01:58:05 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 11:42:34 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char *n_is_zero(long n, char *str)
+static char	*n_is_zero(long n, char *str)
 {
 	if (n == 0)
 	{
@@ -21,12 +21,13 @@ static char *n_is_zero(long n, char *str)
 	}
 	return (str);
 }
-static char *reverse_str(char *str)
+
+static char	*reverse_str(char *str)
 {
-	int 	start;
-	int 	end;
+	int		start;
+	int		end;
 	char	tmp;
-	
+
 	start = 0;
 	end = (ft_strlen(str) - 1);
 	while (start < end)
@@ -39,7 +40,8 @@ static char *reverse_str(char *str)
 	}
 	return (str);
 }
-static void process_ltoa(long *n, char *str, int i, int is_negative)
+
+static void	process_ltoa(long *n, char *str, int i, int is_negative)
 {
 	while (*n > 0)
 	{
@@ -53,7 +55,7 @@ static void process_ltoa(long *n, char *str, int i, int is_negative)
 }
 
 /* 19 is long max digit*/
-char *ft_ltoa(long n)
+char	*ft_ltoa(long n)
 {
 	char	*str;
 	int		i;
