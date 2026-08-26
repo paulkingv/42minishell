@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 03:23:35 by pking             #+#    #+#             */
-/*   Updated: 2026/08/13 03:44:17 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 06:23:58 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static void sigint_heredoc(int sig)
 {
 	(void)sig;
 	g_signal_status = SIGINT;
-	// close(STDIN_FILENO); del if ok s
+	write(1, "\n", 1);
+	close(STDIN_FILENO);
 }
 
 void init_signals(void)
@@ -50,7 +51,7 @@ void init_signals(void)
 	signal(SIGQUIT, SIG_IGN); // actually send signal to handler
 }
 
-void signals_heredoc(void)
+void heredoc_signals(void)
 {
 	signal(SIGINT, sigint_heredoc);
 }
