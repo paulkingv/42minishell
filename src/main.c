@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/25 14:13:28 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 08:54:54 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	run_shell(t_shell *minishell)
 // if we have a valid set of tokens we finally run the shell, we process, expand
 // and execute before freeing everything and returning back to the shell input.
 // once we leave the main loop, free shell insures we have freed everything.
-int    main(int argv, char **argc, char **envp)
+int    main(int argc, char **argv, char **envp)
 {
    t_shell  minishell;
    char     *input;
@@ -112,7 +112,7 @@ int    main(int argv, char **argc, char **envp)
 	minishell.env = init_env(envp, NULL, NULL);
 	while (minishell.status == 0)
 	{
-		init_signals(argv, argc);
+		init_signals(argc, argv);
 		input = readline("/minishell$ ");
 		if (!input && ft_printf("exit\n"))
 			break ;

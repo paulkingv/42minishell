@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_safety_funct.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 02:16:14 by pking             #+#    #+#             */
-/*   Updated: 2026/08/23 18:00:50 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 08:32:58 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	wait_for_children(pid_t last_pid, t_shell *shell)
 	int		status;
 
 	reaped_pid = waitpid(-1, &status, 0);
-	while (reaped_pid > 0)
+	while (reaped_pid > 0 || (reaped_pid == -1 && errno == EINTR))
 	{
 		if (reaped_pid == last_pid)
 		{

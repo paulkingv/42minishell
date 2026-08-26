@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+         #
+#    By: pking <pking@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/08/26 00:40:01 by j.fox            ###   ########.fr        #
+#    Updated: 2026/08/26 08:56:15 by pking            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ SRC =	main.c \
 		builtins/export.c builtins/export_utils.c \
 		builtins/echo.c \
 		builtins/exit.c builtins/exit_utils.c \
-		signal/signal.c \
+    	signal/signal_child.c signal/signal_parent.c\
 		shell/shell.c shell/free_utils.c shell/free_shell.c
 
 NAME = minishell

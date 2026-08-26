@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   signal_parent.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 03:23:35 by pking             #+#    #+#             */
-/*   Updated: 2026/08/25 13:16:51 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/26 08:54:55 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,8 @@ static void handle_sigint(int sig)
 	g_signal_status = SIGINT;
 }
 
-static void sigint_heredoc(int sig)
-{
-	(void)sig;
-	g_signal_status = SIGINT;
-	// close(STDIN_FILENO); del if ok s
-}
 
-void init_signals(int argv, char **argc)
+void init_signals(int argc, char **argv)
 {
 	struct sigaction	sa; // required to set up the struct to use
 
@@ -52,10 +46,6 @@ void init_signals(int argv, char **argc)
 	signal(SIGQUIT, SIG_IGN); // actually send signal to handler
 }
 
-void signals_heredoc(void)
-{
-	signal(SIGINT, sigint_heredoc);
-}
 
 void reset_signals(void)
 {
@@ -66,4 +56,7 @@ void reset_signals(void)
 	sigaction(SIGINT, &sa, NULL);
 }
 
-
+void parent_wait_signals(void)
+{
+	signal(SIGINT, SIG_IGN);
+}
