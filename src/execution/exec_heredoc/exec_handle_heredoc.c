@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 05:25:01 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 07:02:23 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static int	hd_loop(int fd, t_redir *redir, t_env *env)
 		line = readline("> ");
 		if (!line)
 		{
-			ft_putstr_fd("warning: heredoc delimited by EOF\n", 2);
+			if (g_signal_status != SIGINT)
+				ft_putstr_fd("warning: heredoc delimited by EOF\n", 2);
 			break ; // line unterminated 
 		}
 		if (ft_strcmp(line, redir->file_name) == 0)
@@ -106,6 +107,8 @@ int handle_heredoc(t_redir *redir, t_env *env) //returns FD
 	close(fd);
 	if (loop_error != -1)
 		fd = open(filename, O_RDONLY);
+	else
+		fd = -1;
 	unlink(filename);
 	free(filename);
 	return (fd);

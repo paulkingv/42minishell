@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/08/23 14:40:56 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 07:40:14 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static void	child_exe_cmd(int prev_fd, int pipe_fd[2],
 	char	*valid_cmd;
 	char	**envp;
 
+	default_signals();
 	if (tmp_cmd->redirections // try read_heredocs & set up fds
 		&& read_heredocs(tmp_cmd->redirections, shell->env) == -1)
 		exit(1);
@@ -112,6 +113,7 @@ void	exe_cmdline(t_shell *shell)
 		exec_builtin(shell, tmp_cmd);
 		return ;
 	}
+	parent_wait_signals();
 	while (tmp_cmd)
 	{
 		exec_init_pipefd(pipe_fd);
@@ -124,4 +126,5 @@ void	exe_cmdline(t_shell *shell)
 		tmp_cmd = tmp_cmd->next;
 	}
 	wait_for_children(pid, shell);
+	init_signals();
 }

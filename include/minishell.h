@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 05:04:24 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 07:53:39 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <stdlib.h> //malloc
 # include <signal.h> // signals
 # include <limits.h>
+# include <errno.h> // EINTR
 
 //**********************************GLOBAL***********************************//
 extern volatile sig_atomic_t g_signal_status; // pk- I will finish this l8r
@@ -240,9 +241,12 @@ void	exec_child_builtin(t_shell *shell, t_cmd *cmd);
 int		handle_heredoc(t_redir *redir, t_env *env);
 
 //**********************************SRC/SIGNAL****************//
-//------------SIGNAL.C------------//
+//--------signal_parent.C-------//
 void	init_signals(void);
-void	heredoc_signals(void);
 void	reset_signals(void);
+void parent_wait_signals(void);
 
+//--------signal_child.C--------//
+void default_signals(void);
+void	heredoc_signals(void);
 #endif

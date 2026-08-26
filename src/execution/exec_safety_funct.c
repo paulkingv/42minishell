@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 02:16:14 by pking             #+#    #+#             */
-/*   Updated: 2026/08/23 14:41:31 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 07:39:15 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	wait_for_children(pid_t last_pid, t_shell *shell)
 	int		status;
 
 	reaped_pid = waitpid(-1, &status, 0);
-	while (reaped_pid > 0)
+	while (reaped_pid > 0 || (reaped_pid == -1 && errno == EINTR))
 	{
 		if (reaped_pid == last_pid)
 		{
