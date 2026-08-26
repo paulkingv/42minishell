@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 08:31:52 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 08:37:23 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int    main(int argc, char **argv, char **envp)
     minishell.env = init_env(envp, NULL, NULL);
     while (minishell.status == 0)
     {
-        init_signals(argv, argc);
+        init_signals(argc, argv);
         input = readline("/minishell$ ");
         if (!input && ft_printf("exit\n"))
             break ;

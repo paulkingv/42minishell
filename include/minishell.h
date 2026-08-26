@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 08:26:15 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 08:36:36 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ int		handle_heredoc(t_redir *redir, t_env *env);
 
 //**********************************SRC/SIGNAL****************//
 //--------signal_parent.C-------//
-void	init_signals(void);
+void	init_signals(int argc, char **argv);
 void	reset_signals(void);
 void parent_wait_signals(void);
 

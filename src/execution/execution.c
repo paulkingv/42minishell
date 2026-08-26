@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 08:18:04 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 08:38:18 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,5 @@ void	exe_cmdline(t_shell *shell)
 		tmp_cmd = tmp_cmd->next;
 	}
 	wait_for_children(pid, shell);
-	init_signals();
+	init_signals(0, NULL);
 }
