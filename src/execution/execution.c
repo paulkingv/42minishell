@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 07:40:14 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 08:18:04 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,11 @@ static void	child_exe_cmd(int prev_fd, int pipe_fd[2],
 	default_signals();
 	if (tmp_cmd->redirections // try read_heredocs & set up fds
 		&& read_heredocs(tmp_cmd->redirections, shell->env) == -1)
-		exit(1);
+		{
+			if (g_signal_status == SIGINT)
+				exit(130);
+			exit(1);
+		}
 	is_prevfd_registered(prev_fd);
 	if (tmp_cmd->next)
 		safe_dup2(pipe_fd[1], STDOUT_FILENO);
