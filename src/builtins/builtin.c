@@ -6,7 +6,7 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 15:35:37 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/21 16:59:43 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/23 22:29:12 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,12 @@ int	ft_cd(t_shell *shell, t_cmd *cmd)
 		}
 		if (!(chdir(new_path)))
 		{
+			new_path = getcwd(NULL, 0);
+			if (!new_path)
+			return (1);
 			set_env(&shell->env, "OLDPWD", old_path);
 			set_env(&shell->env, "PWD", new_path);
+			free(new_path);
 			return (0);
 		}
 		else if(new_path[0])
@@ -75,7 +79,7 @@ int	ft_pwd(t_shell *shell)
 	pwd = get_env(shell->env, "PWD");
 	if (pwd)
 	{
-		ft_printf("%s\n", cwd);
+		ft_printf("%s\n", pwd);
 		return (0);
 	}
 	return (1);

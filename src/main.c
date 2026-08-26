@@ -6,23 +6,11 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/23 14:44:08 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 08:31:52 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static void print_tokens(t_token *head)
-// {
-//     t_token *cur;
-
-//     cur = head;
-//     while (cur)
-//     {
-//         printf("type: %d | value: '%s'\n", cur->type, cur->value);
-//         cur = cur->next;
-//     }
-// }
 
 // static void print_shell_envi(t_env *head)
 // {
@@ -35,6 +23,18 @@
 // 		ft_printf("Value: %d\n", tmp->value);
 // 		tmp = tmp->next;
 // 	}
+// }
+
+// static void print_tokens(t_token *head)
+// {
+//     t_token *cur;
+
+//     cur = head;
+//     while (cur)
+//     {
+//         printf("type: %d | value: '%s'\n", cur->type, cur->value);
+//         cur = cur->next;
+//     }
 // }
 
 // static void print_cmd(t_cmd *head)
@@ -77,45 +77,46 @@
 			// print_cmd(minishell->cmdline);
 
 //added environment table
-int	main(int argv, char **argc, char **envp)
+int    run_signal(t_shell *shell, char *input)
 {
-	t_shell	minishell;
-	char	*input;
+    g_signal_status = 0;
+    shell->exit = 130;
+    free(input);
+    return (1);
+}
 
-	(void)argv;
-	(void)argc;
-	ft_bzero(&minishell, sizeof(t_shell));
-	minishell.env = init_env(envp, NULL, NULL);
-	init_signals();
-	while (minishell.status == 0)
-	{
-		init_signals();
-		input = readline("/minishell$ ");
-		if (!input && ft_printf("exit\n"))
-			break ;
-		if (g_signal_status == SIGINT)
-		{
-			g_signal_status = 0;
-			minishell.exit = 130;
-			free(input);
-			continue;
-		}
-		if (*input)
-		{
-			add_history(input);
-			minishell.tokens = tokenize(input, &minishell);
-			if (minishell.tokens)
-			{
-				// print_tokens(minishell.tokens);
-				minishell.exit = process(&minishell, minishell.tokens);
-				// print_cmd(minishell.cmdline);
-				exe_cmdline(&minishell);
-				free_tokens(&minishell.tokens);
-				free_cmd(&minishell.cmdline);
-			}
-		}
-		free(input);
-	}
-	free_shell(&minishell);
-	return (minishell.exit);
+void    run_shell(t_shell *minishell)
+{
+    minishell->exit = process(minishell, minishell->tokens);
+    exe_cmdline(minishell);
+    free_tokens(&minishell->tokens);
+    free_cmd(&minishell->cmdline);
+}
+
+int    main(int argc, char **argv, char **envp)
+{
+    t_shell    minishell;
+    char    *input;
+
+    ft_bzero(&minishell, sizeof(t_shell));
+    minishell.env = init_env(envp, NULL, NULL);
+    while (minishell.status == 0)
+    {
+        init_signals(argv, argc);
+        input = readline("/minishell$ ");
+        if (!input && ft_printf("exit\n"))
+            break ;
+        if (g_signal_status == SIGINT && run_signal(&minishell, input))
+            continue ;
+        if (*input)
+        {
+            add_history(input);
+            minishell.tokens = tokenize(input, &minishell);
+            if (minishell.tokens)
+                run_shell(&minishell);
+        }
+        free(input);
+    }
+    free_shell(&minishell);
+    return (minishell.exit);
 }

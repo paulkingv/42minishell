@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 07:53:39 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/26 08:26:15 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ extern volatile sig_atomic_t g_signal_status; // pk- I will finish this l8r
 //**********************************DEFINES***********************************//
 #define REDIR_MASK (REDIR_OUT | REDIR_IN | APPEND | HEREDOC)
 #define OPERATOR_MASK (REDIR_OUT | REDIR_IN | APPEND | HEREDOC | PIPE)
+#define DEFAULT_PATH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 //**********************************STRUCTS***********************************//
 
 /*~~~~~~~~TOKENIZATION~~~~~~~~~*/
@@ -50,6 +51,7 @@ typedef enum e_token_type
 	REDIR_IN = 1 << 3,	// 0x00001000 8		( <  )
 	APPEND = 1 << 4,	// 0x00010000 16	( >> )
 	HEREDOC = 1 << 5,	// 0x00100000 32	( << )
+	SEMICOLON = 1 << 6, // 0x01000000 64
 }	t_token_type;
 
 typedef struct s_token
@@ -95,6 +97,7 @@ typedef struct s_shell
 	t_cmd	*cmdline;
 	int		status;
 	int		exit;
+	int		path_was_unset;
 }	t_shell;
 
 //******************************FOLDERS/FUNCTIONS*****************************//
@@ -190,7 +193,7 @@ int		valid_export(char *arg);
 //static int		env_count(t_env	*env);
 
 //-----------echo.c------------//
-int		ft_echo(t_shell *shell);
+int		ft_echo(t_shell *shell, int newline, int i);
 // static int	is_n_option(char *arg);
 
 //-----------exit.c------------//
