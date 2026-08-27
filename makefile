@@ -6,7 +6,7 @@
 #    By: pking <pking@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/08/27 02:50:52 by pking            ###   ########.fr        #
+#    Updated: 2026/08/28 00:59:37 by pking            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,14 @@ SRC =	main.c \
 		tokenize/tokenizing.c tokenize/token_utils.c \
 		tokenize/token_validation.c \
 		execution/env_to_array.c \
-		execution/exec_close_pipe.c execution/exec_handle_redir.c \
-		execution/exec_safety_funct.c execution/execution.c \
+		execution/exec_utils.c execution/exec_handle_redir.c \
+		execution/exec_safety_funct.c \
 		execution/exec_get_path.c execution/exec_check_stat.c \
 		execution/init/exec_init_pipefd.c \
 		execution/exec_builtin/exec_builtin.c \
 		execution/exec_builtin/exec_child_builtin.c \
 		execution/exec_heredoc/exec_handle_heredoc.c \
+		execution/execution.c execution/execution_child.c \
 		environment/environment.c environment/environment_utils.c \
 		expansion/process.c expansion/expand_tokens.c \
 		expansion/expand_utils.c \

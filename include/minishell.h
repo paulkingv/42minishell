@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/27 05:19:24 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/28 01:03:30 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,12 +225,22 @@ int		ft_pwd(t_shell *shell);
 //**********************************SRC/EXECUTION*****************************//
 //--------EXECUTION.c----------//
 void	exe_cmdline(t_shell *shell);
+void	invalid_cmd_cleanup(t_shell *shell, t_cmd *cmdline,
+	char **envp, int exit_code);
+
+//------execution_child.c------//
+void	child_exe_cmd(int prev_fd, int pipe_fd[2],
+	t_shell *shell, t_cmd *tmp_cmd);
+
+//--------exec_is_prevfd_reg.c-------//
+void	is_prevfd_registered(int prev_fd);
 
 //--------env_to_array.c-------//
 char	**env_to_array(t_env *env);
 
-//------exec_close_pipe.c------//
+//------exec_utils.c------//
 void	exec_close_pipe(int pipe_fd[2]);
+void	is_prevfd_registered(int prev_fd);
 
 //--------env_to_array.c-------//
 char	**env_to_array(t_env *env);
@@ -268,7 +278,7 @@ void	exec_child_builtin(t_shell *shell, t_cmd *cmd);
 //**********************************SRC/EXECUTION/EXEC_HEREDOC****************//
 int		handle_heredoc(t_redir *redir, t_env *env);
 
-//**********************************SRC/SIGNAL****************//
+//**********************************SRC/SIGNAL********************************//
 //--------signal_parent.C-------//
 void	init_signals(int argc, char **argv);
 void	reset_signals(void);

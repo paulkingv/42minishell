@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/27 21:59:49 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/28 00:54:36 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ static char	*hd_name(void)
 }
 
 // inside hd_loop, this is readline for hd; also checks if EOF or ^C
-static void	hd_loop_rl(int fd, t_redir *redir) //, char *line
+static void hd_loop_rl(int fd, t_redir *redir)
 {
 	char *line;
 
+	line = NULL;
 	while (g_signal_status != SIGINT)
 	{
 		line = readline("> ");
@@ -76,8 +77,9 @@ static void	hd_loop_rl(int fd, t_redir *redir) //, char *line
 		ft_putstr_fd(line, fd);
 		write(fd, "\n", 1);
 		free(line);
-		line = NULL;
 	}
+	if (line)
+		free(line);
 }
 
 static int	hd_loop(int fd, t_redir *redir, t_env *env)
