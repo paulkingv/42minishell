@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 14:22:27 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/27 21:07:07 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,11 @@ static char *hd_name(void)
 	return (filename);
 }
 
-static int	hd_loop(int fd, t_redir *redir, t_env *env)
+// inside hd_loop, this is readline for hd; also checks if EOF or ^C
+static void	hd_loop_rl(int fd, t_redir *redir) //, char *line
 {
 	char *line;
 
-	(void)*env;
-	g_signal_status = 0;
-	heredoc_signals();
 	while (g_signal_status != SIGINT)
 	{
 		line = readline("> ");
@@ -67,7 +65,7 @@ static int	hd_loop(int fd, t_redir *redir, t_env *env)
 		{
 			if (g_signal_status != SIGINT)
 				ft_putstr_fd("warning: heredoc delimited by EOF\n", 2);
-			break ; // line unterminated
+			break ; // line unterminated, ^C
 		}
 		if (ft_strcmp(line, redir->file_name) == 0)
 		{
@@ -80,7 +78,18 @@ static int	hd_loop(int fd, t_redir *redir, t_env *env)
 		free(line);
 		line = NULL;
 	}
-	free(line);
+}
+
+static int	hd_loop(int fd, t_redir *redir, t_env *env)
+{
+	// char *line;
+
+	// lines = NULL;
+	(void)*env;
+	g_signal_status = 0;
+	heredoc_signals();
+	hd_loop_rl(fd, redir); //, line
+	// free(line);
 	reset_signals();
 	if (g_signal_status == SIGINT)
 		return (-1);
@@ -97,13 +106,13 @@ int handle_heredoc(t_redir *redir, t_env *env)
 	filename = hd_name();
 	if (!filename)
 		return (-1);
-	fd = open(filename, O_WRONLY | O_CREAT |O_TRUNC, 0644);
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644); //Write only, create if !exist, truncate to it, 0644 == perms
 	if (fd < 0)
 	{
 		free(filename);
 		return (-1);
 	}
-	loop_error = hd_loop(fd, redir, env);
+	loop_error = hd_loop(fd, redir, env); // run the readline loop
 	close(fd);
 	if (loop_error != -1)
 		fd = open(filename, O_RDONLY);
