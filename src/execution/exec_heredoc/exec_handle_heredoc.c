@@ -6,22 +6,22 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/27 21:07:07 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/27 21:17:16 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char *hd_gen(char *ptr, unsigned long *memaddr, int *fd, char *filename)
+static char	*hd_gen(char *ptr, unsigned long *memaddr, int *fd, char *filename)
 {
 	ptr = ft_ltoa(*memaddr);
 	if (!ptr)
-		return(NULL);
+		return (NULL);
 	filename = ft_strjoin("./heredoc_", ptr);
 	free(ptr);
 	if (!filename)
 		return (NULL);
-	*fd = open(filename, O_WRONLY | O_CREAT |O_TRUNC | O_EXCL, 0644);
+	*fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC | O_EXCL, 0644);
 	if (*fd >= 0)
 	{
 		close(*fd);
@@ -35,7 +35,7 @@ static char *hd_gen(char *ptr, unsigned long *memaddr, int *fd, char *filename)
 // HD_NAME is used to gen a random* name for the HD
 // Combines a static int val with pointer value
 // This was changed to generate value from memory space
-static char *hd_name(void)
+static char	*hd_name(void)
 {
 	char			*ptr;
 	char			*filename;
@@ -49,7 +49,7 @@ static char *hd_name(void)
 	memaddr = (unsigned long)ptr;
 	free(ptr);
 	while (fd == -1)
-		filename = hd_gen(ptr, &memaddr, &fd, filename);
+		filename = hd_gen(NULL, &memaddr, &fd, filename);
 	return (filename);
 }
 
@@ -83,7 +83,6 @@ static void	hd_loop_rl(int fd, t_redir *redir) //, char *line
 static int	hd_loop(int fd, t_redir *redir, t_env *env)
 {
 	// char *line;
-
 	// lines = NULL;
 	(void)*env;
 	g_signal_status = 0;
@@ -96,18 +95,18 @@ static int	hd_loop(int fd, t_redir *redir, t_env *env)
 	return (0);
 }
 
-//returns FD
-int handle_heredoc(t_redir *redir, t_env *env)
+// returns FD
+int	handle_heredoc(t_redir *redir, t_env *env)
 {
-	int 	fd;
-	char 	*filename;
+	int		fd;
+	char	*filename;
 	int		loop_error;
 
 	filename = hd_name();
 	if (!filename)
 		return (-1);
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644); //Write only, create if !exist, truncate to it, 0644 == perms
-	if (fd < 0)
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644); // Write only,
+	//create if !exist, truncate to it, 0644 == perms if (fd < 0)
 	{
 		free(filename);
 		return (-1);
