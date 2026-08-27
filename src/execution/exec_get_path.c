@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 00:51:05 by pking             #+#    #+#             */
-/*   Updated: 2026/08/27 05:44:16 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/27 21:36:07 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ static char	*find_path(t_shell *shell)
 }
 
 // 2. We have the path. Lets make the split and access function
-// NOTE ⬇️ This leaks [path_cmd needs to be freed]. Free one layer above
-// UPDATE ⬆️ THIS SHOULD BE FIXED NOW
 // Line 81: while i is less than our colon amount + 1
 // line 87 added path_cmd to condition to stop an incorrect memory access.
 static char	*split_try_access(char *path_value, char *cmd, int *exit_code)
