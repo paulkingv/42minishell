@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/08/25 15:45:31 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/27 05:19:43 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,22 @@ int	exec_builtin(t_shell *shell, t_cmd *cmd)
 	tmp = shell;
 	tmp_cmd = cmd;
 	status = 0;
-	if (!shell->cmdline->args[0])
+	if (!tmp_cmd->args[0])
 		return (status);
-	if (!ft_strncmp(shell->cmdline->args[0], "echo", 5))
-		status = ft_echo(tmp, 0, 0);
-	else if (!ft_strncmp(shell->cmdline->args[0], "cd", 3))
+	if (!ft_strncmp(tmp_cmd->args[0], "echo", 5))
+		status = ft_echo(tmp_cmd, 0, 0);
+	else if (!ft_strncmp(tmp_cmd->args[0], "cd", 3))
 		status = ft_cd(tmp, tmp_cmd, NULL, NULL);
-	else if (!ft_strncmp(shell->cmdline->args[0], "pwd", 4))
+	else if (!ft_strncmp(tmp_cmd->args[0], "pwd", 4))
 		status = ft_pwd(tmp);
-	else if (!ft_strncmp(shell->cmdline->args[0], "export", 7))
+	else if (!ft_strncmp(tmp_cmd->args[0], "export", 7))
 		status = ft_export(tmp, tmp_cmd, NULL);
-	else if (!ft_strncmp(shell->cmdline->args[0], "unset", 6))
+	else if (!ft_strncmp(tmp_cmd->args[0], "unset", 6))
 		status = ft_unset(tmp, tmp_cmd);
-	else if (!ft_strncmp(shell->cmdline->args[0], "env", 4))
+	else if (!ft_strncmp(tmp_cmd->args[0], "env", 4))
 		status = ft_env(tmp);
-	else if (!ft_strncmp(shell->cmdline->args[0], "exit", 5))
-		status = ft_exit(tmp);
+	else if (!ft_strncmp(tmp_cmd->args[0], "exit", 5))
+		status = ft_exit(tmp, tmp_cmd); //tmp_cmd (left0ver)
 	shell->exit = status;
 	return (status);
 }

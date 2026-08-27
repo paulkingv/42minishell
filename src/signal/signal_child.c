@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 07:27:58 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 07:33:48 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/27 04:59:05 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ void heredoc_signals(void)
 void default_signals(void)
 {
 	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 

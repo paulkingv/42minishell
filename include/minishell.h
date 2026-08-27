@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 12:59:21 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/27 05:19:24 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <signal.h> // signals
 # include <limits.h>
 # include <errno.h> // EINTR
+# include <sys/stat.h> // stat: file info, lstat: stat no symlink, fstat: on open fds
 
 //**********************************GLOBAL************************************//
 extern volatile sig_atomic_t	g_signal_status; // pk- I will finish this l8r
@@ -191,11 +192,11 @@ int		ft_cd(t_shell *shell, t_cmd *cmd, char *new_path, char *old_path);
 // static int act_cd(t_shell *shell, t_cmd *cmd, char *new_path, char *old_path)
 
 //-----------echo.c------------//
-int		ft_echo(t_shell *shell, int newline, int i);
+int		ft_echo(t_cmd *cmd, int newline, int i);
 // static int	is_n_option(char *arg);
 
 //-----------exit.c------------//
-int		ft_exit(t_shell *shell);
+int		ft_exit(t_shell *shell, t_cmd *cmd);
 // static int  check_number(char *str, long long *val);
 
 //--------exit_utils.c---------//
@@ -245,8 +246,12 @@ pid_t	safe_fork(void);
 int		safe_pipe(int pipe_fd[2]);
 void	wait_for_children(pid_t last_pid, t_shell *shell);
 
+//-----exec_check_stat.c----------//
+int		path_exists(char *path);
+int		is_directory(char *path);
+
 //-----exec_get_path.c----------//
-char	*exec_get_valid_path(t_shell *shell, char *cmd);
+char	*exec_get_valid_path(t_shell *shell, char *cmd, int *exit_code);
 
 //**********************************SRC/EXECUTION/INIT************************//
 //-----EXEC_INIT_PIPEFD.C-------//

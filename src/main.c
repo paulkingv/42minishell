@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 15:26:15 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/27 05:02:17 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,18 @@
 			// print_cmd(minishell->cmdline);
 
 // helper to take signal setting out of main to save lines.
+
+
 int	run_signal(t_shell *shell, char *input)
 {
 	g_signal_status = 0;
 	shell->exit = 130;
-	free(input);
-	return (1);
+	if (input && !*input)
+	{
+		free(input);
+		return (1);
+	}
+	return (0);
 }
 
 // helper to take running of the whole shell out of main to save lines.

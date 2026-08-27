@@ -43,12 +43,12 @@ static int	check_number(char *str, long long *result, int sign, int i)
 }
 
 // exit with no options
-int	ft_exit(t_shell *shell)
+int	ft_exit(t_shell *shell, t_cmd *cmd)
 {
 	t_cmd		*tmp;
 	long long	val;
 
-	tmp = shell->cmdline;
+	tmp = cmd;
 	if (!tmp->args[1])
 	{
 		shell->status = 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 12:25:55 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/25 12:43:58 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/27 04:27:53 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ static int	is_n_option(char *arg)
 }
 
 // echo with a check for option -n
-int	ft_echo(t_shell *shell, int newline, int i)
+int	ft_echo(t_cmd *cmd, int newline, int i)
 {
 	char	**args;
 
-	args = shell->cmdline->args;
+	args = cmd->args;
 	i = 1;
 	newline = 1;
 	while (args[i] && is_n_option(args[i]))

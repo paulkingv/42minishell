@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_get_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 00:51:05 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 12:29:57 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/27 05:44:16 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static char	*find_path(t_shell *shell)
 // UPDATE ⬆️ THIS SHOULD BE FIXED NOW
 // Line 81: while i is less than our colon amount + 1
 // line 87 added path_cmd to condition to stop an incorrect memory access.
-static char	*split_and_try_access(char *path_value, char *cmd)
+static char	*split_try_access(char *path_value, char *cmd, int *exit_code)
 {
 	char	**paths;
 	int		paths_count;
@@ -84,11 +84,15 @@ static char	*split_and_try_access(char *path_value, char *cmd)
 	while (i < paths_count + 1)
 	{
 		path_cmd = join_path_cmd(paths[i], cmd);
-		if (path_cmd && access(path_cmd, X_OK) == 0)
+		if (path_cmd && access(path_cmd, X_OK) == 0
+			&& !is_directory(path_cmd))
 		{
 			free_array(paths);
 			return (path_cmd);
 		}
+		if (path_cmd && *exit_code == 127
+			&& path_exists(path_cmd))
+			*exit_code = 126;
 		free(path_cmd);
 		i++;
 	}
@@ -98,20 +102,25 @@ static char	*split_and_try_access(char *path_value, char *cmd)
 
 //Meat function. Returns the string of the first possible exec path
 // I REORDERED THIS TO HOPEFULLY COVER COMMANDS THAT ONLY HAVE /
-char	*exec_get_valid_path(t_shell *shell, char *cmd)
+
+//refactor immenant 
+char	*exec_get_valid_path(t_shell *shell, char *cmd, int *exit_code)
 {
 	char	*path_value;
 	char	*valid_path_cmd;
+	// char	*direct_cmd;
 
+	*exit_code = 127;
 	if (ft_strchr(cmd, '/'))
 	{
-		if (access(cmd, X_OK) == 0)
+		if (access(cmd, X_OK) == 0 && !is_directory(cmd))
 		{
 			valid_path_cmd = ft_strdup(cmd);
 			return (valid_path_cmd);
 		}
-		else
-			return (NULL);
+		if (path_exists(cmd))
+			*exit_code = 126;
+		return (NULL);
 	}
 	path_value = find_path(shell);
 	if (!path_value)
@@ -120,8 +129,7 @@ char	*exec_get_valid_path(t_shell *shell, char *cmd)
 			return (NULL);
 		path_value = DFLT_PTH;
 	}
-	valid_path_cmd = split_and_try_access(path_value, cmd);
-	if (valid_path_cmd)
-		return (valid_path_cmd);
-	return (NULL);
-}
+	valid_path_cmd = split_try_access(path_value, cmd, exit_code);
+	return (valid_path_cmd);
+} 
+

@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 08:38:18 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/27 05:47:52 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,27 @@ static void	is_prevfd_registered(int prev_fd)
 }
 
 // Helper to free our array on close
-static void	invalid_cmd_cleanup(t_shell *shell, t_cmd *cmdline, char **envp)
+static void	invalid_cmd_cleanup(t_shell *shell, t_cmd *cmdline, char **envp,
+	int exit_code)
 {
+	char *msg;
+
+	msg = "command not found\n";
+	if (exit_code == 126)
+	{
+		msg = "Permission denied\n";
+		if (ft_strchr(cmdline->args[0], '/')
+			&& is_directory(cmdline->args[0]))
+		msg = "Is a directory";
+	}
 	write(2, "minishell: ", 11);
 	if (cmdline && cmdline->args && cmdline->args[0])
 		write(2, cmdline->args[0], ft_strlen(cmdline->args[0]));
-	write(2, ": command not found\n", 20);
+	write(2, ": ", 2);
+	write(2, msg, ft_strlen(msg));
 	free_array(envp);
 	free_shell(shell);
-	exit(127);
+	exit(exit_code);
 }
 
 // returns the number of the write end of pipe to the prev_fd for use in next
@@ -64,6 +76,7 @@ static void	child_exe_cmd(int prev_fd, int pipe_fd[2],
 {
 	char	*valid_cmd;
 	char	**envp;
+	int		exit_code;
 
 	default_signals();
 	if (tmp_cmd->redirections // try read_heredocs & set up fds
@@ -85,11 +98,11 @@ static void	child_exe_cmd(int prev_fd, int pipe_fd[2],
 	if (is_builtin(tmp_cmd))
 		exec_child_builtin(shell, tmp_cmd);
 	envp = env_to_array(shell->env);
-	valid_cmd = exec_get_valid_path(shell, tmp_cmd->args[0]);
+	valid_cmd = exec_get_valid_path(shell, tmp_cmd->args[0], &exit_code);
 	if (valid_cmd == NULL)
-		invalid_cmd_cleanup(shell, tmp_cmd, envp);
+		invalid_cmd_cleanup(shell, tmp_cmd, envp, exit_code);
 	execve(valid_cmd, tmp_cmd->args, envp);
-	ft_putstr_fd("execve error in child", 2);
+	perror(tmp_cmd->args[0]);
 	free(valid_cmd);
 	free_array(envp);
 	free_shell(shell);
