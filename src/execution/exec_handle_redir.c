@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle_redir.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 14:49:09 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 15:03:26 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/27 21:56:21 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,22 @@
 
 // CC created this function so that we scan the cmdline's redirs for HD
 // in main.
+
+static void link_redir(t_redir *redir, int *fd, t_shell *shell)
+{
+	*fd = open_redir_file(redir);
+	if (*fd == -1)
+	{
+		perror(redir->file_name);
+		free_shell(shell);
+		exit(1);
+	}
+	if (redir->type == REDIR_IN)
+		safe_dup2(*fd, 0); //dup2(fd, targetfd)
+	else if (redir->type == REDIR_OUT || redir->type == APPEND)
+		safe_dup2(*fd, 1);
+}
+
 int read_heredocs(t_redir *redir, t_env *env)
 {
 	while (redir)
@@ -56,26 +72,13 @@ int	handle_redirects(t_redir *redir, t_env *env, t_shell *shell)
 	fd = 0;
 	while (redir)
 	{
-
 		if (redir->type == HEREDOC) // essential: do this in loop to read multiple HDs
 		{
 			fd = redir->heredoc_fd;
 			safe_dup2(fd, STDIN_FILENO);
 		}
 		else
-		{
-			fd = open_redir_file(redir);
-			if (fd == -1)
-			{
-				perror(redir->file_name);
-				free_shell(shell);
-				exit(1);
-			}
-			if (redir->type == REDIR_IN)
-				safe_dup2(fd, 0); //dup2(fd, targetfd)
-			else if (redir->type == REDIR_OUT || redir->type == APPEND)
-				safe_dup2(fd, 1);
-		}
+			link_redir(redir, &fd, shell);
 		close(fd);
 		redir = redir->next;
 	}

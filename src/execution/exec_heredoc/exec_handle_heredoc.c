@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/27 21:07:07 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/27 21:16:48 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char *hd_name(void)
 	memaddr = (unsigned long)ptr;
 	free(ptr);
 	while (fd == -1)
-		filename = hd_gen(ptr, &memaddr, &fd, filename);
+		filename = hd_gen(NULL, &memaddr, &fd, filename);
 	return (filename);
 }
 
