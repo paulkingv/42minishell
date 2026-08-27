@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 12:06:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 15:57:08 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/27 14:15:17 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,17 @@ static char	*expand_word(t_shell *shell, char *word, int dquote, int squote)
 		else if (word[i] == '$' && !squote)
 		{
 			if (word[i + 1] == '"' && !dquote)
+			{
 				string = append_string(string, "");
+				if (!string)
+					return (NULL);
+			}
 			else
 			{
 				tmp = expansion(shell, &word[i], &i);
 				string = append_string(string, tmp);
+				if (!string)
+					return (NULL);
 				free(tmp);
 			}
 		}

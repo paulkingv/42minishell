@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/13 14:33:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 15:36:03 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/27 14:09:25 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*append_char(char *string, char c)
 	char	r[2];
 	char	*tmp;
 
-	if (!string)
+	if (!string || ! c)
 		return (NULL);
 	r[0] = c;
 	r[1] = '\0';

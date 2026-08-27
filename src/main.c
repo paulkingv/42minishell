@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/27 05:02:17 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/27 14:20:32 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@
 			// print_cmd(minishell->cmdline);
 
 // helper to take signal setting out of main to save lines.
-
-
 int	run_signal(t_shell *shell, char *input)
 {
 	g_signal_status = 0;
@@ -100,6 +98,7 @@ void	run_shell(t_shell *minishell)
 	exe_cmdline(minishell);
 	free_tokens(&minishell->tokens);
 	free_cmd(&minishell->cmdline);
+	return ;
 }
 
 // simple main, declare our shell, bzero to set it to 0 then populate env.

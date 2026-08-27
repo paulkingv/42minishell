@@ -6,9 +6,11 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 01:34:59 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 11:38:59 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/27 14:12:43 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../include/libft.h"
 
 int	ft_strcmp(char *s1, char *s2)
 {
