@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 14:02:16 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 11:54:11 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/27 21:02:54 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static t_cmd	*new_cmd(void)
 		return (NULL);
 	new->args = NULL;
 	new->redirections = NULL;
+	new->separator = 0;
 	new->next = NULL;
 	return (new);
 }
@@ -102,6 +103,7 @@ t_cmd	*parse(t_shell *shell, t_cmd *head, t_cmd *current, t_token *tmp)
 			tmp = tmp->next;
 		if (tmp)
 		{
+			current->separator = tmp->type;
 			tmp = tmp->next;
 			current->next = new_cmd();
 			if (!current->next)

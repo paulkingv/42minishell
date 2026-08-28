@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle_redir.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 14:49:09 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 15:03:26 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/28 01:25:25 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 // CC created this function so that we scan the cmdline's redirs for HD
 // in main.
-int read_heredocs(t_redir *redir, t_env *env)
+int read_heredocs(t_redir *redir, t_shell *shell)
 {
 	while (redir)
 	{
 		if (redir->type == HEREDOC)
 		{
-			redir->heredoc_fd = handle_heredoc(redir, env);
+			redir->heredoc_fd = handle_heredoc(redir, shell);
 			if (redir->heredoc_fd == -1)
 				return (-1);
 		}
