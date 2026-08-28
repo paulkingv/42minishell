@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 12:06:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/28 03:43:47 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/28 13:49:06 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,11 @@ int	expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n)
 	while (ttok)
 	{
 		n = ttok->next;
+		if (ttok->type == HEREDOC && ttok->next)
+		{
+			ttok = ttok->next->next;
+			continue;
+		}
 		if (ttok->type == WORD)
 		{
 			expanded = expand_word(shell, ttok->value, NULL, 0);

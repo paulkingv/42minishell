@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 05:39:00 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/28 12:54:52 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,7 +278,7 @@ void	exec_child_builtin(t_shell *shell, t_cmd *cmd);
 
 //**********************************SRC/EXECUTION/EXEC_HEREDOC****************//
 int		handle_heredoc(t_redir *redir, t_shell *shell);
-char	*expand_heredoc(t_shell *shell, char *line);
+char	*expand_heredoc(t_shell *shell, char *line, char *string, int i);
 void	finish_heredoc(char *line, int fd);
 
 //**********************************SRC/SIGNAL****************//

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 04:03:52 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/28 15:09:33 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 		}
 		if (!redir->quoted)
 		{
-			line = expand_heredoc(shell, line);
+			line = expand_heredoc(shell, line, NULL, 0);
 			if (!line)
 				break ;
 		}
