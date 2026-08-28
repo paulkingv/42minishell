@@ -6,7 +6,7 @@
 #    By: pking <pking@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/08/28 05:32:23 by pking            ###   ########.fr        #
+#    Updated: 2026/08/28 07:52:34 by pking            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC =	main.c \
 		execution/exec_builtin/exec_child_builtin.c \
 		execution/exec_heredoc/exec_handle_heredoc.c \
 		execution/exec_heredoc/exec_heredoc_expand.c \
+		execution/exec_heredoc/exec_heredoc_utils.c \
 		environment/environment.c environment/environment_utils.c \
 		expansion/process.c expansion/expand_tokens.c \
 		expansion/expand_utils.c \

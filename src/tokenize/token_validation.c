@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 02:31:14 by pking             #+#    #+#             */
-/*   Updated: 2026/08/26 12:45:31 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/28 07:50:35 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static int validate_tokens(t_token *token) // exit value needs to get changed
 	while (clone) // check the rest of tokens
 	{
 	// pipe cant be last or first or followed by pipe
-		if (clone->type == PIPE && (clone == token || clone->next == NULL )) //check: Node 1 = PIPE; Node[i+1] = PIPE; NULL
+		if (clone->type == PIPE && (clone == token || clone->next == NULL 
+			|| clone->next->type == PIPE)) //check: Node 1 = PIPE; Node[i+1] = PIPE; NULL
 		{
 				token_syntax_error(clone);
 				return (1);

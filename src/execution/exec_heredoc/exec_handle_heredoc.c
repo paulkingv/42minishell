@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 04:03:52 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/28 07:48:20 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ static void hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 
 	while (g_signal_status != SIGINT)
 	{
-	line = readline("> ");
+	line = hd_read_line(redir);
 		if (!line)
 		{
-			if (g_signal_status != SIGINT)
-				ft_putstr_fd("warning: heredoc delimited by EOF\n", 2);
+			// if (g_signal_status != SIGINT)
+			// 	ft_putstr_fd("warning: heredoc delimited by EOF\n", 2);
 			break ;
 		}
 		if (ft_strcmp(line, redir->file_name) == 0)
@@ -106,8 +106,7 @@ int	handle_heredoc(t_redir *redir, t_shell *shell)
 	filename = hd_name();
 	if (!filename)
 	return (-1);
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644); // Write only,
-	//create if !exist, truncate to it, 0644 == perms if (fd < 0)
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644); 
 	if (fd < 0)
 	{
 		free(filename);
