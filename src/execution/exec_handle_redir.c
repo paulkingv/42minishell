@@ -56,26 +56,13 @@ int	handle_redirects(t_redir *redir, t_env *env, t_shell *shell)
 	fd = 0;
 	while (redir)
 	{
-
 		if (redir->type == HEREDOC) // essential: do this in loop to read multiple HDs
 		{
 			fd = redir->heredoc_fd;
 			safe_dup2(fd, STDIN_FILENO);
 		}
 		else
-		{
-			fd = open_redir_file(redir);
-			if (fd == -1)
-			{
-				perror(redir->file_name);
-				free_shell(shell);
-				exit(1);
-			}
-			if (redir->type == REDIR_IN)
-				safe_dup2(fd, 0); //dup2(fd, targetfd)
-			else if (redir->type == REDIR_OUT || redir->type == APPEND)
-				safe_dup2(fd, 1);
-		}
+			link_redir(redir, &fd, shell);
 		close(fd);
 		redir = redir->next;
 	}

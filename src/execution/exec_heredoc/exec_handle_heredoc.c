@@ -89,6 +89,36 @@ static int	hd_loop(int fd, t_redir *redir, t_shell *shell)
 	g_signal_status = 0;
 	heredoc_signals();
 	hd_loop_rl(fd, redir, shell); //, line
+	while (g_signal_status != SIGINT)
+	{
+		line = readline("> ");
+		if (!line)
+		{
+			if (g_signal_status != SIGINT)
+				ft_putstr_fd("warning: heredoc delimited by EOF\n", 2);
+			break ; // line unterminated, ^C
+		}
+		if (ft_strcmp(line, redir->file_name) == 0)
+		{
+			free(line);
+			line = NULL;
+			break ;
+		}
+		ft_putstr_fd(line, fd);
+		write(fd, "\n", 1);
+		free(line);
+		line = NULL;
+	}
+}
+
+static int	hd_loop(int fd, t_redir *redir, t_env *env)
+{
+	// char *line;
+	// lines = NULL;
+	(void)*env;
+	g_signal_status = 0;
+	heredoc_signals();
+	hd_loop_rl(fd, redir); //, line
 	// free(line);
 	reset_signals();
 	if (g_signal_status == SIGINT)
