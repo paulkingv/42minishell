@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+         #
+#    By: pking <pking@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/08/28 00:35:40 by j.fox            ###   ########.fr        #
+#    Updated: 2026/08/28 05:32:23 by pking            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,9 @@ SRC =	main.c \
 		tokenize/tokenizing.c tokenize/token_utils.c \
 		tokenize/token_validation.c \
 		execution/env_to_array.c \
-		execution/exec_close_pipe.c execution/exec_handle_redir.c \
-		execution/exec_safety_funct.c execution/execution.c \
+		execution/exec_utils.c execution/exec_handle_redir.c \
+		execution/exec_safety_funct.c \
+		execution/execution.c execution/execution_child.c \
 		execution/exec_get_path.c execution/exec_check_stat.c \
 		execution/init/exec_init_pipefd.c \
 		execution/exec_builtin/exec_builtin.c \
