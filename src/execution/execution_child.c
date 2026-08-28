@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 00:43:59 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 05:16:58 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/28 05:39:51 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void child_setup_io(int prev_fd, int pipe_fd[2], t_cmd *tmp_cmd,
 {
 
 	if (tmp_cmd->redirections
-		&& read_heredocs(tmp_cmd->redirections, shell->env) == -1)
+		&& read_heredocs(tmp_cmd->redirections, shell) == -1)
 		{
 			if (g_signal_status == SIGINT)
 				exit(130);

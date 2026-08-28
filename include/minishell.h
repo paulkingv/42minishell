@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 05:38:19 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/28 05:39:00 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,8 @@ int		ft_pwd(t_shell *shell);
 //**********************************SRC/EXECUTION*****************************//
 //--------EXECUTION.c----------//
 void	exe_cmdline(t_shell *shell);
+void	invalid_cmd_cleanup(t_shell *shell, t_cmd *cmdline,
+	char **envp, int exit_code);
 
 //------execution_child.c------//
 void	child_exe_cmd(int prev_fd, int pipe_fd[2],
