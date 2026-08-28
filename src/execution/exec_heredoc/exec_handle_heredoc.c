@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 00:54:36 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/28 02:43:47 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,10 @@ static void hd_loop_rl(int fd, t_redir *redir)
 
 static int	hd_loop(int fd, t_redir *redir, t_env *env)
 {
-	// char *line;
-	// lines = NULL;
 	(void)*env;
 	g_signal_status = 0;
 	heredoc_signals();
-	hd_loop_rl(fd, redir); //, line
-	// free(line);
+	hd_loop_rl(fd, redir);
 	reset_signals();
 	if (g_signal_status == SIGINT)
 		return (-1);
@@ -107,8 +104,7 @@ int	handle_heredoc(t_redir *redir, t_env *env)
 	filename = hd_name();
 	if (!filename)
 		return (-1);
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644); // Write only,
-	//create if !exist, truncate to it, 0644 == perms if (fd < 0)
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644); // Write only, 	//create if !exist, truncate to it, 0644 == perms if (fd < 0)
 	{
 		free(filename);
 		return (-1);
