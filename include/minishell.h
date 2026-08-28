@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 03:44:03 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/28 05:37:37 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,10 @@ int		ft_pwd(t_shell *shell);
 //**********************************SRC/EXECUTION*****************************//
 //--------EXECUTION.c----------//
 void	exe_cmdline(t_shell *shell);
+
+//------execution_child.c------//
+void	child_exe_cmd(int prev_fd, int pipe_fd[2],
+	t_shell *shell, t_cmd *tmp_cmd);
 
 //--------env_to_array.c-------//
 char	**env_to_array(t_env *env);
