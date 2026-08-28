@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 05:37:37 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/28 05:38:19 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,8 +237,9 @@ void	child_exe_cmd(int prev_fd, int pipe_fd[2],
 //--------env_to_array.c-------//
 char	**env_to_array(t_env *env);
 
-//------exec_close_pipe.c------//
+//------exec_utils.c------//
 void	exec_close_pipe(int pipe_fd[2]);
+void	is_prevfd_registered(int prev_fd);
 
 //--------env_to_array.c-------//
 char	**env_to_array(t_env *env);
