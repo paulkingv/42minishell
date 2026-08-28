@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/27 05:19:24 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/28 01:54:19 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,10 @@ typedef struct s_redir
 
 typedef struct s_cmd
 {
-	char				**args;			// ARGV: [cmd] [flag]
-	t_redir				*redirections;	// Only used if REDIR is used
-	struct s_cmd		*next;			// Pointer to next CMD node
+	char			**args;			// ARGV: [cmd] [flag]
+	t_redir			*redirections;	// Only used if REDIR is used
+	int				separator;
+	struct s_cmd	*next;			// Pointer to next CMD node
 }	t_cmd;
 
 /*~~~~~~ENVIRONMENT VARS~~~~~~~*/
@@ -152,8 +153,8 @@ int		process(t_shell *shell, t_token *tokens);
 
 //--------expand_tokens.c--------//
 int		expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n);
+char	*expansion(t_shell *shell, char *word, int *i);
 // static char	*find_value(t_shell *shell, char *word, int *i);
-// static char *expansion(t_shell *shell, char *word, int i);
 //static char *expand_word(t_shell *shell, char *word, int dquote, int squote));
 // static int	set_quotes(char c, int *dquote, int *squote);
 
@@ -237,7 +238,7 @@ char	**env_to_array(t_env *env);
 
 //-----exec_handle_redir.c-----//
 int		open_redir_file(t_redir *redir);
-int		read_heredocs(t_redir *redir, t_env *env);
+int		read_heredocs(t_redir *redir, t_shell *shell);
 int		handle_redirects(t_redir *redir, t_env *env, t_shell *shell);
 
 //-----exec_safety_funct.c-----//
@@ -266,7 +267,9 @@ int		exec_builtin(t_shell *shell, t_cmd *cmd);
 void	exec_child_builtin(t_shell *shell, t_cmd *cmd);
 
 //**********************************SRC/EXECUTION/EXEC_HEREDOC****************//
-int		handle_heredoc(t_redir *redir, t_env *env);
+int		handle_heredoc(t_redir *redir, t_shell *shell);
+char	*expand_heredoc(t_shell *shell, char *line);
+void	finish_heredoc(char *line, int fd);
 
 //**********************************SRC/SIGNAL****************//
 //--------signal_parent.C-------//

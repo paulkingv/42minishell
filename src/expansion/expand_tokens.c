@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 12:06:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/27 14:15:17 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/28 01:32:52 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*find_value(t_shell *shell, char *word, int *i)
 // using our environment we look for value of the desired variable name
 // returning it to be appended by expand word.
 // before that we check the value is simply a $ or needs to expand to exit state
-static char	*expansion(t_shell *shell, char *word, int *i)
+char	*expansion(t_shell *shell, char *word, int *i)
 {
 	t_env	*tenv;
 	char	*tmp;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/27 21:59:49 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/28 01:55:54 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,42 @@ static char	*hd_name(void)
 	return (filename);
 }
 
-// inside hd_loop, this is readline for hd; also checks if EOF or ^C
-static void	hd_loop_rl(int fd, t_redir *redir) //, char *line
+static void hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 {
-	char *line;
+    char    *line;
 
+    while (g_signal_status != SIGINT)
+    {
+        line = readline("> ");
+        if (!line)
+        {
+            if (g_signal_status != SIGINT)
+                ft_putstr_fd("warning: heredoc delimited by EOF\n", 2);
+            break ;
+        }
+        if (ft_strcmp(line, redir->file_name) == 0)
+        {
+            free(line);
+            line = NULL;
+            break ;
+        }
+        if (!redir->quoted)
+        {
+            line = expand_heredoc(shell, line);
+            if (!line)
+                break ;
+        }
+		finish_heredoc(line, fd);
+    }
+}
+
+static int	hd_loop(int fd, t_redir *redir, t_shell *shell)
+{
+	// char *line;
+	// lines = NULL;
+	g_signal_status = 0;
+	heredoc_signals();
+	hd_loop_rl(fd, redir, shell); //, line
 	while (g_signal_status != SIGINT)
 	{
 		line = readline("> ");
@@ -96,7 +127,7 @@ static int	hd_loop(int fd, t_redir *redir, t_env *env)
 }
 
 // returns FD
-int	handle_heredoc(t_redir *redir, t_env *env)
+int	handle_heredoc(t_redir *redir, t_shell *shell)
 {
 	int		fd;
 	char	*filename;
@@ -104,14 +135,15 @@ int	handle_heredoc(t_redir *redir, t_env *env)
 
 	filename = hd_name();
 	if (!filename)
-		return (-1);
+	return (-1);
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644); // Write only,
 	//create if !exist, truncate to it, 0644 == perms if (fd < 0)
+	if (fd < 0)
 	{
 		free(filename);
 		return (-1);
 	}
-	loop_error = hd_loop(fd, redir, env); // run the readline loop
+	loop_error = hd_loop(fd, redir, shell); // run the readline loop
 	close(fd);
 	if (loop_error != -1)
 		fd = open(filename, O_RDONLY);

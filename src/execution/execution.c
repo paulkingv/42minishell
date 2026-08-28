@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/08/27 05:47:52 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/28 01:28:49 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	child_exe_cmd(int prev_fd, int pipe_fd[2],
 
 	default_signals();
 	if (tmp_cmd->redirections // try read_heredocs & set up fds
-		&& read_heredocs(tmp_cmd->redirections, shell->env) == -1)
+		&& read_heredocs(tmp_cmd->redirections, shell) == -1)
 		{
 			if (g_signal_status == SIGINT)
 				exit(130);
@@ -133,6 +133,13 @@ void	exe_cmdline(t_shell *shell)
 	parent_wait_signals();
 	while (tmp_cmd)
 	{
+		if (is_builtin(tmp_cmd) && !tmp_cmd->redirections
+			&& tmp_cmd->separator == SEMICOLON)
+		{
+			exec_builtin(shell, tmp_cmd);
+			tmp_cmd = tmp_cmd->next;
+			continue;
+		}
 		exec_init_pipefd(pipe_fd);
 		if (tmp_cmd->next)
 			safe_pipe(pipe_fd);

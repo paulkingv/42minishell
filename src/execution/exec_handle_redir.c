@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle_redir.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 14:49:09 by pking             #+#    #+#             */
-/*   Updated: 2026/08/27 21:56:21 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/28 01:25:25 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,13 @@
 
 // CC created this function so that we scan the cmdline's redirs for HD
 // in main.
-
-static void link_redir(t_redir *redir, int *fd, t_shell *shell)
-{
-	*fd = open_redir_file(redir);
-	if (*fd == -1)
-	{
-		perror(redir->file_name);
-		free_shell(shell);
-		exit(1);
-	}
-	if (redir->type == REDIR_IN)
-		safe_dup2(*fd, 0); //dup2(fd, targetfd)
-	else if (redir->type == REDIR_OUT || redir->type == APPEND)
-		safe_dup2(*fd, 1);
-}
-
-int read_heredocs(t_redir *redir, t_env *env)
+int read_heredocs(t_redir *redir, t_shell *shell)
 {
 	while (redir)
 	{
 		if (redir->type == HEREDOC)
 		{
-			redir->heredoc_fd = handle_heredoc(redir, env);
+			redir->heredoc_fd = handle_heredoc(redir, shell);
 			if (redir->heredoc_fd == -1)
 				return (-1);
 		}
