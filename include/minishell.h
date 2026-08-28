@@ -6,7 +6,7 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 01:54:19 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/28 03:44:03 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ typedef struct s_shell
 	char	*input;
 	int		status;
 	int		exit;
+	int		dquote;
+	int		squote;
 	int		path_was_unset;
 }	t_shell;
 
@@ -155,10 +157,11 @@ int		process(t_shell *shell, t_token *tokens);
 int		expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n);
 char	*expansion(t_shell *shell, char *word, int *i);
 // static char	*find_value(t_shell *shell, char *word, int *i);
-//static char *expand_word(t_shell *shell, char *word, int dquote, int squote));
+// static char	*expand_word(t_shell *shell, char *word, char* string, int i);
 // static int	set_quotes(char c, int *dquote, int *squote);
 
 //---------expand_utils.c--------//
+char	*help_expand_dollar(t_shell *shell, char *string, char *word, int *i);
 char	*append_char(char *string, char c);
 char	*append_string(char *s1, char *s2);
 char	*find_word(char *word);

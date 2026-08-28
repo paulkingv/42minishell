@@ -6,7 +6,7 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 12:06:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/28 01:32:52 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/28 03:43:47 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,40 +94,22 @@ static int	set_quotes(char c, int *dquote, int *squote)
 // expansion will return us a string value that we can append onto the string
 // we currently have, we use a pointer to i to move through the string in this
 // function and in the other, so we can jump over the word we are expanding.
-static char	*expand_word(t_shell *shell, char *word, int dquote, int squote)
+static char	*expand_word(t_shell *shell, char *word, char* string, int i)
 {
-	int		i;
-	char	*string;
-	char	*tmp;
-
-	i = 0;
 	string = ft_strdup("");
 	if (!string)
 		return (NULL);
 	while (word[i])
 	{
-		if (set_quotes(word[i], &dquote, &squote))
+		if (!set_quotes(word[i], &shell->dquote, &shell->squote))
 		{
-		}
-		else if (word[i] == '$' && !squote)
-		{
-			if (word[i + 1] == '"' && !dquote)
-			{
-				string = append_string(string, "");
-				if (!string)
-					return (NULL);
-			}
+			if (word[i] == '$' && !shell->squote)
+				string = help_expand_dollar(shell, string, word, &i);
 			else
-			{
-				tmp = expansion(shell, &word[i], &i);
-				string = append_string(string, tmp);
-				if (!string)
-					return (NULL);
-				free(tmp);
-			}
+				string = append_char(string, word[i]);
+			if (!string)
+				return (NULL);
 		}
-		else
-			string = append_char(string, word[i]);
 		i++;
 	}
 	return (string);
@@ -150,7 +132,7 @@ int	expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n)
 		n = ttok->next;
 		if (ttok->type == WORD)
 		{
-			expanded = expand_word(shell, ttok->value, 0, 0);
+			expanded = expand_word(shell, ttok->value, NULL, 0);
 			if (!expanded)
 				return (1);
 			if (expanded[0] == '\0' && !is_quoted(ttok->value))

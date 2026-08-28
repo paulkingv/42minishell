@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/13 14:33:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/27 14:09:25 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/28 03:43:39 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,16 @@ char	*find_word(char *word)
 		return (NULL);
 	ft_strlcpy(ret, word, i);
 	return (ret);
+}
+
+char	*help_expand_dollar(t_shell *shell, char *string, char *word, int *i)
+{
+	char	*tmp;
+
+	if (word[*i + 1] == '"' && !shell->dquote)
+		return (append_string(string, ""));
+	tmp = expansion(shell, &word[*i], i);
+	string = append_string(string, tmp);
+	free(tmp);
+	return (string);
 }

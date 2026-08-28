@@ -6,7 +6,7 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 01:55:54 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/28 04:03:52 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ static char	*hd_name(void)
 {
 	char			*ptr;
 	char			*filename;
-	unsigned long	memaddr;
 	int				fd;
+	unsigned long	memaddr;
 
 	ptr = malloc(1);
 	if (!ptr)
@@ -55,31 +55,31 @@ static char	*hd_name(void)
 
 static void hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 {
-    char    *line;
+	char	*line;
 
-    while (g_signal_status != SIGINT)
-    {
-        line = readline("> ");
-        if (!line)
-        {
-            if (g_signal_status != SIGINT)
-                ft_putstr_fd("warning: heredoc delimited by EOF\n", 2);
-            break ;
-        }
-        if (ft_strcmp(line, redir->file_name) == 0)
-        {
-            free(line);
-            line = NULL;
-            break ;
-        }
-        if (!redir->quoted)
-        {
-            line = expand_heredoc(shell, line);
-            if (!line)
-                break ;
-        }
+	while (g_signal_status != SIGINT)
+	{
+	line = readline("> ");
+		if (!line)
+		{
+			if (g_signal_status != SIGINT)
+				ft_putstr_fd("warning: heredoc delimited by EOF\n", 2);
+			break ;
+		}
+		if (ft_strcmp(line, redir->file_name) == 0)
+		{
+			free(line);
+			line = NULL;
+			break ;
+		}
+		if (!redir->quoted)
+		{
+			line = expand_heredoc(shell, line);
+			if (!line)
+				break ;
+		}
 		finish_heredoc(line, fd);
-    }
+	}
 }
 
 static int	hd_loop(int fd, t_redir *redir, t_shell *shell)
@@ -89,36 +89,6 @@ static int	hd_loop(int fd, t_redir *redir, t_shell *shell)
 	g_signal_status = 0;
 	heredoc_signals();
 	hd_loop_rl(fd, redir, shell); //, line
-	while (g_signal_status != SIGINT)
-	{
-		line = readline("> ");
-		if (!line)
-		{
-			if (g_signal_status != SIGINT)
-				ft_putstr_fd("warning: heredoc delimited by EOF\n", 2);
-			break ; // line unterminated, ^C
-		}
-		if (ft_strcmp(line, redir->file_name) == 0)
-		{
-			free(line);
-			line = NULL;
-			break ;
-		}
-		ft_putstr_fd(line, fd);
-		write(fd, "\n", 1);
-		free(line);
-		line = NULL;
-	}
-}
-
-static int	hd_loop(int fd, t_redir *redir, t_env *env)
-{
-	// char *line;
-	// lines = NULL;
-	(void)*env;
-	g_signal_status = 0;
-	heredoc_signals();
-	hd_loop_rl(fd, redir); //, line
 	// free(line);
 	reset_signals();
 	if (g_signal_status == SIGINT)

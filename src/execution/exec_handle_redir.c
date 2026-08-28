@@ -6,11 +6,27 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 14:49:09 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 01:25:25 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/28 03:52:21 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void link_redir(t_redir *redir, int *fd, t_shell *shell)
+{
+	*fd = open_redir_file(redir);
+	if (*fd == -1)
+	{
+		perror(redir->file_name);
+		free_shell(shell);
+		exit(1);
+	}
+	if (redir->type == REDIR_IN)
+		safe_dup2(*fd, 0); //dup2(fd, targetfd)
+	else if (redir->type == REDIR_OUT || redir->type == APPEND)
+		safe_dup2(*fd, 1);
+	return ;
+}
 
 // CC created this function so that we scan the cmdline's redirs for HD
 // in main.
@@ -29,6 +45,7 @@ int read_heredocs(t_redir *redir, t_shell *shell)
 	reset_signals();
 	return (0);
 }
+
 // This function is used in tandem with handle_redirects() in order to
 // open/create a file to write to or read from.
 //		CC told me to remove HD case
