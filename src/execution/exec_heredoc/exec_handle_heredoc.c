@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/29 14:23:39 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/29 17:53:25 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,13 @@ static char	*hd_name(void)
 static void hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 {
 	char	*line;
+	char 	*expanded;
 
 	while (g_signal_status != SIGINT)
 	{
-	line = hd_read_line(redir);
+		line = hd_read_line(redir);
 		if (!line)
-		{
-			// if (g_signal_status != SIGINT)
-			// 	ft_putstr_fd("warning: heredoc delimited by EOF\n", 2);
 			break ;
-		}
 		if (ft_strcmp(line, redir->file_name) == 0)
 		{
 			free(line);
@@ -74,11 +71,13 @@ static void hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 		}
 		if (!redir->quoted)
 		{
-			line = expand_heredoc(shell, line, NULL, 0);
+			expanded = expand_heredoc(shell, line, NULL, 0);
+			free(line);
+			line = expanded;
 			if (!line)
 				break ;
 		}
-		finish_heredoc(line, fd);
+		finish_heredoc(expanded, fd);
 	}
 }
 
