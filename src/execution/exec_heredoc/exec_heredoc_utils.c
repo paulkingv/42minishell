@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 07:35:34 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 07:43:58 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/29 10:45:46 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,44 @@ char	*hd_read_line(t_redir *redir)
 		ft_putstr_fd("')\n", 2);
 	}
 	return (line);
+}
+
+//helper to read all heredocs
+// will close fd if hd is interuppted partway through pipeline
+static void close_pending_heredocs(t_cmd *cmd)
+{
+	t_redir *redir;
+	
+	while (cmd)
+	{
+		redir = cmd->redirections;
+		while (redir)
+		{
+			if (redir->type == HEREDOC && redir->heredoc_fd >= 0)
+			{
+				close(redir->heredoc_fd);
+				redir->heredoc_fd = -1;
+			}
+			redir = redir->next;
+		}
+		cmd = cmd->next;
+	}
+}
+// reads all hds for every command of pipeline at beginning
+// keeps concurrent HDs from corrupting 
+int read_all_heredocs(t_shell *shell)
+{
+	t_cmd	*cmd;
+
+	cmd = shell->cmdline;
+	while (cmd)
+	{
+		if (cmd->redirections && read_heredocs(cmd->redirections, shell) == -1)
+		{
+			close_pending_heredocs(shell->cmdline);
+			return (-1);
+		}
+		cmd = cmd->next;
+	}
+	return (0);
 }

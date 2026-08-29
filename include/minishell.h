@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 22:20:16 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/29 10:49:15 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,7 @@ void	finish_heredoc(char *line, int fd);
 //--------exec_heredoc_utils.c--//
 char	*hd_read_line(t_redir *redir);
 char	*raw_readline(void);
+int		read_all_heredocs(t_shell *shell);
 
 //**********************************SRC/SIGNAL****************//
 //--------signal_parent.C-------//

@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 05:15:10 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/29 10:55:25 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ void	exe_cmdline(t_shell *shell)
 	t_cmd	*tmp_cmd;
 
 	tmp_cmd = shell->cmdline;
+	if (read_all_heredocs(shell) == -1)
+	{
+		shell->exit = 130;
+		return ;
+	}
 	if (tmp_cmd && !tmp_cmd->next && is_builtin(tmp_cmd)
 		&& !tmp_cmd->redirections)
 	{
