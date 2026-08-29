@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/29 10:49:15 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/29 12:56:24 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void	free_array(char **array);
 
 //**********************************SRC/TOKENIZE******************************//
 //--------TOKENIZING.C---------//
-t_token	*make_new_token(t_token_type type, char *input);
 t_token	*tokenize(char *input, t_shell *shell);
 
 //-------token_utils.C--------//
@@ -133,6 +132,7 @@ void	remove_token(t_token **head, t_token *key);
 
 //-------token_validation.C--------//
 int		token_validation(t_token *token, t_shell *shell);
+t_token	*make_new_token(t_token_type type, char *input);
 
 //**********************************SRC/ENVIRONMENT***************************//
 //--------ENVIRONMENT.C-------//
