@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 12:54:52 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/29 14:08:48 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include <signal.h> // signals
 # include <limits.h>
 # include <errno.h> // EINTR
-# include <sys/stat.h> // stat: file info, lstat: stat no symlink, fstat: on open fds
+# include <sys/stat.h> // stat:file info, lstat:stat no symlink, fstat:open fds
 
 //**********************************GLOBAL************************************//
 extern volatile sig_atomic_t	g_signal_status; // pk- I will finish this l8r
@@ -98,7 +98,8 @@ typedef struct s_shell
 	t_env	*env;
 	t_token	*tokens;
 	t_cmd	*cmdline;
-	char	*input;
+	char	*key;
+	char	*value;
 	int		status;
 	int		exit;
 	int		dquote;
@@ -136,7 +137,7 @@ int		token_validation(t_token *token, t_shell *shell);
 
 //**********************************SRC/ENVIRONMENT***************************//
 //--------ENVIRONMENT.C-------//
-t_env	*init_env(char **envp, t_env *head, t_env *new);
+t_env	*init_env(char **envp, t_shell *shell, t_env *head, t_env *new);
 t_env	*edit_env(t_env *s_env, char *key, char *new_node);
 void	set_env(t_env **s_env, char *key, char *value);
 void	unset_env(t_env **head, char *key);
@@ -146,8 +147,11 @@ void	env_add_back(t_env **head, t_env *new_node);
 t_env	*new_env(char *key, char *value);
 t_env	*find_env(t_env *s_env, char *key);
 char	*get_env(t_env *s_env, char	*key);
-void	free_vals(char *key, char *value);
 void	setpwd(t_env **head);
+void	get_key_value(t_shell *shell, char **envp);
+
+//----environment_utils1.c-----//
+void	free_vals(char *key, char *value);
 
 //*********************************SRC/EXPANSION******************************//
 //-----------process.C-----------//
@@ -156,9 +160,9 @@ int		process(t_shell *shell, t_token *tokens);
 //--------expand_tokens.c--------//
 int		expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n);
 char	*expansion(t_shell *shell, char *word, int *i);
+void	handle_expand(char *expanded, t_shell *shell, t_token *ttok);
 // static char	*find_value(t_shell *shell, char *word, int *i);
 // static char	*expand_word(t_shell *shell, char *word, char* string, int i);
-// static int	set_quotes(char c, int *dquote, int *squote);
 
 //---------expand_utils.c--------//
 char	*help_expand_dollar(t_shell *shell, char *string, char *word, int *i);
@@ -166,6 +170,9 @@ char	*append_char(char *string, char c);
 char	*append_string(char *s1, char *s2);
 char	*find_word(char *word);
 int		is_quoted(char *word);
+
+//---expand_utils_set_quotes.c---//
+int		set_quotes(char c, int *dquote, int *squote);
 
 //**********************************SRC/PARSING*******************************//
 //-----------PARSING.C-----------//
@@ -211,17 +218,20 @@ int		set_sign(char c, int *i);
 
 //----------export.c-----------//
 int		ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd);
-// static void	ft_print_export(t_shell *shell);
+void	handle_no_valid_export(t_shell *shell, char *args, int *i);
+void	print_export_error(char *arg);
 // static char	**ft_export_util(t_cmd *cmd, int i);
-// static int	append(char *arg);
-// static void	append_env(t_shell *shell, char *key, char *value);
+// static void	ft_print_export(t_shell *shell);
 
 //-------export_utils.c--------//
 t_env	**export_array(t_env *env);
 void	sort_array(t_env **array);
 int		valid_export(char *arg);
-void	print_export_error(char *arg);
 //static int		env_count(t_env	*env);
+
+//-------export_utils_append.c--------//
+int		append(char *arg);
+void	append_env(t_shell *shell, char *key, char *value);
 
 //------------pwd.c------------//
 int		ft_pwd(t_shell *shell);
@@ -230,11 +240,11 @@ int		ft_pwd(t_shell *shell);
 //--------EXECUTION.c----------//
 void	exe_cmdline(t_shell *shell);
 void	invalid_cmd_cleanup(t_shell *shell, t_cmd *cmdline,
-	char **envp, int exit_code);
+			char	**envp, int exit_code);
 
 //------execution_child.c------//
 void	child_exe_cmd(int prev_fd, int pipe_fd[2],
-	t_shell *shell, t_cmd *tmp_cmd);
+			t_shell	*shell, t_cmd *tmp_cmd);
 
 //--------env_to_array.c-------//
 char	**env_to_array(t_env *env);

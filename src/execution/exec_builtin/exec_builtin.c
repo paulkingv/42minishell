@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 15:53:57 by pking             #+#    #+#             */
-/*   Updated: 2026/08/27 05:19:43 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/29 14:07:46 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	exec_builtin(t_shell *shell, t_cmd *cmd)
 	else if (!ft_strncmp(tmp_cmd->args[0], "env", 4))
 		status = ft_env(tmp);
 	else if (!ft_strncmp(tmp_cmd->args[0], "exit", 5))
-		status = ft_exit(tmp, tmp_cmd); //tmp_cmd (left0ver)
+		status = ft_exit(tmp, tmp_cmd);
 	shell->exit = status;
 	return (status);
 }

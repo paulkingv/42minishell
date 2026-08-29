@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/17 11:10:00 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 11:49:46 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/29 13:57:12 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,4 @@ int	valid_export(char *arg)
 		i++;
 	}
 	return (1);
-}
-
-// print the error report from export.
-void	print_export_error(char *arg)
-{
-	ft_putstr_fd("export: `", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putstr_fd("' not a valid identifier\n", 2);
-	return ;
 }

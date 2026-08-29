@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 16:19:26 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 15:27:31 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/29 13:57:50 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,44 +67,21 @@ static char	**ft_export_util(t_cmd *cmd, int i)
 	return (strings);
 }
 
-// check if the argument after export has a += and needs to append
-static int	append(char *arg)
+// print the error report from export.
+void	print_export_error(char *arg)
 {
-	char	*equal;
-
-	equal = ft_strchr(arg, '=');
-	if (!equal || equal == arg)
-		return (0);
-	if (*(equal - 1) == '+')
-		return (1);
-	return (0);
+	ft_putstr_fd("export: `", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putstr_fd("' not a valid identifier\n", 2);
+	return ;
 }
 
-// if we need to append, call this function, find the key in the environment
-// if not findable, add the variable without the +=
-// if found but empty, set the value of key
-// otherwise append the value after += onto the existing value.
-static void	append_env(t_shell *shell, char *key, char *value)
+// take printing of export errors and return the valid exit value
+void	handle_no_valid_export(t_shell *shell, char *args, int *i)
 {
-	t_env	*env;
-	char	*joined;
-
-	env = find_env(shell->env, key);
-	if (!env)
-	{
-		set_env(&shell->env, key, value);
-		return ;
-	}
-	if (!env->value)
-	{
-		set_env(&shell->env, key, value);
-		return ;
-	}
-	joined = ft_strjoin(env->value, value);
-	if (!joined)
-		return ;
-	set_env(&shell->env, key, joined);
-	free(joined);
+	print_export_error(args);
+	shell->exit = 1;
+	*i += 1;
 	return ;
 }
 
@@ -122,9 +99,7 @@ int	ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd)
 	{
 		if (!valid_export(tcmd->args[i]))
 		{
-			print_export_error(tcmd->args[i]);
-			shell->exit = 1;
-			i++;
+			handle_no_valid_export(shell, tcmd->args[i], &i);
 			continue ;
 		}
 		strings = ft_export_util(tcmd, i);

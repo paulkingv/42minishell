@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 11:38:11 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 15:32:59 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/29 13:59:17 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,6 @@ char	*get_env(t_env *s_env, char	*key)
 	return (tmp->value);
 }
 
-// free the 2 strings used in init env to save some lines.
-void	free_vals(char *key, char *value)
-{
-	if (key)
-		free(key);
-	if (value)
-		free(value);
-	return ;
-}
-
 // pull the setting of PWD and OLDPWD into a helper to clean up init env.
 void	setpwd(t_env **head)
 {
@@ -80,5 +70,25 @@ void	setpwd(t_env **head)
 		set_env(head, "OLDPWD", NULL);
 		free(value);
 	}
+	return ;
+}
+
+// a helper to find the key and value of the environment while initialisng
+// our shells environment.
+void	get_key_value(t_shell *shell, char **envp)
+{
+	int	i;
+	int	x;
+
+	i = 0;
+	x = 0;
+	while ((*envp)[i] && (*envp)[i] != '=')
+		i += 1;
+	shell->key = ft_substr((*envp), x, i);
+	i += 1;
+	x = i;
+	while ((*envp)[i] != '\0')
+		i += 1;
+	shell->value = ft_substr((*envp), x, i);
 	return ;
 }
