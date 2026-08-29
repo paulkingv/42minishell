@@ -6,11 +6,28 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 05:15:10 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/29 19:21:05 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//this is how we count heredocs to ensure unique fds
+// static void	collect_all_heredocs(t_cmd *cmdline, t_shell *shell)
+// {
+// 	t_redir *redir
+// 	char *	content;
+	
+// 	while (redir)
+// 	{
+// 		if (redir->type == HEREDOC)
+// 		{
+// 			content = raw_readline();
+// 			redir->heredoc_fd = 
+// 		}
+// 		redir = redir->next;
+// 	}
+// }
 
 // Helper to free our array on close
 void	invalid_cmd_cleanup(t_shell *shell, t_cmd *cmdline,
@@ -60,6 +77,11 @@ static void execute_pipeline(t_shell *shell)
 
 	tmp_cmd = shell->cmdline;
 	prev_fd =-1;
+	// if (collect_all_heredocs(shell->cmdline, shell) = -1)
+	// {
+	// 	shell->exit_code = 1;
+	// 	return ;
+	// }
 	while(tmp_cmd)
 	{
 		exec_init_pipefd(pipe_fd);

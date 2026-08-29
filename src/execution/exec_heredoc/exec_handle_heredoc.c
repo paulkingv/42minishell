@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/29 17:53:25 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/29 19:16:04 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,9 @@ static void hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 
 static int	hd_loop(int fd, t_redir *redir, t_shell *shell)
 {
-	// char *line;
-	// lines = NULL;
 	g_signal_status = 0;
 	heredoc_signals();
 	hd_loop_rl(fd, redir, shell); //, line
-	// free(line);
 	reset_signals();
 	if (g_signal_status == SIGINT)
 		return (-1);
