@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 07:48:20 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/28 23:07:38 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 		}
 		if (!redir->quoted)
 		{
-			line = expand_heredoc(shell, line);
+			line = expand_heredoc(shell, line, NULL, 0);
 			if (!line)
 				break ;
 		}

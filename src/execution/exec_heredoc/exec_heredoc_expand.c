@@ -22,13 +22,13 @@ void	finish_heredoc(char *line, int fd)
 }
 
 
-char *expand_heredoc(t_shell *shell, char *line)
+char *expand_heredoc(t_shell *shell, char *line, char *string, int i)
 {
-	int		i;
-	char	*string;
+	// int		i;
+	// char	*string;
 	char	*tmp;
 
-	i = 0;
+	// i = 0;
 	string = ft_strdup("");
 	if (!string)
 		return (NULL);
