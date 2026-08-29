@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/29 14:23:39 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/29 17:54:17 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,13 @@ static char	*hd_name(void)
 static void hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 {
 	char	*line;
+	char	*expanded;
 
 	while (g_signal_status != SIGINT)
 	{
-	line = hd_read_line(redir);
+		line = hd_read_line(redir);
 		if (!line)
-		{
-			// if (g_signal_status != SIGINT)
-			// 	ft_putstr_fd("warning: heredoc delimited by EOF\n", 2);
 			break ;
-		}
 		if (ft_strcmp(line, redir->file_name) == 0)
 		{
 			free(line);
@@ -74,7 +71,9 @@ static void hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 		}
 		if (!redir->quoted)
 		{
-			line = expand_heredoc(shell, line, NULL, 0);
+			expanded = expand_heredoc(shell, line, NULL, 0);
+			free(line);
+			line = expanded;
 			if (!line)
 				break ;
 		}
@@ -84,12 +83,9 @@ static void hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 
 static int	hd_loop(int fd, t_redir *redir, t_shell *shell)
 {
-	// char *line;
-	// lines = NULL;
 	g_signal_status = 0;
 	heredoc_signals();
-	hd_loop_rl(fd, redir, shell); //, line
-	// free(line);
+	hd_loop_rl(fd, redir, shell);
 	reset_signals();
 	if (g_signal_status == SIGINT)
 		return (-1);
@@ -106,7 +102,7 @@ int	handle_heredoc(t_redir *redir, t_shell *shell)
 	filename = hd_name();
 	if (!filename)
 	return (-1);
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644); 
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 	{
 		free(filename);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/29 14:23:40 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/29 19:45:54 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,13 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+/*~~~~~~EXPANSION STRCT~~~~~~~~*/
+typedef struct s_exp
+{
+	char	*string;
+	t_token	*tokens;
+}	t_exp;
+
 /*~~~~~~~~~~~~SHELL~~~~~~~~~~~~*/
 typedef struct s_shell
 {
@@ -162,17 +169,20 @@ int		expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n);
 char	*expansion(t_shell *shell, char *word, int *i);
 void	handle_expand(char *expanded, t_shell *shell, t_token *ttok);
 // static char	*find_value(t_shell *shell, char *word, int *i);
-// static char	*expand_word(t_shell *shell, char *word, char* string, int i);
+// static char	*expand_word(t_shell *shell, char *word, t_exp *fields, int i);
 
 //---------expand_utils.c--------//
-char	*help_expand_dollar(t_shell *shell, char *string, char *word, int *i);
+void	expand_dollar(t_shell *shell, t_exp *fields, char *word, int *i);
 char	*append_char(char *string, char c);
 char	*append_string(char *s1, char *s2);
 char	*find_word(char *word);
-int		is_quoted(char *word);
 
 //---expand_utils_set_quotes.c---//
+int		is_quoted(char *word);
 int		set_quotes(char c, int *dquote, int *squote);
+
+//-expand_utils_field_epansion.c-//
+char	*split_expansion(char *str);
 
 //**********************************SRC/PARSING*******************************//
 //-----------PARSING.C-----------//

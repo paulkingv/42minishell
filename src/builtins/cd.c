@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 15:35:37 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 11:41:41 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/29 18:19:52 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	print_newpath(char *new_path)
 	ft_putstr_fd(new_path, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd("No such file or directory\n", 2);
+	return ;
 }
 
 // helper function to action all of the cd work, returns an int to ft_cd

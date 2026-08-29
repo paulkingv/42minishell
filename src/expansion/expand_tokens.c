@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 12:06:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/29 14:23:37 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/29 19:28:35 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,25 +93,25 @@ void	handle_expand(char *expanded, t_shell *shell, t_token *ttok)
 // expansion will return us a string value that we can append onto the string
 // we currently have, we use a pointer to i to move through the string in this
 // function and in the other, so we can jump over the word we are expanding.
-static char	*expand_word(t_shell *shell, char *word, char *string, int i)
+static char	*expand_word(t_shell *shell, char *word, t_exp *fields, int i)
 {
-	string = ft_strdup("");
-	if (!string)
+	fields->string = ft_strdup("");
+	if (!fields->string)
 		return (NULL);
 	while (word[i])
 	{
 		if (!set_quotes(word[i], &shell->dquote, &shell->squote))
 		{
 			if (word[i] == '$' && !shell->squote)
-				string = help_expand_dollar(shell, string, word, &i);
+				expand_dollar(shell, fields, word, &i);
 			else
-				string = append_char(string, word[i]);
-			if (!string)
+				fields->string = append_char(fields->string, word[i]);
+			if (!fields->string)
 				return (NULL);
 		}
 		i++;
 	}
-	return (string);
+	return (fields->string);
 }
 
 // work though a list of tokens finding quotes, $ and ? and expanding all cases
@@ -123,8 +123,10 @@ static char	*expand_word(t_shell *shell, char *word, char *string, int i)
 // the new value.
 int	expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n)
 {
+	t_exp	fields;
 	char	*expanded;
 
+	ft_bzero(&fields, sizeof(t_exp));
 	ttok = tok;
 	while (ttok)
 	{
@@ -136,7 +138,7 @@ int	expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n)
 		}
 		if (ttok->type == WORD)
 		{
-			expanded = expand_word(shell, ttok->value, NULL, 0);
+			expanded = expand_word(shell, ttok->value, &fields, 0);
 			if (!expanded)
 				return (1);
 			handle_expand(expanded, shell, ttok);

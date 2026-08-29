@@ -6,11 +6,26 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/29 13:37:30 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/29 14:04:01 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/29 16:44:35 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// confirms simply if the word specifically is quoted
+int	is_quoted(char *word)
+{
+	int		i;
+
+	i = 0;
+	while (word[i])
+	{
+		if (word[i] == '\'' || word[i] == '"')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 // simple helper to set quote bools to 0 or 1 depending on the char recieved
 // this is critical following the execution of this function as it helps us

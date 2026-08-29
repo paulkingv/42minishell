@@ -6,26 +6,11 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/13 14:33:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/29 14:38:13 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/29 19:58:21 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// confirms simply if the word specifically is quoted
-int	is_quoted(char *word)
-{
-	int		i;
-
-	i = 0;
-	while (word[i])
-	{
-		if (word[i] == '\'' || word[i] == '"')
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 // a strjoin helper to append our exapnded string onto the original
 char	*append_string(char *s1, char *s2)
@@ -82,14 +67,27 @@ char	*find_word(char *word)
 
 // covers if the word is a single $ followed by ", in this case returning
 // an empty string
-char	*help_expand_dollar(t_shell *shell, char *string, char *word, int *i)
+void	expand_dollar(t_shell *shell, t_exp *fields, char *word, int *i)
 {
 	char	*tmp;
+	char	*field;
 
 	if (word[*i + 1] == '"' && !shell->dquote)
-		return (append_string(string, ""));
+	{
+		fields->string = append_string(fields->string, "");
+		return ;
+	}
 	tmp = expansion(shell, &word[*i], i);
-	string = append_string(string, tmp);
+	if (!tmp)
+		return ;
+	if (shell->dquote)
+		fields->string = append_string(fields->string, tmp);
+	else
+	{
+		field = split_expansion(tmp);
+		fields->string = append_string(fields->string, tmp);
+		free(field);
+	}
 	free(tmp);
-	return (string);
+	return ;
 }
