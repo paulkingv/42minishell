@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/29 19:45:54 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/29 22:41:39 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ t_token	*tokenize(char *input, t_shell *shell);
 
 //-------token_utils.C--------//
 void	remove_token(t_token **head, t_token *key);
+t_token	*make_new_token(t_token_type type, char *value);
 
 //-------token_validation.C--------//
 int		token_validation(t_token *token, t_shell *shell);

@@ -65,19 +65,7 @@ static t_token_type	get_type(char *value, int i)
 	return (WORD);
 }
 
-// Helper Function to make a New Token Node
-t_token	*make_new_token(t_token_type type, char *value)
-{
-	t_token	*new_token;
 
-	new_token = ft_calloc(1, sizeof(t_token));
-	if (!new_token)
-		return (NULL);
-	new_token->type = type;
-	new_token->value = value;
-	new_token->next = NULL;
-	return (new_token);
-}
 
 // Tokenize input into an LL of tokens
 /* REWORK PLAN */
