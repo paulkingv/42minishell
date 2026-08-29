@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/13 14:33:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/28 03:43:39 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/29 14:38:13 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// confirms simply if the word specifically is quoted
 int	is_quoted(char *word)
 {
 	int		i;
@@ -26,6 +27,7 @@ int	is_quoted(char *word)
 	return (0);
 }
 
+// a strjoin helper to append our exapnded string onto the original
 char	*append_string(char *s1, char *s2)
 {
 	char	*tmp;
@@ -41,6 +43,7 @@ char	*append_string(char *s1, char *s2)
 	return (tmp);
 }
 
+// a strjoin helper but for appending a single char
 char	*append_char(char *string, char c)
 {
 	char	r[2];
@@ -57,6 +60,9 @@ char	*append_char(char *string, char c)
 	return (tmp);
 }
 
+// as we already know if we are dealing with an exapansion that is not
+// single $ or $?, $" we can now find the word we need to exapand before
+// we pass it to find env.
 char	*find_word(char *word)
 {
 	char	*ret;
@@ -74,6 +80,8 @@ char	*find_word(char *word)
 	return (ret);
 }
 
+// covers if the word is a single $ followed by ", in this case returning
+// an empty string
 char	*help_expand_dollar(t_shell *shell, char *string, char *word, int *i)
 {
 	char	*tmp;
