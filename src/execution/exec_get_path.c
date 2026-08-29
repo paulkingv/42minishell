@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 00:51:05 by pking             #+#    #+#             */
-/*   Updated: 2026/08/27 21:36:07 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/28 07:47:16 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static char	*split_try_access(char *path_value, char *cmd, int *exit_code)
 			return (path_cmd);
 		}
 		if (path_cmd && *exit_code == 127
-			&& path_exists(path_cmd))
+			&& path_exists(path_cmd) && !is_directory(path_cmd))
 			*exit_code = 126;
 		free(path_cmd);
 		i++;

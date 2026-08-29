@@ -27,6 +27,7 @@ SRC =	main.c \
 		execution/exec_builtin/exec_child_builtin.c \
 		execution/exec_heredoc/exec_handle_heredoc.c \
 		execution/exec_heredoc/exec_heredoc_expand.c \
+		execution/exec_heredoc/exec_heredoc_utils.c \
 		environment/environment.c environment/environment_utils.c \
 		environment/environment_utils_free.c \
 		expansion/process.c expansion/expand_tokens.c \
