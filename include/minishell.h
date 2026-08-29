@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/29 14:23:40 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/29 16:59:59 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ t_token	*tokenize(char *input, t_shell *shell);
 
 //-------token_utils.C--------//
 void	remove_token(t_token **head, t_token *key);
+t_token	*make_new_token(t_token_type type, char *value);
 
 //-------token_validation.C--------//
 int		token_validation(t_token *token, t_shell *shell);
