@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc_expand.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 00:34:24 by j.fox             #+#    #+#             */
-/*   Updated: 2026/08/28 00:34:24 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/28 12:53:30 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,8 @@ void	finish_heredoc(char *line, int fd)
 
 char *expand_heredoc(t_shell *shell, char *line, char *string, int i)
 {
-	// int		i;
-	// char	*string;
 	char	*tmp;
 
-	// i = 0;
 	string = ft_strdup("");
 	if (!string)
 		return (NULL);

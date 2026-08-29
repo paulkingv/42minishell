@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 12:06:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/28 23:10:27 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/29 14:23:37 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,22 +67,21 @@ char	*expansion(t_shell *shell, char *word, int *i)
 	return (value);
 }
 
-// simple helper to set quote bools to 0 or 1 depending on the char recieved
-// this is critical following the execution of this function as it helps us
-// determine if strings are literal or need expanding
-static int	set_quotes(char c, int *dquote, int *squote)
+// remove token if expanded does not have anyhting inside it
+// otherwise free the value and replace with the new expanded value
+void	handle_expand(char *expanded, t_shell *shell, t_token *ttok)
 {
-	if (c == '\'' && !*dquote)
+	if (expanded[0] == '\0' && !is_quoted(ttok->value))
 	{
-		*squote = !*squote;
-		return (1);
+		free(expanded);
+		remove_token(&shell->tokens, ttok);
 	}
-	else if (c == '"' && !*squote)
+	else
 	{
-		*dquote = !*dquote;
-		return (1);
+		free(ttok->value);
+		ttok->value = expanded;
 	}
-	return (0);
+	return ;
 }
 
 // we initially decide if the word is quoted in single or double quotes
@@ -94,7 +93,7 @@ static int	set_quotes(char c, int *dquote, int *squote)
 // expansion will return us a string value that we can append onto the string
 // we currently have, we use a pointer to i to move through the string in this
 // function and in the other, so we can jump over the word we are expanding.
-static char	*expand_word(t_shell *shell, char *word, char* string, int i)
+static char	*expand_word(t_shell *shell, char *word, char *string, int i)
 {
 	string = ft_strdup("");
 	if (!string)
@@ -133,23 +132,14 @@ int	expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n)
 		if (ttok->type == HEREDOC && ttok->next)
 		{
 			ttok = ttok->next->next;
-			continue;
+			continue ;
 		}
 		if (ttok->type == WORD)
 		{
 			expanded = expand_word(shell, ttok->value, NULL, 0);
 			if (!expanded)
 				return (1);
-			if (expanded[0] == '\0' && !is_quoted(ttok->value))
-			{
-				free(expanded);
-				remove_token(&shell->tokens, ttok);
-			}
-			else
-			{
-				free(ttok->value);
-				ttok->value = expanded;
-			}
+			handle_expand(expanded, shell, ttok);
 		}
 		ttok = n;
 	}

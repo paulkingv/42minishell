@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 17:04:19 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 15:32:00 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/29 13:25:14 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,35 +94,21 @@ void	env_add_back(t_env **head, t_env *new_node)
 // Here we go through the string envp and break it into key and value.
 // Cutting it using the = sign in the envp.
 // See above for new_env and env_add back.
-t_env	*init_env(char **envp, t_env *head, t_env *new)
+t_env	*init_env(char **envp, t_shell *shell, t_env *head, t_env *new)
 {
-	int		i;
-	int		x;
-	char	*key;
-	char	*value;
-
 	if (!envp || !envp[0])
 		setpwd(&head);
 	while (*envp)
 	{
-		i = 0;
-		x = 0;
-		while ((*envp)[i] && (*envp)[i] != '=')
-			i++;
-		key = ft_substr((*envp), x, i);
-		i++;
-		x = i;
-		while ((*envp)[i] != '\0')
-			i++;
-		value = ft_substr((*envp), x, i);
-		if (!key || !value)
+		get_key_value(shell, envp);
+		if (!shell->key || !shell->value)
 		{
-			free_vals(key, value);
+			free_vals(shell->key, shell->value);
 			return (NULL);
 		}
-		new = new_env(key, value);
+		new = new_env(shell->key, shell->value);
 		env_add_back(&head, new);
-		free_vals(key, value);
+		free_vals(shell->key, shell->value);
 		envp++;
 	}
 	return (head);

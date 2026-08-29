@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pking <pking@student.42.fr>                +#+  +:+       +#+         #
+#    By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/08/28 07:52:34 by pking            ###   ########.fr        #
+#    Updated: 2026/08/29 14:11:33 by jfox             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,16 +29,18 @@ SRC =	main.c \
 		execution/exec_heredoc/exec_heredoc_expand.c \
 		execution/exec_heredoc/exec_heredoc_utils.c \
 		environment/environment.c environment/environment_utils.c \
+		environment/environment_utils_free.c \
 		expansion/process.c expansion/expand_tokens.c \
-		expansion/expand_utils.c \
+		expansion/expand_utils.c expansion/expand_utils_set_quotes.c \
 		parsing/parsing.c parsing/parsing_redirects.c \
 		parsing/parsing_heredoc.c \
 		builtins/builtin_utils.c \
 		builtins/cd.c builtins/pwd.c \
 		builtins/export.c builtins/export_utils.c \
+		builtins/export_utils_append.c \
 		builtins/echo.c \
 		builtins/exit.c builtins/exit_utils.c \
-    	signal/signal_child.c signal/signal_parent.c\
+		signal/signal_child.c signal/signal_parent.c\
 		shell/shell.c shell/free_utils.c shell/free_shell.c
 
 NAME = minishell

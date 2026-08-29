@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/27 14:20:32 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/29 13:28:17 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ int	run_signal(t_shell *shell, char *input)
 // helper to take running of the whole shell out of main to save lines.
 void	run_shell(t_shell *minishell)
 {
-	// print_tokens(minishell->tokens);
 	minishell->exit = process(minishell, minishell->tokens);
-	// print_cmd(minishell->cmdline);
 	exe_cmdline(minishell);
 	free_tokens(&minishell->tokens);
 	free_cmd(&minishell->cmdline);
@@ -116,7 +114,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*input;
 
 	ft_bzero(&minishell, sizeof(t_shell));
-	minishell.env = init_env(envp, NULL, NULL);
+	minishell.env = init_env(envp, &minishell, NULL, NULL);
 	while (minishell.status == 0)
 	{
 		init_signals(argc, argv);
