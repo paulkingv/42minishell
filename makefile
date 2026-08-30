@@ -34,6 +34,8 @@ SRC =	main.c \
 		environment/environment_utils_free.c \
 		expansion/process.c expansion/expand_tokens.c \
 		expansion/expand_utils.c expansion/expand_utils_set_quotes.c \
+		expansion/expand_utils_fieldexpansion.c \
+		expansion/expand_utils_token.c \
 		parsing/parsing.c parsing/parsing_redirects.c \
 		parsing/parsing_heredoc.c \
 		builtins/builtin_utils.c \

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   execution_child.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 00:43:59 by pking             #+#    #+#             */
 /*   Updated: 2026/08/30 16:52:13 by pking            ###   ########.fr       */
@@ -12,14 +12,13 @@
 
 #include "minishell.h"
 
-
 // Actual child executing the cmd part
-static void child_execute_command(t_shell *shell, t_cmd *tmp_cmd)
+static void	child_execute_command(t_shell *shell, t_cmd *tmp_cmd)
 {
 	char	*valid_cmd;
 	char	**envp;
 	int		exit_code;
-	
+
 	if (!tmp_cmd->args || !tmp_cmd->args[0])
 		exit(free_shell(shell));
 	if (is_builtin(tmp_cmd))
@@ -37,7 +36,7 @@ static void child_execute_command(t_shell *shell, t_cmd *tmp_cmd)
 }
 
 // setup fds and redirections of child process
-static void child_setup_io(int prev_fd, int pipe_fd[2], t_cmd *tmp_cmd,
+static void	child_setup_io(int prev_fd, int pipe_fd[2], t_cmd *tmp_cmd,
 	t_shell *shell)
 {
 

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
 /*   Updated: 2026/08/30 16:56:55 by pking            ###   ########.fr       */
@@ -15,7 +15,7 @@
 static void hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 {
 	char	*line;
-	char 	*expanded;
+	char	*expanded;
 
 	while (g_signal_status != SIGINT)
 	{

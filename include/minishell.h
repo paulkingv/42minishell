@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
 /*   Updated: 2026/08/30 16:57:07 by pking            ###   ########.fr       */
@@ -92,6 +92,13 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+/*~~~~~~EXPANSION STRCT~~~~~~~~*/
+typedef struct s_exp
+{
+	char	*string;
+	t_token	*tokens;
+}	t_exp;
+
 /*~~~~~~~~~~~~SHELL~~~~~~~~~~~~*/
 typedef struct s_shell
 {
@@ -161,19 +168,32 @@ int		process(t_shell *shell, t_token *tokens);
 //--------expand_tokens.c--------//
 int		expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n);
 char	*expansion(t_shell *shell, char *word, int *i);
-void	handle_expand(char *expanded, t_shell *shell, t_token *ttok);
+void	handle_expand(char *expanded, t_shell *shell, t_token *ttok, t_exp *f);
 // static char	*find_value(t_shell *shell, char *word, int *i);
-// static char	*expand_word(t_shell *shell, char *word, char* string, int i);
+// static char	*expand_word(t_shell *shell, char *word, t_exp *fields, int i);
 
 //---------expand_utils.c--------//
-char	*help_expand_dollar(t_shell *shell, char *string, char *word, int *i);
+void	expand_dollar(t_shell *shell, t_exp *fields, char *w, int *i);
 char	*append_char(char *string, char c);
-char	*append_string(char *s1, char *s2);
+char	*ap_string(char *s1, char *s2);
 char	*find_word(char *word);
-int		is_quoted(char *word);
 
 //---expand_utils_set_quotes.c---//
+int		is_quoted(char *word);
 int		set_quotes(char c, int *dquote, int *squote);
+
+//-expand_utils_field_expansion.c-//
+void	split_expansion(t_exp *fields, char *str);
+void	field_expansion(t_exp *fields, char *tmp);
+// static int	find_field_end(char *str, int i);
+// static char	*get_field(char *str, int *i);
+
+//------expand_utils_token.c----//
+t_token	*token_last(t_token *tokens);
+int		has_whitespace(char *str);
+void	append_to_last_token(t_exp *fields, char c);
+void	token_add_back(t_token **head, t_token *new_node);
+void	splice_tokens(t_token *ttok, t_token *new_tokens);
 
 //**********************************SRC/PARSING*******************************//
 //-----------PARSING.C-----------//

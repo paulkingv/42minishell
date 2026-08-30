@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 12:06:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/29 14:23:37 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 15:04:02 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*expansion(t_shell *shell, char *word, int *i)
 
 // remove token if expanded does not have anyhting inside it
 // otherwise free the value and replace with the new expanded value
-void	handle_expand(char *expanded, t_shell *shell, t_token *ttok)
+void	handle_expand(char *expanded, t_shell *shell, t_token *ttok, t_exp *f)
 {
 	if (expanded[0] == '\0' && !is_quoted(ttok->value))
 	{
@@ -80,6 +80,8 @@ void	handle_expand(char *expanded, t_shell *shell, t_token *ttok)
 	{
 		free(ttok->value);
 		ttok->value = expanded;
+		if (f->tokens)
+			splice_tokens(ttok, f->tokens);
 	}
 	return ;
 }
@@ -93,25 +95,27 @@ void	handle_expand(char *expanded, t_shell *shell, t_token *ttok)
 // expansion will return us a string value that we can append onto the string
 // we currently have, we use a pointer to i to move through the string in this
 // function and in the other, so we can jump over the word we are expanding.
-static char	*expand_word(t_shell *shell, char *word, char *string, int i)
+static char	*expand_word(t_shell *shell, char *word, t_exp *fields, int i)
 {
-	string = ft_strdup("");
-	if (!string)
+	fields->string = ft_strdup("");
+	if (!fields->string)
 		return (NULL);
 	while (word[i])
 	{
 		if (!set_quotes(word[i], &shell->dquote, &shell->squote))
 		{
 			if (word[i] == '$' && !shell->squote)
-				string = help_expand_dollar(shell, string, word, &i);
+				expand_dollar(shell, fields, word, &i);
+			else if (fields->tokens)
+				append_to_last_token(fields, word[i]);
 			else
-				string = append_char(string, word[i]);
-			if (!string)
+				fields->string = append_char(fields->string, word[i]);
+			if (!fields->string)
 				return (NULL);
 		}
 		i++;
 	}
-	return (string);
+	return (fields->string);
 }
 
 // work though a list of tokens finding quotes, $ and ? and expanding all cases
@@ -123,11 +127,13 @@ static char	*expand_word(t_shell *shell, char *word, char *string, int i)
 // the new value.
 int	expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n)
 {
+	t_exp	fields;
 	char	*expanded;
 
 	ttok = tok;
 	while (ttok)
 	{
+		ft_bzero(&fields, sizeof(t_exp));
 		n = ttok->next;
 		if (ttok->type == HEREDOC && ttok->next)
 		{
@@ -136,10 +142,10 @@ int	expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n)
 		}
 		if (ttok->type == WORD)
 		{
-			expanded = expand_word(shell, ttok->value, NULL, 0);
+			expanded = expand_word(shell, ttok->value, &fields, 0);
 			if (!expanded)
 				return (1);
-			handle_expand(expanded, shell, ttok);
+			handle_expand(expanded, shell, ttok, &fields);
 		}
 		ttok = n;
 	}

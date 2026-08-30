@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/24 23:18:50 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/30 15:44:19 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	find_end_word(char *input, int i)
 	char	quote_type;
 
 	while (input[i] && input[i] != ' ' && input[i] != '\t' && input[i] != ';'
-			&& input[i] != '|' && input[i] != '<' && input[i] != '>')
+		&& input[i] != '|' && input[i] != '<' && input[i] != '>')
 	{
 		if ((input[i] == '"' || input[i] == '\''))
 		{
@@ -36,7 +36,7 @@ static int	find_end_word(char *input, int i)
 			i++; //fixes the i to be at index outside the quotes
 		}
 		else
-				i++;
+			i++;
 	}
 	return (i);
 }
@@ -65,8 +65,6 @@ static t_token_type	get_type(char *value, int i)
 	return (WORD);
 }
 
-
-
 // Tokenize input into an LL of tokens
 /* REWORK PLAN */
 /*
@@ -81,9 +79,9 @@ t_token	*tokenize(char *input, t_shell *shell)
 {
 	int		word_start;
 	int		i;
-	t_token *head;
-	t_token *tail;
-	t_token *new;
+	t_token	*head;
+	t_token	*tail;
+	t_token	*new;
 
 	word_start = 0;
 	i = 0;

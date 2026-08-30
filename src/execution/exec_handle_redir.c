@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle_redir.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 14:49:09 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 03:52:21 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/30 15:23:45 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void link_redir(t_redir *redir, int *fd, t_shell *shell)
+static void	link_redir(t_redir *redir, int *fd, t_shell *shell)
 {
 	*fd = open_redir_file(redir);
 	if (*fd == -1)
@@ -30,7 +30,7 @@ static void link_redir(t_redir *redir, int *fd, t_shell *shell)
 
 // CC created this function so that we scan the cmdline's redirs for HD
 // in main.
-int read_heredocs(t_redir *redir, t_shell *shell)
+int	read_heredocs(t_redir *redir, t_shell *shell)
 {
 	while (redir)
 	{
@@ -73,7 +73,7 @@ int	handle_redirects(t_redir *redir, t_env *env, t_shell *shell)
 	fd = 0;
 	while (redir)
 	{
-		if (redir->type == HEREDOC) // essential: do this in loop to read multiple HDs
+		if (redir->type == HEREDOC) // do this in loop to read multiple HDs
 		{
 			fd = redir->heredoc_fd;
 			safe_dup2(fd, STDIN_FILENO);
