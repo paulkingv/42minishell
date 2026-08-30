@@ -6,16 +6,16 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/02 21:04:29 by pking             #+#    #+#             */
-/*   Updated: 2026/07/24 11:37:55 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 19:22:30 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
 // This file is to define a funciton that will convert the env linked list into
 // an array.
-// Each ellement in the array is the KEY and VALUE together, separated by a
+// Each element in the array is the KEY and VALUE together, separated by a
 // equals (=) sign.
-
-#include "minishell.h"
 
 static void	fill_array(char **array, t_env *tmp)
 {

@@ -6,18 +6,18 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/30 15:44:19 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 19:26:42 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* WORKING VERSION: */
-// 		Desc:
+/* DESCRIPTION: */
 //			This function will "tokenize" the input array.
 //			It does this by separating based on the space.
 //			Returns the LL of args (including quotes).
-//goes thru the word until the end to find the last char
+//			goes thru the word until the end to find the last char
+
 static int	find_end_word(char *input, int i)
 {
 	char	quote_type;

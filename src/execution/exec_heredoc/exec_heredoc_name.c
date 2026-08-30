@@ -6,18 +6,18 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 16:23:28 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 17:53:59 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 19:11:30 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // passes stack mem addr to val as long
-static	long random_long_gen(void)
+static long	random_long_gen(void)
 {
-	static long counter;
-	int		stack_var;
-	long	val;
+	static long	counter;
+	int			stack_var;
+	long		val;
 
 	counter++;
 	val = (long)&stack_var;
@@ -44,7 +44,11 @@ char	*hd_name(int *fd)
 			return (NULL);
 		*fd = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0600);
 		if (*fd > 0)
+		{
+			free(num);
 			return (filename);
+		}
+		free(num);
 		free(filename);
 	}
 	return (NULL);

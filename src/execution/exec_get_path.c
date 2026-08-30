@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 00:51:05 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 15:27:54 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 19:22:11 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ static int	count_colons(char *path_value)
 	return (count);
 }
 
-// 1. GO through ENVP Linked List in order to FIND PATH VARIABLE
-// Line 61: while != "PATH"
+// GO through ENVP Linked List in order to FIND PATH VARIABLE
 static char	*find_path(t_shell *shell)
 {
 	t_env	*tmp;
@@ -66,9 +65,7 @@ static char	*find_path(t_shell *shell)
 	return (NULL);
 }
 
-// 2. We have the path. Lets make the split and access function
-// Line 81: while i is less than our colon amount + 1
-// line 87 added path_cmd to condition to stop an incorrect memory access.
+// We have the path. Lets make the split and access function
 static char	*split_try_access(char *path_value, char *cmd, int *exit_code)
 {
 	char	**paths;
@@ -98,15 +95,11 @@ static char	*split_try_access(char *path_value, char *cmd, int *exit_code)
 	return (NULL);
 }
 
-//Meat function. Returns the string of the first possible exec path
-// I REORDERED THIS TO HOPEFULLY COVER COMMANDS THAT ONLY HAVE /
-
-//refactor immenant
 char	*exec_get_valid_path(t_shell *shell, char *cmd, int *exit_code)
 {
 	char	*path_value;
 	char	*valid_path_cmd;
-	// char	*direct_cmd;
+
 	*exit_code = 127;
 	if (ft_strchr(cmd, '/'))
 	{

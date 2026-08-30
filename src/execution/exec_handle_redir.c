@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 14:49:09 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 15:23:45 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 19:21:41 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,12 @@ static void	link_redir(t_redir *redir, int *fd, t_shell *shell)
 		exit(1);
 	}
 	if (redir->type == REDIR_IN)
-		safe_dup2(*fd, 0); //dup2(fd, targetfd)
+		safe_dup2(*fd, 0);
 	else if (redir->type == REDIR_OUT || redir->type == APPEND)
 		safe_dup2(*fd, 1);
 	return ;
 }
 
-// CC created this function so that we scan the cmdline's redirs for HD
-// in main.
 int	read_heredocs(t_redir *redir, t_shell *shell)
 {
 	while (redir)
@@ -48,7 +46,6 @@ int	read_heredocs(t_redir *redir, t_shell *shell)
 
 // This function is used in tandem with handle_redirects() in order to
 // open/create a file to write to or read from.
-//		CC told me to remove HD case
 int	open_redir_file(t_redir *redir)
 {
 	int	fd;
@@ -64,16 +61,15 @@ int	open_redir_file(t_redir *redir)
 	return (fd);
 }
 
-// CC says this should work
 int	handle_redirects(t_redir *redir, t_env *env, t_shell *shell)
 {
 	int	fd;
 
-	(void)*env; // have to change this later for the expansion
+	(void)*env;
 	fd = 0;
 	while (redir)
 	{
-		if (redir->type == HEREDOC) // do this in loop to read multiple HDs
+		if (redir->type == HEREDOC)
 		{
 			fd = redir->heredoc_fd;
 			safe_dup2(fd, STDIN_FILENO);

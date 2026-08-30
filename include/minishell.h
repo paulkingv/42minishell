@@ -6,19 +6,19 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 16:57:07 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 19:16:25 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft.h"
 // # if defined(__APPLE__)
 // # include <sys/syslimits.h> //PATH_MAX, ARG_MAX on macOS
 // # else
 // # include <linux/limits.h>
 // # endif
+# include "libft.h"
 # include <stdio.h> // printf
 # include <unistd.h> // pipes, fork, getpid, execve, dup2
 # include <fcntl.h> // FOR READ
@@ -33,12 +33,10 @@
 # include <sys/stat.h> // stat:file info, lstat:stat no symlink, fstat:open fds
 
 //**********************************GLOBAL************************************//
-extern volatile sig_atomic_t	g_signal_status; // pk- I will finish this l8r
+extern volatile sig_atomic_t	g_signal_status;
 
 //**********************************DEFINES***********************************//
 typedef unsigned long long		t_ull;
-// # define REDIR_MASK (REDIR_OUT | REDIR_IN | APPEND | HEREDOC)
-// # define OPERATOR_MASK (REDIR_OUT | REDIR_IN | APPEND | HEREDOC | PIPE)
 # define DFLT_PTH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 //**********************************STRUCTS***********************************//

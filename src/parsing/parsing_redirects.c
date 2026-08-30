@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 11:44:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/26 11:53:44 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 19:25:33 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,7 @@ static int	hd_error(t_redir *new, char *value, int qstatus, int etype)
 	}
 	return (0);
 }
-// As with all structs, we have a helper to build it.
-// However here we can fill it at the same time and we have passed information
-// to this function.
 
-// PK: Updated function to now parse heredoc.
 // Checks if NULL, if Unclosed, and if Closed, Strips
 static t_redir	*new_redir(char *value, t_token_type type)
 {
