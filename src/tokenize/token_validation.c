@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   token_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 02:31:14 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 07:50:35 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 15:43:22 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void token_syntax_error (t_token *token)
+static void	token_syntax_error(t_token *token)
 {
 	if (token->type == PIPE)
 	{
@@ -23,7 +23,7 @@ static void token_syntax_error (t_token *token)
 	}
 	else
 	{
-		if(token->next == NULL)
+		if (token->next == NULL)
 			ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
 		else
 		{
@@ -35,23 +35,23 @@ static void token_syntax_error (t_token *token)
 	}
 }
 
-static int validate_tokens(t_token *token) // exit value needs to get changed
+static int	validate_tokens(t_token *token) // exit value needs to get changed
 {
-	t_token *clone;
+	t_token	*clone;
 
 	clone = token;
 	while (clone) // check the rest of tokens
 	{
 	// pipe cant be last or first or followed by pipe
-		if (clone->type == PIPE && (clone == token || clone->next == NULL 
+		if (clone->type == PIPE && (clone == token || clone->next == NULL
 			|| clone->next->type == PIPE)) //check: Node 1 = PIPE; Node[i+1] = PIPE; NULL
 		{
-				token_syntax_error(clone);
-				return (1);
+			token_syntax_error(clone);
+			return (1);
 		}
-	// if clone == REDIR && (we are last token || next->type isnt word)
-		if ((clone->type & (REDIR_OUT | REDIR_IN | APPEND | HEREDOC) //REDIR_MASK)
-		&& (clone->next == NULL || clone->next->type != WORD)))
+		// if clone == REDIR && (we are last token || next->type isnt word)
+		if ((clone->type & (REDIR_OUT | REDIR_IN | APPEND | HEREDOC)
+				&& (clone->next == NULL || clone->next->type != WORD)))
 		{
 			token_syntax_error(clone);
 			return (1);
@@ -61,12 +61,12 @@ static int validate_tokens(t_token *token) // exit value needs to get changed
 	return (0);
 }
 
-int token_validation(t_token *token, t_shell *shell)
+int	token_validation(t_token *token, t_shell *shell)
 {
 	if (validate_tokens(token))
 	{
 		shell->exit = 2;
 		return (1);
 	}
-		return (0);
+	return (0);
 }

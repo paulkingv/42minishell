@@ -3,23 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   execution_child.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 00:43:59 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 05:39:51 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 15:27:12 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 // Actual child executing the cmd part
-static void child_execute_command(t_shell *shell, t_cmd *tmp_cmd)
+static void	child_execute_command(t_shell *shell, t_cmd *tmp_cmd)
 {
 	char	*valid_cmd;
 	char	**envp;
 	int		exit_code;
-	
+
 	if (!tmp_cmd->args || !tmp_cmd->args[0])
 		exit(free_shell(shell));
 	if (is_builtin(tmp_cmd))
@@ -37,17 +36,16 @@ static void child_execute_command(t_shell *shell, t_cmd *tmp_cmd)
 }
 
 // setup fds and redirections of child process
-static void child_setup_io(int prev_fd, int pipe_fd[2], t_cmd *tmp_cmd,
+static void	child_setup_io(int prev_fd, int pipe_fd[2], t_cmd *tmp_cmd,
 	t_shell *shell)
 {
-
 	if (tmp_cmd->redirections
 		&& read_heredocs(tmp_cmd->redirections, shell) == -1)
-		{
-			if (g_signal_status == SIGINT)
-				exit(130);
-			exit(1);
-		}
+	{
+		if (g_signal_status == SIGINT)
+			exit(130);
+		exit(1);
+	}
 	is_prevfd_registered(prev_fd);
 	if (tmp_cmd->next)
 		safe_dup2(pipe_fd[1], STDOUT_FILENO);

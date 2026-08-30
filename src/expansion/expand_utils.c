@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/13 14:33:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/30 14:23:29 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 15:36:55 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@ char	*ap_string(char *s1, char *s2)
 {
 	char	*tmp;
 
-	// if (!s1)
-	// 	return (NULL);
-	// if (!s2)
-	// 	s2 = "";
 	tmp = ft_strjoin(s1, s2);
 	if (!tmp)
 		return (NULL);
@@ -77,7 +73,7 @@ void	expand_dollar(t_shell *shell, t_exp *fields, char *w, int *i)
 		return ;
 	}
 	if (!w[*i + 1] || (!ft_isalnum(w[*i + 1]) && w[*i + 1] != '_'
-		&& w[*i + 1] != '?'))
+			&& w[*i + 1] != '?'))
 	{
 		fields->string = ap_string(fields->string, "$");
 		return ;
@@ -88,17 +84,6 @@ void	expand_dollar(t_shell *shell, t_exp *fields, char *w, int *i)
 	if (shell->dquote)
 		fields->string = ap_string(fields->string, tmp);
 	else
-	{
-		if (has_whitespace(tmp))
-		{
-			split_expansion(fields, tmp);
-			if (fields->tokens)
-				fields->string = ap_string(fields->string, fields->tokens->value);
-		}
-		else
-		{
-			fields->string = ap_string(fields->string, tmp);
-		}
-	}
+		field_expansion(fields, tmp);
 	free(tmp);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 05:15:10 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 15:25:39 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,14 @@
 void	invalid_cmd_cleanup(t_shell *shell, t_cmd *cmdline,
 	char **envp, int exit_code)
 {
-	char *msg;
+	char	*msg;
 
 	msg = "command not found\n";
 	if (exit_code == 126)
 	{
 		msg = "Permission denied\n";
-		if (ft_strchr(cmdline->args[0], '/')
-			&& is_directory(cmdline->args[0]))
-		msg = "Is a directory";
+		if (ft_strchr(cmdline->args[0], '/') && is_directory(cmdline->args[0]))
+			msg = "Is a directory";
 	}
 	write(2, "minishell: ", 11);
 	if (cmdline && cmdline->args && cmdline->args[0])
@@ -51,7 +50,7 @@ static int	parent_cleanup_exe_cmd(int prev_fd, int pipe_fd[2], t_cmd *tmp_cmd)
 	return (-1);
 }
 
-static void execute_pipeline(t_shell *shell)
+static void	execute_pipeline(t_shell *shell)
 {
 	t_cmd	*tmp_cmd;
 	int		prev_fd;
@@ -59,8 +58,8 @@ static void execute_pipeline(t_shell *shell)
 	pid_t	pid;
 
 	tmp_cmd = shell->cmdline;
-	prev_fd =-1;
-	while(tmp_cmd)
+	prev_fd = -1;
+	while (tmp_cmd)
 	{
 		exec_init_pipefd(pipe_fd);
 		if (tmp_cmd->next)
@@ -75,7 +74,7 @@ static void execute_pipeline(t_shell *shell)
 	init_signals(0, NULL);
 }
 
-// The entry point. This is called to execute the line that has been parsed. 
+// The entry point. This is called to execute the line that has been parsed.
 void	exe_cmdline(t_shell *shell)
 {
 	t_cmd	*tmp_cmd;

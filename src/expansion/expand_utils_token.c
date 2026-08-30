@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 01:35:47 by j.fox             #+#    #+#             */
-/*   Updated: 2026/08/30 13:55:03 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 15:09:37 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	append_to_last_token(t_exp *fields, char c)
 	if (!last)
 		return ;
 	last->value = append_char(last->value, c);
-	fields->string = append_char(fields->string, c);
 	return ;
 }
 

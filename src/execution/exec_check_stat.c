@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_check_stat.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 02:28:38 by pking             #+#    #+#             */
-/*   Updated: 2026/08/27 05:16:45 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 15:22:57 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 */
 int	is_directory(char *path)
 {
-	struct	stat st;
-	int		result;
+	struct stat	st;
+	int			result;
 
 	result = (stat(path, &st) == 0 && S_ISDIR(st.st_mode));
 	return (result);
@@ -37,9 +37,9 @@ int	is_directory(char *path)
 	determine if its a dir, or if we
 	dont have X perm. Modify MSG, return exit
 */
-int path_exists(char *path)
+int	path_exists(char *path)
 {
-	int found;
+	int	found;
 
 	found = (access(path, F_OK) == 0);
 	return (found);

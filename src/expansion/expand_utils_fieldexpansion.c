@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/29 18:27:31 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/30 13:46:55 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 15:17:57 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,20 @@ void	split_expansion(t_exp *fields, char *str)
 		}
 		token_add_back(&fields->tokens, new);
 	}
+	return ;
+}
+
+// run through all the options of expansion seeing if need to split the value
+// on white space or if we simply append the string.
+void	field_expansion(t_exp *fields, char *tmp)
+{
+	if (has_whitespace(tmp))
+	{
+		split_expansion(fields, tmp);
+		if (fields->tokens)
+			fields->string = ap_string(fields->string, fields->tokens->value);
+	}
+	else
+		fields->string = ap_string(fields->string, tmp);
 	return ;
 }

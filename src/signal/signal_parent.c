@@ -3,27 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   signal_parent.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 03:23:35 by pking             #+#    #+#             */
-/*   Updated: 2026/08/29 16:52:22 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 15:42:08 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 /* FUNCTIONS FOR HANDLING SIGNALS*/
 /*
 * Signals are Ctrl + D, C, /
 * <signal.h> gives us access to defined structs and functs
 * 	and MACROS
-* 
-*
 */
 
-volatile sig_atomic_t g_signal_status = 0;
+volatile sig_atomic_t	g_signal_status = 0;
 
-static void handle_sigint(int sig)
+static void	handle_sigint(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
@@ -33,21 +31,18 @@ static void handle_sigint(int sig)
 	g_signal_status = SIGINT;
 }
 
-
-void init_signals(int argc, char **argv)
+void	init_signals(int argc, char **argv)
 {
 	struct sigaction	sa; // required to set up the struct to use
-
 	(void)argv;
 	(void)argc;
 	ft_bzero(&sa, sizeof(sa)); // make sure no random data
 	sa.sa_handler = handle_sigint; // setting the function as reaction
-	sigaction(SIGINT, &sa, NULL); // setting up the signal response. (When SIGINT, use sa)
+	sigaction(SIGINT, &sa, NULL); // set up the sig reply. (When SIGINT, use sa)
 	signal(SIGQUIT, SIG_IGN); // actually send signal to handler
 }
 
-
-void reset_signals(void)
+void	reset_signals(void)
 {
 	struct sigaction sa;
 
@@ -56,7 +51,7 @@ void reset_signals(void)
 	sigaction(SIGINT, &sa, NULL);
 }
 
-void parent_wait_signals(void)
+void	parent_wait_signals(void)
 {
 	signal(SIGINT, SIG_IGN);
 }

@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 13:48:23 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 15:36:33 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,14 +182,15 @@ char	*find_word(char *word);
 int		is_quoted(char *word);
 int		set_quotes(char c, int *dquote, int *squote);
 
-//-expand_utils_field_epansion.c-//
+//-expand_utils_field_expansion.c-//
 void	split_expansion(t_exp *fields, char *str);
+void	field_expansion(t_exp *fields, char *tmp);
 // static int	find_field_end(char *str, int i);
 // static char	*get_field(char *str, int *i);
 
 //------expand_utils_token.c----//
-int	has_whitespace(char *str);
 t_token	*token_last(t_token *tokens);
+int		has_whitespace(char *str);
 void	append_to_last_token(t_exp *fields, char c);
 void	token_add_back(t_token **head, t_token *new_node);
 void	splice_tokens(t_token *ttok, t_token *new_tokens);

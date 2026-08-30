@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_get_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 00:51:05 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 07:47:16 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 15:27:54 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,12 @@ static char	*split_try_access(char *path_value, char *cmd, int *exit_code)
 //Meat function. Returns the string of the first possible exec path
 // I REORDERED THIS TO HOPEFULLY COVER COMMANDS THAT ONLY HAVE /
 
-//refactor immenant 
+//refactor immenant
 char	*exec_get_valid_path(t_shell *shell, char *cmd, int *exit_code)
 {
 	char	*path_value;
 	char	*valid_path_cmd;
 	// char	*direct_cmd;
-
 	*exit_code = 127;
 	if (ft_strchr(cmd, '/'))
 	{
@@ -129,5 +128,4 @@ char	*exec_get_valid_path(t_shell *shell, char *cmd, int *exit_code)
 	}
 	valid_path_cmd = split_try_access(path_value, cmd, exit_code);
 	return (valid_path_cmd);
-} 
-
+}

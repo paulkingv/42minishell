@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 07:35:34 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 07:43:58 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 15:29:43 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*raw_readline(void)
 
 char	*hd_read_line(t_redir *redir)
 {
-	char *line;
+	char	*line;
 
 	if (isatty(STDIN_FILENO))
 		line = readline("> ");
