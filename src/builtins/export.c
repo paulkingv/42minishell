@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 16:19:26 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/29 13:57:50 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 22:45:08 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	ft_print_export(t_shell *shell)
 }
 
 // break the valid command argument into a string array holding key and value
-static char	**ft_export_util(t_cmd *cmd, int i)
+char	**ft_export_util(t_cmd *cmd, int i)
 {
 	char	**strings;
 	char	*equal;
@@ -59,7 +59,7 @@ static char	**ft_export_util(t_cmd *cmd, int i)
 		key_len = key_len - 1;
 	strings[0] = ft_substr(cmd->args[i], 0, key_len);
 	strings[1] = ft_strdup(equal + 1);
-	if (!strings [0] || !strings [1])
+	if (!strings[0] || !strings[1])
 	{
 		free_array(strings);
 		return (NULL);
@@ -88,29 +88,41 @@ void	handle_no_valid_export(t_shell *shell, char *args, int *i)
 // export with no options
 int	ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd)
 {
-	char	**strings;
-	int		i;
-
 	tcmd = cmd;
-	i = 1;
-	if (!tcmd->args[i])
+	shell->exit = 0;
+	if (!tcmd->args[1])
 		ft_print_export(shell);
-	while (tcmd->args[i])
-	{
-		if (!valid_export(tcmd->args[i]))
-		{
-			handle_no_valid_export(shell, tcmd->args[i], &i);
-			continue ;
-		}
-		strings = ft_export_util(tcmd, i);
-		if (!strings)
-			return (2);
-		if (append(tcmd->args[i]))
-			append_env(shell, strings[0], strings[1]);
-		else
-			set_env(&shell->env, strings[0], strings[1]);
-		free_array(strings);
-		i++;
-	}
+	if (run_export(shell, tcmd) == 2)
+		return (2);
 	return (shell->exit);
 }
+
+// int	ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd)
+// {
+// 	char	**strings;
+// 	int		i;
+
+// 	tcmd = cmd;
+// 	i = 1;
+// 	shell->exit = 0;
+// 	if (!tcmd->args[i])
+// 		ft_print_export(shell);
+// 	while (tcmd->args[i])
+// 	{
+// 		if (!valid_export(tcmd->args[i]))
+// 		{
+// 			handle_no_valid_export(shell, tcmd->args[i], &i);
+// 			continue ;
+// 		}
+// 		strings = ft_export_util(tcmd, i);
+// 		if (!strings)
+// 			return (2);
+// 		if (append(tcmd->args[i]))
+// 			append_env(shell, strings[0], strings[1]);
+// 		else
+// 			set_env(&shell->env, strings[0], strings[1]);
+// 		free_array(strings);
+// 		i++;
+// 	}
+// 	return (shell->exit);
+// }

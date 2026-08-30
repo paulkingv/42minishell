@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 19:36:41 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 22:57:38 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ void	run_shell(t_shell *minishell)
 	free_tokens(&minishell->tokens);
 	free_cmd(&minishell->cmdline);
 	return ;
+}
+
+static	void	run_line(t_shell *shell)
+{
+	if (shell->tokens)
+		run_shell(shell);
+	else if (!isatty(STDIN_FILENO))
+		shell->status = 1;
 }
 
 // simple main, declare our shell, bzero to set it to 0 then populate env.
@@ -63,8 +71,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(input);
 			minishell.tokens = tokenize(input, &minishell);
-			if (minishell.tokens)
-				run_shell(&minishell);
+			run_line(&minishell);
 		}
 		free(input);
 	}
