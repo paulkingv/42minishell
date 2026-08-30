@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 16:57:39 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 19:01:14 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ static void	execute_pipeline(t_shell *shell)
 	pid_t	pid;
 
 	tmp_cmd = shell->cmdline;
-	prev_fd =-1;
+	prev_fd = -1;
 	if (collect_heredocs(shell) == -1)
-		return (heredoc_abort(shell)); //need2change
-	while(tmp_cmd)
+		return (heredoc_abort(shell));
+	while (tmp_cmd)
 	{
 		exec_init_pipefd(pipe_fd);
 		if (tmp_cmd->next)

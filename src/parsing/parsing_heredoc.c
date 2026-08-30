@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/05 01:17:03 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 15:37:34 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 19:06:04 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,27 @@
 int	strip_quotes(char *value)
 {
 	char	in_quote;
-	int		read;	//read index
-	int		write;	//write index
+	int		read;
+	int		write;
 
-	read = 0; // read index
-	write = 0; // write index
-	in_quote = 0; // in quote state
+	read = 0;
+	write = 0;
+	in_quote = 0;
 	while (value[read])
 	{
 		if (!in_quote && (value[read] == '\'' || value[read] == '"'))
-			in_quote = value[read++]; // ' / " detected, and !in quote,
+			in_quote = value[read++];
 		else if (in_quote && value[read] == in_quote)
 		{
-			in_quote = 0; // we have closed the previous quote
-			read++; // move the read index
+			in_quote = 0;
+			read++;
 		}
 		else
-			value[write++] = value[read++]; // if any character, in quote or not (cant be quote itself, unless inside quote
+			value[write++] = value[read++];
 	}
 	value[write] = '\0';
 	if (in_quote)
-		return (-2); // defensive: case where we have an open quote
+		return (-2);
 	return (0);
 }
 
@@ -64,8 +64,8 @@ int	is_hd_quoted(char *value)
 		i++;
 	}
 	if (squote_count % 2 != 0 || dquote_count % 2 != 0)
-		return (-1); // there was an open quote
+		return (-1);
 	else if (squote_count > 0 || dquote_count > 0)
-		return (1); // quotes, and were closed
+		return (1);
 	return (0);
 }

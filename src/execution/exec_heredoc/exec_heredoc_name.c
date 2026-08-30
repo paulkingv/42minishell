@@ -13,11 +13,11 @@
 #include "minishell.h"
 
 // passes stack mem addr to val as long
-static	long random_long_gen(void)
+static long	random_long_gen(void)
 {
-	static long counter;
-	int		stack_var;
-	long	val;
+	static long	counter;
+	int			stack_var;
+	long		val;
 
 	counter++;
 	val = (long)&stack_var;

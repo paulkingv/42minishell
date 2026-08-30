@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc_collect.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 16:24:04 by pking             #+#    #+#             */
 /*   Updated: 2026/08/30 19:19:34 by pking            ###   ########.fr       */
@@ -12,22 +12,21 @@
 
 #include "minishell.h"
 
+// DESCRIPTION //
+// Reads every HD in pipeline before any fork.
+// STDIN is duplicated first, HD's SIGINT handler closes it to break out
+// of readline, and in the parent, the fd has to be put back afterwards
 
-/* // DESCRIPTION // 
-Reads every HD in pipeline before any fork.
-STDIN is duplicated first, HD's SIGINT handler closes it to break out
-of readline, and in the parent, the fd has to be put back afterwards
-*/
-int		collect_heredocs(t_shell *shell)
+int	collect_heredocs(t_shell *shell)
 {
 	t_cmd	*cmd;
 	int		saved_in;
-	int 	status;
+	int		status;
 
 	saved_in = dup(STDIN_FILENO);
 	status = 0;
 	cmd = shell->cmdline;
-	while(cmd && status == 0)
+	while (cmd && status == 0)
 	{
 		if (cmd->redirections)
 			status = read_heredocs(cmd->redirections, shell);
@@ -42,7 +41,7 @@ int		collect_heredocs(t_shell *shell)
 }
 
 //Closes each command's redirection's heredoc fd if exist
-static void close_cmd_heredocs(t_redir *redir)
+static void	close_cmd_heredocs(t_redir *redir)
 {
 	while (redir)
 	{
@@ -69,10 +68,11 @@ void	close_unowned_heredocs(t_shell *shell, t_cmd *self)
 		cmd = cmd->next;
 	}
 }
+
 // Used to close FD in parent after forking all children. 
 void close_heredocs (t_shell *shell)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	cmd = shell->cmdline;
 	while (cmd)

@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 02:31:14 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 15:43:22 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 19:10:21 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,19 @@ static void	token_syntax_error(t_token *token)
 	}
 }
 
-static int	validate_tokens(t_token *token) // exit value needs to get changed
+static int	validate_tokens(t_token *token)
 {
 	t_token	*clone;
 
 	clone = token;
-	while (clone) // check the rest of tokens
+	while (clone)
 	{
-	// pipe cant be last or first or followed by pipe
 		if (clone->type == PIPE && (clone == token || clone->next == NULL
-			|| clone->next->type == PIPE)) //check: Node 1 = PIPE; Node[i+1] = PIPE; NULL
+				|| clone->next->type == PIPE))
 		{
 			token_syntax_error(clone);
 			return (1);
 		}
-		// if clone == REDIR && (we are last token || next->type isnt word)
 		if ((clone->type & (REDIR_OUT | REDIR_IN | APPEND | HEREDOC)
 				&& (clone->next == NULL || clone->next->type != WORD)))
 		{
