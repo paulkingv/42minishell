@@ -96,33 +96,3 @@ int	ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd)
 		return (2);
 	return (shell->exit);
 }
-
-// int	ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd)
-// {
-// 	char	**strings;
-// 	int		i;
-
-// 	tcmd = cmd;
-// 	i = 1;
-// 	shell->exit = 0;
-// 	if (!tcmd->args[i])
-// 		ft_print_export(shell);
-// 	while (tcmd->args[i])
-// 	{
-// 		if (!valid_export(tcmd->args[i]))
-// 		{
-// 			handle_no_valid_export(shell, tcmd->args[i], &i);
-// 			continue ;
-// 		}
-// 		strings = ft_export_util(tcmd, i);
-// 		if (!strings)
-// 			return (2);
-// 		if (append(tcmd->args[i]))
-// 			append_env(shell, strings[0], strings[1]);
-// 		else
-// 			set_env(&shell->env, strings[0], strings[1]);
-// 		free_array(strings);
-// 		i++;
-// 	}
-// 	return (shell->exit);
-// }
