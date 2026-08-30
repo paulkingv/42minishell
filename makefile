@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+         #
+#    By: pking <pking@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/17 14:20:05 by jfox              #+#    #+#              #
-#    Updated: 2026/08/29 14:11:33 by jfox             ###   ########.fr        #
+#    Updated: 2026/08/30 16:54:39 by pking            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,8 @@ SRC =	main.c \
 		execution/exec_heredoc/exec_handle_heredoc.c \
 		execution/exec_heredoc/exec_heredoc_expand.c \
 		execution/exec_heredoc/exec_heredoc_utils.c \
+		execution/exec_heredoc/exec_heredoc_name.c \
+		execution/exec_heredoc/exec_heredoc_collect.c \
 		environment/environment.c environment/environment_utils.c \
 		environment/environment_utils_free.c \
 		expansion/process.c expansion/expand_tokens.c \

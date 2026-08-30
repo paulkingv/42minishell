@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 00:43:59 by pking             #+#    #+#             */
-/*   Updated: 2026/08/28 05:39:51 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 16:52:13 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ static void child_setup_io(int prev_fd, int pipe_fd[2], t_cmd *tmp_cmd,
 	t_shell *shell)
 {
 
-	if (tmp_cmd->redirections
-		&& read_heredocs(tmp_cmd->redirections, shell) == -1)
-		{
-			if (g_signal_status == SIGINT)
-				exit(130);
-			exit(1);
-		}
+	// if (tmp_cmd->redirections
+	// 	&& read_heredocs(tmp_cmd->redirections, shell) == -1)
+	// 	{
+	// 		if (g_signal_status == SIGINT)
+	// 			exit(130);
+	// 		exit(1);
+	// 	}
 	is_prevfd_registered(prev_fd);
 	if (tmp_cmd->next)
 		safe_dup2(pipe_fd[1], STDOUT_FILENO);

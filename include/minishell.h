@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/29 16:59:59 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 16:57:07 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,6 +290,14 @@ void	exec_child_builtin(t_shell *shell, t_cmd *cmd);
 //**********************************SRC/EXECUTION/EXEC_HEREDOC****************//
 //--------exec_handle_heredoc.c--//
 int		handle_heredoc(t_redir *redir, t_shell *shell);
+
+//--------exec_heredoc_name.c----//
+char	*hd_name(int *fd);
+
+//--------exec_heredoc_collect.c----//
+int		collect_heredocs(t_shell *shell);
+void	close_heredocs(t_shell *shell);
+void	heredoc_abort(t_shell *shelL);
 
 //--------exec_heredoc_expand.c--//
 char	*expand_heredoc(t_shell *shell, char *line, char *string, int i);
