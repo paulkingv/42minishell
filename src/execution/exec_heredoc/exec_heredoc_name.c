@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc_name.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 16:23:28 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 17:34:42 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 17:53:59 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static	long random_long_gen(void)
 	int		stack_var;
 	long	val;
 
-	couhter++;
+	counter++;
 	val = (long)&stack_var;
 	val = (val ^ counter) & 0x7FFFFFFFL;
-	return (value);
+	return (val);
 }
 
 // HD_NAME is used to gen a random* name for the HD
