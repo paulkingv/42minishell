@@ -6,7 +6,7 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/13 14:33:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/30 02:30:07 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/30 10:04:48 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,15 @@ void	expand_dollar(t_shell *shell, t_exp *fields, char *w, int *i)
 {
 	char	*tmp;
 
-	// if (!w[*i + 1] || (!ft_isalnum(w[*i + 1]) && w[*i + 1] != '_'
-	// 	&& w[*i + 1] != '?'))
-	// {
-	// 	fields->string = ap_string(fields->string, "$");
-	// 	return ;
-	// }
 	if (w[*i + 1] == '"' && !shell->dquote)
 	{
 		fields->string = ap_string(fields->string, "");
+		return ;
+	}
+	if (!w[*i + 1] || (!ft_isalnum(w[*i + 1]) && w[*i + 1] != '_' 
+		&& w[*i + 1] != '?'))
+	{
+		fields->string = ap_string(fields->string, "$");
 		return ;
 	}
 	tmp = expansion(shell, &w[*i], i);
@@ -94,5 +94,4 @@ void	expand_dollar(t_shell *shell, t_exp *fields, char *w, int *i)
 			fields->string = ap_string(fields->string, fields->tokens->value);
 	}
 	free(tmp);
-	return ;
 }
