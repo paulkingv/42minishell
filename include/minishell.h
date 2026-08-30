@@ -3,21 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 19:19:55 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 20:06:58 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-// # if defined(__APPLE__)
-// # include <sys/syslimits.h> //PATH_MAX, ARG_MAX on macOS
-// # else
-// # include <linux/limits.h>
-// # endif
 # include "libft.h"
 # include <stdio.h> // printf
 # include <unistd.h> // pipes, fork, getpid, execve, dup2

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc_name.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 16:23:28 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 18:51:16 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 20:06:03 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,29 @@ static long	random_long_gen(void)
 
 // HD_NAME is used to gen a random* name for the HD
 // Now uses a random long generator
-char    *hd_name(int *fd)
+char	*hd_name(int *fd)
 {
-    char    *num;
-    char    *filename;
-    int        tries;
+	char	*num;
+	char	*filename;
+	int		tries;
 
-    tries = -1;
-    while (++tries < 100)
-    {
-        num = ft_itoa(random_long_gen());
-        if (!num)
-            return (NULL);
-        filename = ft_strjoin("./heredoc_", num);
-        if (!filename)
-            return (NULL);
-        *fd = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0600);
-        if (*fd > 0)
-        {
-            free(num);
-            return (filename);
-        }
-        free(num);
-        free(filename);
-    }
-    return (NULL);
+	tries = -1;
+	while (++tries < 100)
+	{
+		num = ft_itoa(random_long_gen());
+		if (!num)
+			return (NULL);
+		filename = ft_strjoin("./heredoc_", num);
+		if (!filename)
+			return (NULL);
+		*fd = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0600);
+		if (*fd > 0)
+		{
+			free(num);
+			return (filename);
+		}
+		free(num);
+		free(filename);
+	}
+	return (NULL);
 }

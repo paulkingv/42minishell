@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 03:23:35 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 19:13:14 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 19:52:26 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 * 	and MACROS
 */
 
-// volatile sig_atomic_t	g_signal_status = 0;
+volatile sig_atomic_t	g_signal_status = 0;
 
 static void	handle_sigint(int sig)
 {

@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 16:24:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 19:19:34 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 20:03:30 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	close_unowned_heredocs(t_shell *shell, t_cmd *self)
 	t_cmd	*cmd;
 
 	cmd = shell->cmdline;
-	while(cmd)
+	while (cmd)
 	{
 		if (cmd != self)
 			close_cmd_heredocs(cmd->redirections);
@@ -69,8 +69,8 @@ void	close_unowned_heredocs(t_shell *shell, t_cmd *self)
 	}
 }
 
-// Used to close FD in parent after forking all children. 
-void close_heredocs (t_shell *shell)
+// Used to close FD in parent after forking all children.
+void	close_heredocs(t_shell *shell)
 {
 	t_cmd	*cmd;
 
