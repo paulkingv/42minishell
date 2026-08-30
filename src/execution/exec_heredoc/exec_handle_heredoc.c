@@ -77,7 +77,7 @@ static void	hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 			if (!line)
 				break ;
 		}
-		finish_heredoc(line, fd);
+		finish_heredoc(expanded, fd);
 	}
 }
 
