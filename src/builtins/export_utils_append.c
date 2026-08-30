@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/29 13:32:30 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/30 22:36:33 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 22:46:23 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	append_env(t_shell *shell, char *key, char *value)
 	return ;
 }
 
-int run_export(t_shell *shell, t_cmd *tcmd)
+int	run_export(t_shell *shell, t_cmd *tcmd)
 {
-	int i;
-	char **strings;
+	int		i;
+	char	**strings;
 
 	i = 1;
 	while (tcmd->args[i])

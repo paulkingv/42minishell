@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 15:44:36 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/30 19:26:42 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 23:00:40 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static t_token_type	get_type(char *value, int i)
 
 static int	token_end(char *input, int i, t_shell *shell)
 {
-	if (input[i] == '|' || input[i] == '<' 
+	if (input[i] == '|' || input[i] == '<'
 		|| input[i] == '>' || input[i] == ';')
 	{
 		if ((input[i] == '<' && input[i + 1] == '<')
@@ -84,7 +84,7 @@ static int	token_end(char *input, int i, t_shell *shell)
 	return (i);
 }
 
-static int next_token(char *input, int *i, t_token **head, t_shell *shell)
+static	int	next_token(char *input, int *i, t_token **head, t_shell *shell)
 {
 	int		word_start;
 	t_token	*new;
@@ -104,20 +104,12 @@ static int next_token(char *input, int *i, t_token **head, t_shell *shell)
 	token_add_back(head, new);
 	return (0);
 }
-// Tokenize input into an LL of tokens
-/* REWORK PLAN */
-/*
-Remove the inits being passed
-Instead set up the pointers inside a new init function
-Add the shell struct to the tokenize function
-Change the prototype
-Rework the call to the verification so that it takes the shell struct
 
-*/
+// Tokenize input into an LL of tokens
 t_token	*tokenize(char *input, t_shell *shell)
 {
-	int	i;
-	t_token *head;
+	int		i;
+	t_token	*head;
 	int		result;
 
 	i = 0;
@@ -139,5 +131,4 @@ t_token	*tokenize(char *input, t_shell *shell)
 		return (NULL);
 	}
 	return (head);
-
 }

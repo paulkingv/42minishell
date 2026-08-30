@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 16:19:26 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/30 22:37:42 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 22:45:08 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	**ft_export_util(t_cmd *cmd, int i)
 		key_len = key_len - 1;
 	strings[0] = ft_substr(cmd->args[i], 0, key_len);
 	strings[1] = ft_strdup(equal + 1);
-	if (!strings [0] || !strings [1])
+	if (!strings[0] || !strings[1])
 	{
 		free_array(strings);
 		return (NULL);
@@ -92,7 +92,7 @@ int	ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd)
 	shell->exit = 0;
 	if (!tcmd->args[1])
 		ft_print_export(shell);
-	if(run_export(shell, tcmd) == 2)
+	if (run_export(shell, tcmd) == 2)
 		return (2);
 	return (shell->exit);
 }

@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:39 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 19:36:41 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 22:57:38 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	run_shell(t_shell *minishell)
 	return ;
 }
 
-static void run_line(t_shell *shell)
+static	void	run_line(t_shell *shell)
 {
 	if (shell->tokens)
 		run_shell(shell);
