@@ -35,6 +35,14 @@ void	run_shell(t_shell *minishell)
 	return ;
 }
 
+static void run_line(t_shell *shell)
+{
+	if (shell->tokens)
+		run_shell(shell);
+	else if (!isatty(STDIN_FILENO))
+		shell->status = 1;
+}
+
 // simple main, declare our shell, bzero to set it to 0 then populate env.
 // enter while loop and initiate signal handling.
 // set prompt. input becomes user input.
@@ -63,8 +71,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(input);
 			minishell.tokens = tokenize(input, &minishell);
-			if (minishell.tokens)
-				run_shell(&minishell);
+			run_line(&minishell);
 		}
 		free(input);
 	}

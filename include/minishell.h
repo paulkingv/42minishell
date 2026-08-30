@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 20:06:58 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 22:37:07 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ int		set_sign(char c, int *i);
 int		ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd);
 void	handle_no_valid_export(t_shell *shell, char *args, int *i);
 void	print_export_error(char *arg);
-// static char	**ft_export_util(t_cmd *cmd, int i);
+char	**ft_export_util(t_cmd *cmd, int i);
 // static void	ft_print_export(t_shell *shell);
 
 //-------export_utils.c--------//
@@ -246,6 +246,7 @@ int		valid_export(char *arg);
 //-------export_utils_append.c--------//
 int		append(char *arg);
 void	append_env(t_shell *shell, char *key, char *value);
+int		run_export(t_shell *shell, t_cmd *tcmd);
 
 //------------pwd.c------------//
 int		ft_pwd(t_shell *shell);

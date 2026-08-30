@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_append.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/29 13:32:30 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/29 13:54:34 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 22:36:33 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,30 @@ void	append_env(t_shell *shell, char *key, char *value)
 	set_env(&shell->env, key, joined);
 	free(joined);
 	return ;
+}
+
+int run_export(t_shell *shell, t_cmd *tcmd)
+{
+	int i;
+	char **strings;
+
+	i = 1;
+	while (tcmd->args[i])
+	{
+		if (!valid_export(tcmd->args[i]))
+		{
+			handle_no_valid_export(shell, tcmd->args[i], &i);
+			continue ;
+		}
+		strings = ft_export_util(tcmd, i);
+		if (!strings)
+			return (2);
+		if (append(tcmd->args[i]))
+			append_env(shell, strings[0], strings[1]);
+		else
+			set_env(&shell->env, strings[0], strings[1]);
+		free_array(strings);
+		i++;
+	}
+	return (0);
 }
