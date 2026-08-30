@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:09:24 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 15:25:39 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 16:57:39 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ static void	execute_pipeline(t_shell *shell)
 	pid_t	pid;
 
 	tmp_cmd = shell->cmdline;
-	prev_fd = -1;
-	while (tmp_cmd)
+	prev_fd =-1;
+	if (collect_heredocs(shell) == -1)
+		return (heredoc_abort(shell)); //need2change
+	while(tmp_cmd)
 	{
 		exec_init_pipefd(pipe_fd);
 		if (tmp_cmd->next)
@@ -70,6 +72,7 @@ static void	execute_pipeline(t_shell *shell)
 		prev_fd = parent_cleanup_exe_cmd(prev_fd, pipe_fd, tmp_cmd);
 		tmp_cmd = tmp_cmd->next;
 	}
+	close_heredocs(shell);
 	wait_for_children(pid, shell);
 	init_signals(0, NULL);
 }
