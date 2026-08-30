@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/13 14:33:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/30 10:04:48 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/30 14:23:29 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ char	*ap_string(char *s1, char *s2)
 {
 	char	*tmp;
 
-	if (!s1)
-		return (NULL);
-	if (!s2)
-		s2 = "";
+	// if (!s1)
+	// 	return (NULL);
+	// if (!s2)
+	// 	s2 = "";
 	tmp = ft_strjoin(s1, s2);
 	if (!tmp)
 		return (NULL);
@@ -76,7 +76,7 @@ void	expand_dollar(t_shell *shell, t_exp *fields, char *w, int *i)
 		fields->string = ap_string(fields->string, "");
 		return ;
 	}
-	if (!w[*i + 1] || (!ft_isalnum(w[*i + 1]) && w[*i + 1] != '_' 
+	if (!w[*i + 1] || (!ft_isalnum(w[*i + 1]) && w[*i + 1] != '_'
 		&& w[*i + 1] != '?'))
 	{
 		fields->string = ap_string(fields->string, "$");
@@ -89,9 +89,16 @@ void	expand_dollar(t_shell *shell, t_exp *fields, char *w, int *i)
 		fields->string = ap_string(fields->string, tmp);
 	else
 	{
-		split_expansion(fields, tmp);
-		if (fields->tokens)
-			fields->string = ap_string(fields->string, fields->tokens->value);
+		if (has_whitespace(tmp))
+		{
+			split_expansion(fields, tmp);
+			if (fields->tokens)
+				fields->string = ap_string(fields->string, fields->tokens->value);
+		}
+		else
+		{
+			fields->string = ap_string(fields->string, tmp);
+		}
 	}
 	free(tmp);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils_fieldexpansion.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/29 18:27:31 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/30 01:47:14 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/30 13:46:55 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // in expansion, while expanding a long string, we need to find the end of the
 // field so we can put it into it's own token/value
-int	find_field_end(char *str, int i)
+static int	find_field_end(char *str, int i)
 {
 	while (str[i] && str[i] != ' ' && !(str[i] >= 9 && str[i] <= 13))
 		i += 1;
@@ -23,7 +23,7 @@ int	find_field_end(char *str, int i)
 
 // function skips whitespace in a long variable expansion and then finds each
 // field or word within it
-char	*get_field(char *str, int *i)
+static char	*get_field(char *str, int *i)
 {
 	int		start;
 	int		end;

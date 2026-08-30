@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 12:06:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/30 02:30:16 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/30 13:41:57 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,27 +65,6 @@ char	*expansion(t_shell *shell, char *word, int *i)
 	*i += ft_strlen(string);
 	free(string);
 	return (value);
-}
-
-void	splice_tokens(t_token *ttok, t_token *new_tokens)
-{
-	t_token	*first;
-	t_token	*rest;
-	t_token	*last;
-
-	if (!ttok || !new_tokens)
-		return ;
-	first = new_tokens;
-	rest = first->next;
-	free(first->value);
-	free(first);
-	if (!rest)
-		return ;
-	last = rest;
-	while (last->next)
-		last = last->next;
-	last->next = ttok->next;
-	ttok->next = rest;
 }
 
 // remove token if expanded does not have anyhting inside it
