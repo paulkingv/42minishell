@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 16:57:07 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 19:19:55 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,6 +317,7 @@ char	*hd_name(int *fd);
 //--------exec_heredoc_collect.c----//
 int		collect_heredocs(t_shell *shell);
 void	close_heredocs(t_shell *shell);
+void	close_unowned_heredocs(t_shell *shell, t_cmd *self);
 void	heredoc_abort(t_shell *shelL);
 
 //--------exec_heredoc_expand.c--//

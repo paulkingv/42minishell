@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_child.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 00:43:59 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 16:52:13 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 19:19:17 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,7 @@ static void	child_execute_command(t_shell *shell, t_cmd *tmp_cmd)
 static void	child_setup_io(int prev_fd, int pipe_fd[2], t_cmd *tmp_cmd,
 	t_shell *shell)
 {
-
-	// if (tmp_cmd->redirections
-	// 	&& read_heredocs(tmp_cmd->redirections, shell) == -1)
-	// 	{
-	// 		if (g_signal_status == SIGINT)
-	// 			exit(130);
-	// 		exit(1);
-	// 	}
+	close_unowned_heredocs(shell, tmp_cmd);
 	is_prevfd_registered(prev_fd);
 	if (tmp_cmd->next)
 		safe_dup2(pipe_fd[1], STDOUT_FILENO);
