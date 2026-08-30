@@ -6,7 +6,7 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 15:28:31 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 17:42:41 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 			if (!line)
 				break ;
 		}
-		finish_heredoc(expanded, fd);
+		finish_heredoc(line, fd);
 	}
 }
 
