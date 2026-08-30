@@ -39,7 +39,7 @@ char *expand_heredoc(t_shell *shell, char *line, char *string, int i)
 		else if (line[i] == '$')
 		{
 			tmp = expansion(shell, &line[i], &i);
-			string = append_string(string, tmp);
+			string = ap_string(string, tmp);
 			free(tmp);
 		}
 		else

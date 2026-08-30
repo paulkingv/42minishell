@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 12:06:01 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/29 19:28:35 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 02:30:16 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,30 @@ char	*expansion(t_shell *shell, char *word, int *i)
 	return (value);
 }
 
+void	splice_tokens(t_token *ttok, t_token *new_tokens)
+{
+	t_token	*first;
+	t_token	*rest;
+	t_token	*last;
+
+	if (!ttok || !new_tokens)
+		return ;
+	first = new_tokens;
+	rest = first->next;
+	free(first->value);
+	free(first);
+	if (!rest)
+		return ;
+	last = rest;
+	while (last->next)
+		last = last->next;
+	last->next = ttok->next;
+	ttok->next = rest;
+}
+
 // remove token if expanded does not have anyhting inside it
 // otherwise free the value and replace with the new expanded value
-void	handle_expand(char *expanded, t_shell *shell, t_token *ttok)
+void	handle_expand(char *expanded, t_shell *shell, t_token *ttok, t_exp *f)
 {
 	if (expanded[0] == '\0' && !is_quoted(ttok->value))
 	{
@@ -80,6 +101,8 @@ void	handle_expand(char *expanded, t_shell *shell, t_token *ttok)
 	{
 		free(ttok->value);
 		ttok->value = expanded;
+		if (f->tokens)
+			splice_tokens(ttok, f->tokens);
 	}
 	return ;
 }
@@ -104,6 +127,8 @@ static char	*expand_word(t_shell *shell, char *word, t_exp *fields, int i)
 		{
 			if (word[i] == '$' && !shell->squote)
 				expand_dollar(shell, fields, word, &i);
+			else if (fields->tokens)
+				append_to_last_token(fields, word[i]);
 			else
 				fields->string = append_char(fields->string, word[i]);
 			if (!fields->string)
@@ -126,10 +151,10 @@ int	expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n)
 	t_exp	fields;
 	char	*expanded;
 
-	ft_bzero(&fields, sizeof(t_exp));
 	ttok = tok;
 	while (ttok)
 	{
+		ft_bzero(&fields, sizeof(t_exp));
 		n = ttok->next;
 		if (ttok->type == HEREDOC && ttok->next)
 		{
@@ -141,7 +166,7 @@ int	expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n)
 			expanded = expand_word(shell, ttok->value, &fields, 0);
 			if (!expanded)
 				return (1);
-			handle_expand(expanded, shell, ttok);
+			handle_expand(expanded, shell, ttok, &fields);
 		}
 		ttok = n;
 	}

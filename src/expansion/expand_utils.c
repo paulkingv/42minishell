@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/13 14:33:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/29 19:58:21 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 02:30:07 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // a strjoin helper to append our exapnded string onto the original
-char	*append_string(char *s1, char *s2)
+char	*ap_string(char *s1, char *s2)
 {
 	char	*tmp;
 
@@ -67,26 +67,31 @@ char	*find_word(char *word)
 
 // covers if the word is a single $ followed by ", in this case returning
 // an empty string
-void	expand_dollar(t_shell *shell, t_exp *fields, char *word, int *i)
+void	expand_dollar(t_shell *shell, t_exp *fields, char *w, int *i)
 {
 	char	*tmp;
-	char	*field;
 
-	if (word[*i + 1] == '"' && !shell->dquote)
+	// if (!w[*i + 1] || (!ft_isalnum(w[*i + 1]) && w[*i + 1] != '_'
+	// 	&& w[*i + 1] != '?'))
+	// {
+	// 	fields->string = ap_string(fields->string, "$");
+	// 	return ;
+	// }
+	if (w[*i + 1] == '"' && !shell->dquote)
 	{
-		fields->string = append_string(fields->string, "");
+		fields->string = ap_string(fields->string, "");
 		return ;
 	}
-	tmp = expansion(shell, &word[*i], i);
+	tmp = expansion(shell, &w[*i], i);
 	if (!tmp)
 		return ;
 	if (shell->dquote)
-		fields->string = append_string(fields->string, tmp);
+		fields->string = ap_string(fields->string, tmp);
 	else
 	{
-		field = split_expansion(tmp);
-		fields->string = append_string(fields->string, tmp);
-		free(field);
+		split_expansion(fields, tmp);
+		if (fields->tokens)
+			fields->string = ap_string(fields->string, fields->tokens->value);
 	}
 	free(tmp);
 	return ;

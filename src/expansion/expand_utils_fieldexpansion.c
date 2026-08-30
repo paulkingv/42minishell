@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils_fieldexpansion.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/29 18:27:31 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/29 19:45:40 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 01:47:14 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,38 +23,41 @@ int	find_field_end(char *str, int i)
 
 // function skips whitespace in a long variable expansion and then finds each
 // field or word within it
-char	*get_field(char *str)
+char	*get_field(char *str, int *i)
 {
 	int		start;
 	int		end;
 	char	*ret;
 
-	start = 0;
-	handle_whitespace(str, &start);
-	end = find_field_end(str, start);
+	handle_whitespace(str, i);
+	start = *i;
+	end = find_field_end(str, *i);
 	ret = ft_substr(str, start, end - start);
+	*i = end;
 	return (ret);
 }
 
-char	*split_expansion(char *str)
+// split the string on whitespace into new values, make tokens and add them in
+// order to a chained list. This list will be copied into shell later.
+void	split_expansion(t_exp *fields, char *str)
 {
+	int		i;
 	char	*field;
+	t_token	*new;
 
-	field = get_field(str);
-	return(field);
-}
-
-void	token_add_back(t_token **head, t_token *new_node)
-{
-	t_token	*tmp;
-
-	if (*head == NULL)
+	i = 0;
+	while (str[i])
 	{
-		*head = new_node;
-		return ;
+		field = get_field(str, &i);
+		if (!field)
+			return ;
+		new = make_new_token(WORD, field);
+		if (!new)
+		{
+			free(field);
+			return ;
+		}
+		token_add_back(&fields->tokens, new);
 	}
-	tmp = *head;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new_node;
+	return ;
 }

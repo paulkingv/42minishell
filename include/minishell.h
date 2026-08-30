@@ -6,7 +6,7 @@
 /*   By: j.fox <jfox.42angouleme@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/13 16:31:46 by pking             #+#    #+#             */
-/*   Updated: 2026/08/29 22:41:39 by j.fox            ###   ########.fr       */
+/*   Updated: 2026/08/30 01:53:48 by j.fox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,14 +168,14 @@ int		process(t_shell *shell, t_token *tokens);
 //--------expand_tokens.c--------//
 int		expand_tokens(t_shell *shell, t_token *tok, t_token *ttok, t_token *n);
 char	*expansion(t_shell *shell, char *word, int *i);
-void	handle_expand(char *expanded, t_shell *shell, t_token *ttok);
+void	handle_expand(char *expanded, t_shell *shell, t_token *ttok, t_exp *f);
 // static char	*find_value(t_shell *shell, char *word, int *i);
 // static char	*expand_word(t_shell *shell, char *word, t_exp *fields, int i);
 
 //---------expand_utils.c--------//
-void	expand_dollar(t_shell *shell, t_exp *fields, char *word, int *i);
+void	expand_dollar(t_shell *shell, t_exp *fields, char *w, int *i);
 char	*append_char(char *string, char c);
-char	*append_string(char *s1, char *s2);
+char	*ap_string(char *s1, char *s2);
 char	*find_word(char *word);
 
 //---expand_utils_set_quotes.c---//
@@ -183,7 +183,12 @@ int		is_quoted(char *word);
 int		set_quotes(char c, int *dquote, int *squote);
 
 //-expand_utils_field_epansion.c-//
-char	*split_expansion(char *str);
+void	split_expansion(t_exp *fields, char *str);
+
+//------expand_utils_token.c----//
+t_token	*token_last(t_token *tokens);
+void	append_to_last_token(t_exp *fields, char c);
+void	token_add_back(t_token **head, t_token *new_node);
 
 //**********************************SRC/PARSING*******************************//
 //-----------PARSING.C-----------//
