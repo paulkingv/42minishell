@@ -6,36 +6,17 @@
 /*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/13 14:33:29 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/29 14:38:13 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 15:36:55 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// confirms simply if the word specifically is quoted
-int	is_quoted(char *word)
-{
-	int		i;
-
-	i = 0;
-	while (word[i])
-	{
-		if (word[i] == '\'' || word[i] == '"')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 // a strjoin helper to append our exapnded string onto the original
-char	*append_string(char *s1, char *s2)
+char	*ap_string(char *s1, char *s2)
 {
 	char	*tmp;
 
-	if (!s1)
-		return (NULL);
-	if (!s2)
-		s2 = "";
 	tmp = ft_strjoin(s1, s2);
 	if (!tmp)
 		return (NULL);
@@ -82,14 +63,27 @@ char	*find_word(char *word)
 
 // covers if the word is a single $ followed by ", in this case returning
 // an empty string
-char	*help_expand_dollar(t_shell *shell, char *string, char *word, int *i)
+void	expand_dollar(t_shell *shell, t_exp *fields, char *w, int *i)
 {
 	char	*tmp;
 
-	if (word[*i + 1] == '"' && !shell->dquote)
-		return (append_string(string, ""));
-	tmp = expansion(shell, &word[*i], i);
-	string = append_string(string, tmp);
+	if (w[*i + 1] == '"' && !shell->dquote)
+	{
+		fields->string = ap_string(fields->string, "");
+		return ;
+	}
+	if (!w[*i + 1] || (!ft_isalnum(w[*i + 1]) && w[*i + 1] != '_'
+			&& w[*i + 1] != '?'))
+	{
+		fields->string = ap_string(fields->string, "$");
+		return ;
+	}
+	tmp = expansion(shell, &w[*i], i);
+	if (!tmp)
+		return ;
+	if (shell->dquote)
+		fields->string = ap_string(fields->string, tmp);
+	else
+		field_expansion(fields, tmp);
 	free(tmp);
-	return (string);
 }

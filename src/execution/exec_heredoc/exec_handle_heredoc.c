@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 12:17:04 by pking             #+#    #+#             */
-/*   Updated: 2026/08/29 17:53:25 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 15:28:31 by jfox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ static char	*hd_name(void)
 	return (filename);
 }
 
-static void hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
+static void	hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 {
 	char	*line;
-	char 	*expanded;
+	char	*expanded;
 
 	while (g_signal_status != SIGINT)
 	{
@@ -83,12 +83,9 @@ static void hd_loop_rl(int fd, t_redir *redir, t_shell *shell)
 
 static int	hd_loop(int fd, t_redir *redir, t_shell *shell)
 {
-	// char *line;
-	// lines = NULL;
 	g_signal_status = 0;
 	heredoc_signals();
-	hd_loop_rl(fd, redir, shell); //, line
-	// free(line);
+	hd_loop_rl(fd, redir, shell);
 	reset_signals();
 	if (g_signal_status == SIGINT)
 		return (-1);
@@ -104,8 +101,8 @@ int	handle_heredoc(t_redir *redir, t_shell *shell)
 
 	filename = hd_name();
 	if (!filename)
-	return (-1);
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644); 
+		return (-1);
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 	{
 		free(filename);
