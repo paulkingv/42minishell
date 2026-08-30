@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 16:19:26 by jfox              #+#    #+#             */
-/*   Updated: 2026/08/29 13:57:50 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 21:32:14 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	ft_export(t_shell *shell, t_cmd *cmd, t_cmd *tcmd)
 
 	tcmd = cmd;
 	i = 1;
+	shell->exit = 0;
 	if (!tcmd->args[i])
 		ft_print_export(shell);
 	while (tcmd->args[i])

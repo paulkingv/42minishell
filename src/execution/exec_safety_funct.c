@@ -6,7 +6,7 @@
 /*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 02:16:14 by pking             #+#    #+#             */
-/*   Updated: 2026/08/29 17:01:21 by pking            ###   ########.fr       */
+/*   Updated: 2026/08/30 21:30:22 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	wait_for_children(pid_t last_pid, t_shell *shell)
 		{
 			if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 				write(STDOUT_FILENO, "\n", 1);
-			if (shell->exit == 0 && WIFEXITED(status))
+			if (WIFEXITED(status))
 				shell->exit = WEXITSTATUS(status);
 			if (WIFSIGNALED(status))
 				shell->exit = 128 + WTERMSIG(status);

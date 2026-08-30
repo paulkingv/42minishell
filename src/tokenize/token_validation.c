@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfox <jfox.42angouleme@gmail.com>          +#+  +:+       +#+        */
+/*   By: pking <pking@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 02:31:14 by pking             #+#    #+#             */
-/*   Updated: 2026/08/30 19:10:21 by jfox             ###   ########.fr       */
+/*   Updated: 2026/08/30 21:37:07 by pking            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static int	validate_tokens(t_token *token)
 	while (clone)
 	{
 		if (clone->type == PIPE && (clone == token || clone->next == NULL
-				|| clone->next->type == PIPE))
+				|| clone->next->type == PIPE 
+				|| clone->next->type == SEMICOLON))
 		{
 			token_syntax_error(clone);
 			return (1);

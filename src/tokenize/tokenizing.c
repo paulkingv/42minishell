@@ -32,8 +32,8 @@ static int	find_end_word(char *input, int i)
 			while (input[i] && input[i] != quote_type)
 				i++;
 			if (!input[i])
-				return (-1); //unclosed quote error
-			i++; //fixes the i to be at index outside the quotes
+				return (-1);
+			i++;
 		}
 		else
 			i++;
